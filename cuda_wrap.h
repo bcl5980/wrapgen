@@ -1048,7 +1048,7 @@ extern "C"
     CUresult __stdcall cuDeviceCanAccessPeer(int *canAccessPeer, CUdevice dev, CUdevice peerDev);
     CUresult __stdcall cuCtxEnablePeerAccess(CUcontext peerContext, unsigned int Flags);
     CUresult __stdcall cuCtxDisablePeerAccess(CUcontext peerContext);
-    CUresult __stdcall cuDeviceGetP2PAttribute(int* value, CUdevice_P2PAttribute attrib, CUdevice srcDevice, CUdevice dstDevice);
+    CUresult __stdcall cuDeviceGetP2PAttribute(int *value, CUdevice_P2PAttribute attrib, CUdevice srcDevice, CUdevice dstDevice);
     CUresult __stdcall cuGraphicsUnregisterResource(CUgraphicsResource resource);
     CUresult __stdcall cuGraphicsSubResourceGetMappedArray(CUarray *pArray, CUgraphicsResource resource, unsigned int arrayIndex, unsigned int mipLevel);
     CUresult __stdcall cuGraphicsResourceGetMappedMipmappedArray(CUmipmappedArray *pMipmappedArray, CUgraphicsResource resource);

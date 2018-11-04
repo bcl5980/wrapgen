@@ -20,16 +20,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MacroExtend.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="nvcuda.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="nvcuda.def">
-      <Filter>源文件</Filter>
+      <Filter>资源文件</Filter>
     </None>
   </ItemGroup>
 </Project>

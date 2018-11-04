@@ -39,6 +39,7 @@ class cenum(object):
         self.name = name
         self.enums = {}
         self.values = {}
+        self.logcode = ''
 
     def init(self, unit):
         start = unit.find('{') + 1
@@ -50,6 +51,8 @@ class cenum(object):
         for member in enummembers:
             if member.find('=') != -1:
                 name, svalue = member.split('=')
+                name = name.strip()
+                svalue = svalue.strip()
                 if svalue.find('x') != -1:
                     value = int(svalue, 16)
                     self.enums[name] = value
@@ -68,21 +71,90 @@ class cenum(object):
                 self.enums[member] = value 
                 self.values[value] = name
 
+
 class cvar(object):
     def __init__(self, vtype='', name=''):
+        if vtype.startswith('const'):
+            self.const = True
+            vtype = vtype[5:].strip()
+        else:
+            self.const = False
+
         self.type = vtype
+        self.arraycnt = 1
         start = name.find('[')
         if (start) != -1:
             end = name.find(']')
             strarray = name[start + 1:end]
             self.arraycnt = int(strarray)
             name = name[:start]
-    
+
         i = 0
         while name[i] == '*':
             i = i + 1
         self.pcnt = i
         self.name = name[i:]
+
+    def genlogcode(self):
+        # ret = '"' + self.name + ':" << '
+        typefind = gtype.get(self.type)
+        ret = ''
+        if typefind == 'basic':
+            if self.type == 'char':
+                if self.arraycnt == 1:
+                    if self.pcnt < 2: 
+                        ret = ret + '"' + self.name + ':" << ' + self.name + ' << \'\\n\';'
+                    else:
+                        ret = ret + '"*' + self.name + ':" << (' + self.name + ' ? *' + self.name + ' : 0) << \'\\n\';'
+                else:
+                    if self.pcnt == 0:
+                        ret = ret + '"' + self.name + ':" << ' + self.name + ' << \'\\n\';'
+                    else:
+                        for i in range(self.arraycnt):
+                            if self.pcnt == 1:
+                                ret = ret + '"' + self.name + ':" << ' + self.name + '[' + str(i) + '] << \'\\n\';'
+                            elif self.pcnt == 2:
+                                ret = ret + '"' + self.name + ':" << ' + self.name + '[' + str(i) + '] << \'\\n\';'
+                            else:
+                                print('Error:more than 2 pionter')
+            elif self.type == 'void':
+                if self.pcnt == 1: 
+                    ret = ret + '"' + self.name + ':" << ' + self.name + ' << \'\\n\';'
+                elif self.pcnt == 2:
+                    ret = ret + '"*' + self.name + ':" << (' + self.name + ' ? *' + self.name + ' : 0)  << \'\\n\';'
+                else:
+                    print('void with no pointer cant support')
+            else:
+                if self.arraycnt == 1:
+                    if self.pcnt == 0: 
+                        ret = ret + '"' + self.name + ':" << ' + self.name + ' << \'\\n\';'
+                    elif self.pcnt > 0:
+                        ret = ret + '"*' + self.name + ':" << (' + self.name + ' ? *' + self.name + ' : 0) << \'\\n\';'
+                else:
+                    for i in range(self.arraycnt):
+                        if self.pcnt == 0:
+                            ret = ret + '"' + self.name + ':" << ' + self.name + '[' + str(i) + '] << \'\\n\';'
+                        elif self.pcnt == 1:
+                            ret = ret + '"' + self.name + ':" << *' + self.name + '[' + str(i) + '] << \'\\n\';'
+                        else:
+                            print('Error:more than 2 pionter')
+        elif typefind == 'enum':
+            if self.arraycnt != 1:
+                print ('enum array havent done')
+            if self.pcnt == 0 :
+                ret = ret + '"' + self.name + ':" << g.m_mapES' + self.type + '[' + self.name + '] << \'\\n\';'
+            elif self.pcnt == 1 :
+                ret = ret + '"*' + self.name + ':" << g.m_mapES' + self.type + '[*' + self.name + '] << \'\\n\';'
+            else:
+                print ('**enum havent support yet')
+        elif typefind == 'struct':
+            ret = ret + ''
+        elif typefind == 'struct*' or typefind == 'union*' or typefind == 'function*':
+            ret = ret + '"' + self.name + ':" << ' + self.name + ' << \'\\n\';'
+        else:
+            print ('error: unknow type')
+        return ret
+
 
 class cstruct(object):
     def __init__(self, name=''):
@@ -148,14 +220,14 @@ class cstruct(object):
                         self.structs[struct.name] = struct
                 else:
                     if member.endswith(';'):
-                        name = member[:-1]
+                        name = member[:-1].strip()
                         var = cvar(vtype, name)
                         self.varibles[var.name] = var
                         self.varindex.append(var.name)
                     elif vtype == 'const' or vtype == 'unsigned':
                         vtype = vtype + ' ' + member
                     else:
-                        vtype = member
+                        vtype = member.strip()
                 
                 i = i + 1
 
@@ -176,12 +248,27 @@ class cfuntion(object):
             elements = params.split(',')
             for e in elements:
                 spidx = e.rfind(' ')
-                stype = e[:spidx]
-                name = e[spidx + 1:]
+                stype = e[:spidx].strip()
+                name = e[spidx + 1:].strip()
                 var = cvar(vtype=stype, name=name)
                 self.params.append(var)
                 self.notypeparams = self.notypeparams + var.name +','
             self.notypeparams = self.notypeparams[:-1]
+
+    def genlogcode(self, basiccodes, tyepmap):
+        lines = basiccodes.split('\n')
+        ret = ''
+        for line in lines:
+            if line.startswith('#fparams'):
+                line = line[8:].strip()
+                indx = 0
+                for param in self.params:
+                    logcode = param.genlogcode()
+                    if logcode != '':
+                        ret = ret + line.replace('#paramlog', logcode) +'\n'
+            else:
+                ret = ret + line + '\n'
+        return ret
 
 
 gtype = {}
@@ -190,6 +277,7 @@ gstructs = {}
 gfunctions = {}
 gfuncpointer = {}
 
+gtype['void'] = 'basic'
 gtype['size_t'] = 'basic'
 gtype['char'] = 'basic'
 gtype['unsigned char'] = 'basic'
@@ -205,6 +293,8 @@ gtype['long'] = 'basic'
 gtype['unsigned long'] = 'basic'
 gtype['long long'] = 'basic'
 gtype['unsigned long long'] = 'basic'
+gtype['float'] = 'basic'
+gtype['double'] = 'basic'
 
 with open('cuda_wrap.h', 'r') as f:
     strLines = f.readlines()
@@ -236,13 +326,18 @@ with open('cuda_wrap.h', 'r') as f:
                             gtype[ctypename] = 'struct*'
                         else:
                             gtype[ctypename] = 'union*'
+                    else:
+                        print ('error: unknown struct')
             elif unit.find('(') == -1:
                 start = unit.rfind(' ')
                 end = unit.rfind(';')
                 ctypename = unit[start:end].strip()
                 end = start
                 start = unit.find(' ')
-                gtype[ctypename] = unit[start:end].strip()
+                ctypetype = unit[start:end].strip()
+                while gtype.get(ctypetype) != None:
+                    ctypetype = gtype[ctypetype]
+                gtype[ctypename] = ctypetype
             else:
                 #function pointer
                 unit = unit[7:].strip()
@@ -272,14 +367,14 @@ with open('cuda_wrap.h', 'r') as f:
             result = unit[:end].strip()
             start = end + 1
             end = unit.find(' ', start)
-            calltype = unit[start:end]
+            calltype = unit[start:end].strip()
             start = end + 1
             end = unit.find('(', start)
-            name = unit[start:end]
+            name = unit[start:end].strip()
             func = cfuntion(name=name, ret =result, calltype=calltype)
             start = end + 1
             end = unit.find(')', start)
-            params = unit[start:end]
+            params = unit[start:end].strip()
             func.init(params)
             func.deprecated = deprecated
             gfunctions[func.name] = func
@@ -316,7 +411,22 @@ with open('cuda_wrap.h', 'r') as f:
                     impfunc = impfunc.replace('#name', name)
                     impfunc = impfunc.replace('#params', gfunctions[name].strparams)
                     impfunc = impfunc.replace('#notypeparam', gfunctions[name].notypeparams)
+                    impfunc = gfunctions[name].genlogcode(impfunc, gtype)
                     output.append(impfunc+'\n')
+            elif line.startswith('#esdef'):
+                line = line[6:].strip()
+                for name in genums:
+                    output.append(line.replace('#name', name)+'\n')                
+            elif line.startswith('#esimp'):
+                line = line[6:].strip()
+                for name in genums:
+                    evalues = genums[name].values
+                    content = line.replace('#name', name)
+                    for evalue in evalues:
+                        impinites = content.replace('#paramv', str(evalue))
+                        impinites = impinites.replace('#paramn', evalues[evalue])
+                        output.append(impinites+'\n')
+                    output.append('\n')
             elif logcontent == False:
                 output.append(line)
 
