@@ -4,14 +4,18 @@
 #include <dlfcn.h>
 #endif
 
+#include <mutex>
 #include <fstream>
 #include <map>
 #include <string>
-#include "cudawrap.h"
+#include <cuda.h>
+#include <stdlib.h>
 
 using std::ofstream;
 using std::map;
 using std::string;
+using std::mutex;
+
 
 #definefp typedef #result(#calltype *p#name)(#params);
 
@@ -22,8 +26,17 @@ public:
 
 #esdef map<int, string> m_mapES#name;
 
+    bool m_bLog;
+    ofstream m_oflog;
+
     wrap()
     {
+        m_bLog = getenv("LOG_CUDA") != nullptr;
+        if (m_bLog)
+        {
+            m_oflog.open("log.txt", std::ios::out);
+        }
+
 #ifdef WIN32
         HMODULE h = LoadLibrary("nvcuda_orig.dll");
         #define GetFunction(h, x) GetProcAddress(h, x)
@@ -44,17 +57,24 @@ public:
 };
 
 static wrap g;
-static ofstream oflog("log.txt");
+static mutex gm;
 
 #funcdefstart
 #result #calltype #name(#params)
 {
     #result ret;
     ret = g.m_#name(#notypeparam);
-    oflog << __FUNCTION__ << " start:\n";
-    oflog << "#result:" << g.m_mapES#result[ret] << '\n';
-#fparams oflog << #paramlog;
-    oflog << __FUNCTION__ << " end:\n\n";
+
+    if (g.m_bLog)
+    {
+        gm.lock();
+        g.m_oflog << __FUNCTION__ << " start:\n";
+        g.m_oflog << "#result:" << g.m_mapES#result[ret] << '\n';
+#fparams g.m_oflog << #paramlog;
+        g.m_oflog << __FUNCTION__ << " end:\n\n";
+        gm.unlock();
+    }
+
     return ret;
 }
 #funcdefend
