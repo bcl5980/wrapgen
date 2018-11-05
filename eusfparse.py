@@ -145,11 +145,11 @@ class cvar(object):
                 if self.pcnt == 0:
                     for i in range(self.arraycnt):
                         aname = name + '[' + str(i) + ']'
-                        ret = ret + '"' + aname + ':" << g.m_mapES' + self.type + '[' + aname + '] <<' + aname +' << \'\\n\'\n << '
+                        ret = ret + '"' + aname + ':" << g.m_mapES' + self.type + '[' + aname + '] << " = " <<' + aname +' << \'\\n\'\n << '
             elif self.pcnt == 0 :
-                ret = ret + '"' + name + ':" << g.m_mapES' + self.type + '[' + name + '] << ' + name + ' << \'\\n\'\n << '
+                ret = ret + '"' + name + ':" << g.m_mapES' + self.type + '[' + name + ']  << " = " <<' + name + ' << \'\\n\'\n << '
             elif self.pcnt == 1 :
-                ret = ret + '"*' + name + ':" << g.m_mapES' + self.type + '[*' + name + '] << ' + name + ' << \'\\n\'\n << '
+                ret = ret + '"*' + name + ':" << g.m_mapES' + self.type + '[*' + name + '] << " = " << *' + name + ' << \'\\n\'\n << '
             else:
                 print ('**enum havent support yet')
         elif typefind == 'struct' or derivestruct != None:
@@ -328,7 +328,7 @@ gtype['unsigned long long'] = 'basic'
 gtype['float'] = 'basic'
 gtype['double'] = 'basic'
 
-with open('cuda_wrap.h', 'r') as f:
+with open('cudawrap.h', 'r') as f:
     strLines = f.readlines()
     units = SplitUnit(strLines, 'typedef')
 

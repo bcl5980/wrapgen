@@ -2,7 +2,7 @@
 #include <fstream>
 #include <map>
 #include <string>
-#include "cuda_wrap.h"
+#include "cudawrap.h"
 
 using std::ofstream;
 using std::map;
