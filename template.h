@@ -1,4 +1,9 @@
+#ifdef WIN32
 #include <windows.h>
+#else
+#include <dlfcn.h>
+#endif
+
 #include <fstream>
 #include <map>
 #include <string>
@@ -19,8 +24,15 @@ public:
 
     wrap()
     {
+#ifdef WIN32
         HMODULE h = LoadLibrary("nvcuda_orig.dll");
-#getfp m_#name = (p#name)GetProcAddress(h, "#name");
+        #define GetFunction(h, x) GetProcAddress(h, x)
+#else
+        void* h = dlopen("libcuda_orig.so", RTLD_LAZY);
+        #define GetFunction(h, x) dlsym(h, x)
+#endif
+
+#getfp m_#name = (p#name)GetFunction(h, "#name");
 
 #esimp m_mapES#name[#paramv] = "#paramn";
     }

@@ -15,11 +15,13 @@ def SplitUnit(strLines, strPrefix):
             if not line.endswith(';'):
                 continue
         elif unit.startswith(strPrefix):
-            unit = unit + line
             if line.find('{') != -1:
+                line = ' ' + line
                 brackets = brackets + 1
             elif line.find('}') != -1:
                 brackets = brackets - 1
+            unit = unit + line
+
 
             if not line.endswith(';'):
                 continue
@@ -292,7 +294,6 @@ class cfuntion(object):
         for line in lines:
             if line.startswith('#fparams'):
                 line = line[8:].strip()
-                indx = 0
                 for param in self.params:
                     logcode = param.genlogcode('')
                     if logcode != '':
@@ -327,6 +328,8 @@ gtype['long long'] = 'basic'
 gtype['unsigned long long'] = 'basic'
 gtype['float'] = 'basic'
 gtype['double'] = 'basic'
+gtype['uint32_t'] = 'basic'
+gtype['uint64_t'] = 'basic'
 
 with open('cudawrap.h', 'r') as f:
     strLines = f.readlines()
@@ -375,9 +378,11 @@ with open('cudawrap.h', 'r') as f:
                 unit = unit[7:].strip()
                 end = unit.find('(')
                 result = unit[:end]
-                start = end + 1
-                end = unit.find(' ', start)
-                calltype = unit[start:end]
+                calltype = ''
+                if unit.find('__') != -1:
+                    start = end + 1
+                    end = unit.find(' ', start)
+                    calltype = unit[start:end].strip()
                 start = end + 2
                 end = unit.find(')', start)
                 name = unit[start:end]
@@ -388,18 +393,20 @@ with open('cudawrap.h', 'r') as f:
                 func.init(params)
                 gfuncpointer[func.name] = func
                 gtype[func.name] = 'function*'
-        elif unit.find('__stdcall') != -1:
+        elif unit.find('(') != -1:
             #function
             deprecated = False
-            if unit.startswith('__declspec(deprecated)'):
+            if unit.startswith('__declspec(deprecated)') or unit.startswith('__attribute__((deprecated))'):
                 deprecated = True
                 unit = unit[unit.find(' '):].strip()
 
             end = unit.find(' ')
             result = unit[:end].strip()
-            start = end + 1
-            end = unit.find(' ', start)
-            calltype = unit[start:end].strip()
+            calltype = ''
+            if unit.find('__') != -1:
+                start = end + 1
+                end = unit.find(' ', start)
+                calltype = unit[start:end].strip()
             start = end + 1
             end = unit.find('(', start)
             name = unit[start:end].strip()
