@@ -436,7 +436,7 @@ extern "C"
     } CUDA_MEMSET_NODE_PARAMS;
     typedef struct CUDA_HOST_NODE_PARAMS_st {
         CUhostFn fn;
-        void* userData;
+        void *userData;
     } CUDA_HOST_NODE_PARAMS;
     typedef enum CUgraphNodeType_enum {
         CU_GRAPH_NODE_TYPE_KERNEL = 0,

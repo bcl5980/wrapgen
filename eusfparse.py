@@ -95,64 +95,95 @@ class cvar(object):
         self.pcnt = i
         self.name = name[i:]
 
-    def genlogcode(self):
-        # ret = '"' + self.name + ':" << '
+    def genlogcode(self, prefix, derivestruct=None):
+        if self.name == 'pad' or self.name.startswith('reserved'):
+            return ''
         typefind = gtype.get(self.type)
         ret = ''
+        name = prefix + self.name
         if typefind == 'basic':
             if self.type == 'char':
                 if self.arraycnt == 1:
                     if self.pcnt < 2: 
-                        ret = ret + '"' + self.name + ':" << ' + self.name + ' << \'\\n\';'
+                        ret = ret + '"' + name + ':" << ' + name + ' << \'\\n\'\n << '
                     else:
-                        ret = ret + '"*' + self.name + ':" << (' + self.name + ' ? *' + self.name + ' : 0) << \'\\n\';'
+                        ret = ret + '"*' + name + ':" << (' + name + ' ? *' + name + ' : 0) << \'\\n\'\n << '
                 else:
                     if self.pcnt == 0:
-                        ret = ret + '"' + self.name + ':" << ' + self.name + ' << \'\\n\';'
+                        ret = ret + '"' + name + ':" << ' + name + ' << \'\\n\'\n << '
                     else:
                         for i in range(self.arraycnt):
                             if self.pcnt == 1:
-                                ret = ret + '"' + self.name + ':" << ' + self.name + '[' + str(i) + '] << \'\\n\';'
-                            elif self.pcnt == 2:
-                                ret = ret + '"' + self.name + ':" << ' + self.name + '[' + str(i) + '] << \'\\n\';'
+                                aname = name + '[' + str(i) + ']'
+                                ret = ret + '"' + aname + ':" << ' + aname + '<< \'\\n\'\n << '
                             else:
                                 print('Error:more than 2 pionter')
             elif self.type == 'void':
                 if self.pcnt == 1: 
-                    ret = ret + '"' + self.name + ':" << ' + self.name + ' << \'\\n\';'
+                    ret = ret + '"' + name + ':" << ' + name + ' << \'\\n\'\n << '
                 elif self.pcnt == 2:
-                    ret = ret + '"*' + self.name + ':" << (' + self.name + ' ? *' + self.name + ' : 0)  << \'\\n\';'
+                    ret = ret + '"*' + name + ':" << (' + name + ' ? *' + name + ' : 0)  << \'\\n\'\n << '
                 else:
                     print('void with no pointer cant support')
             else:
                 if self.arraycnt == 1:
                     if self.pcnt == 0: 
-                        ret = ret + '"' + self.name + ':" << ' + self.name + ' << \'\\n\';'
+                        ret = ret + '"' + name + ':" << ' + name + ' << \'\\n\'\n << '
                     elif self.pcnt > 0:
-                        ret = ret + '"*' + self.name + ':" << (' + self.name + ' ? *' + self.name + ' : 0) << \'\\n\';'
+                        ret = ret + '"*' + name + ':" << (' + name + ' ? *' + name + ' : 0) << \'\\n\'\n << '
                 else:
                     for i in range(self.arraycnt):
+                        aname = name + '[' + str(i) + ']'
                         if self.pcnt == 0:
-                            ret = ret + '"' + self.name + ':" << ' + self.name + '[' + str(i) + '] << \'\\n\';'
+                            ret = ret + '"' + name + ':" << ' + name + '[' + str(i) + '] << \'\\n\'\n << '
                         elif self.pcnt == 1:
-                            ret = ret + '"' + self.name + ':" << *' + self.name + '[' + str(i) + '] << \'\\n\';'
+                            ret = ret + '"*' + aname + ':" << *' + aname +' << \'\\n\'\n << '
                         else:
                             print('Error:more than 2 pionter')
         elif typefind == 'enum':
             if self.arraycnt != 1:
-                print ('enum array havent done')
-            if self.pcnt == 0 :
-                ret = ret + '"' + self.name + ':" << g.m_mapES' + self.type + '[' + self.name + '] << \'\\n\';'
+                if self.pcnt == 0:
+                    for i in range(self.arraycnt):
+                        aname = name + '[' + str(i) + ']'
+                        ret = ret + '"' + aname + ':" << g.m_mapES' + self.type + '[' + aname + '] <<' + aname +' << \'\\n\'\n << '
+            elif self.pcnt == 0 :
+                ret = ret + '"' + name + ':" << g.m_mapES' + self.type + '[' + name + '] << ' + name + ' << \'\\n\'\n << '
             elif self.pcnt == 1 :
-                ret = ret + '"*' + self.name + ':" << g.m_mapES' + self.type + '[*' + self.name + '] << \'\\n\';'
+                ret = ret + '"*' + name + ':" << g.m_mapES' + self.type + '[*' + name + '] << ' + name + ' << \'\\n\'\n << '
             else:
                 print ('**enum havent support yet')
-        elif typefind == 'struct':
-            ret = ret + ''
+        elif typefind == 'struct' or derivestruct != None:
+            if self.pcnt > 1:
+                ret = ret + '"*' + name + ':" << (' + name + ' ? *' + name + ' : 0) << \'\\n\'\n << '
+            else:
+                if derivestruct == None:
+                    struct = gstructs.get(self.type)
+                else:
+                    struct = derivestruct
+                if struct != None:
+                    if self.name == '':
+                        rprefix = name
+                    elif self.pcnt == 1:
+                        rprefix = name + '->'
+                    else:
+                        rprefix = name + '.'
+
+                    for vname in struct.varindex:
+                        var = struct.varibles[vname]
+                        if var.type.startswith('__'):
+                            indx = int(var.type[2:]) - 1
+                            ret = ret + var.genlogcode(rprefix, struct.empty[indx])
+                        elif struct.structs.get(var.type) != None:
+                            ret = ret + var.genlogcode(rprefix, struct.structs.get(var.type))
+                        else:
+                            ret = ret + var.genlogcode(rprefix)
+                else:
+                    print ('cant find struct')
         elif typefind == 'struct*' or typefind == 'union*' or typefind == 'function*':
-            ret = ret + '"' + self.name + ':" << ' + self.name + ' << \'\\n\';'
+            ret = ret + '"' + name + ':" << ' + name + ' << \'\\n\'\n << '
         else:
-            print ('error: unknow type')
+            print ('error: unknow type:' + self.type)
+
         return ret
 
 
@@ -263,8 +294,9 @@ class cfuntion(object):
                 line = line[8:].strip()
                 indx = 0
                 for param in self.params:
-                    logcode = param.genlogcode()
+                    logcode = param.genlogcode('')
                     if logcode != '':
+                        logcode = logcode[:-5]
                         ret = ret + line.replace('#paramlog', logcode) +'\n'
             else:
                 ret = ret + line + '\n'

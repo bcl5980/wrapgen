@@ -1279,8 +1279,8 @@ CUresult __stdcall cuGetErrorString(CUresult error, const char **pStr)
     ret = g.m_cuGetErrorString(error, pStr);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "error:" << g.m_mapESCUresult[error] << '\n';;
-    oflog << "*pStr:" << (pStr ? *pStr : 0) << '\n';;
+    oflog << "error:" << g.m_mapESCUresult[error] << error << '\n';
+    oflog << "*pStr:" << (pStr ? *pStr : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1292,8 +1292,8 @@ CUresult __stdcall cuGetErrorName(CUresult error, const char **pStr)
     ret = g.m_cuGetErrorName(error, pStr);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "error:" << g.m_mapESCUresult[error] << '\n';;
-    oflog << "*pStr:" << (pStr ? *pStr : 0) << '\n';;
+    oflog << "error:" << g.m_mapESCUresult[error] << error << '\n';
+    oflog << "*pStr:" << (pStr ? *pStr : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1305,7 +1305,7 @@ CUresult __stdcall cuInit(unsigned int Flags)
     ret = g.m_cuInit(Flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "Flags:" << Flags << '\n';;
+    oflog << "Flags:" << Flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1317,7 +1317,7 @@ CUresult __stdcall cuDriverGetVersion(int *driverVersion)
     ret = g.m_cuDriverGetVersion(driverVersion);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*driverVersion:" << (driverVersion ? *driverVersion : 0) << '\n';;
+    oflog << "*driverVersion:" << (driverVersion ? *driverVersion : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1329,8 +1329,8 @@ CUresult __stdcall cuDeviceGet(CUdevice *device, int ordinal)
     ret = g.m_cuDeviceGet(device, ordinal);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*device:" << (device ? *device : 0) << '\n';;
-    oflog << "ordinal:" << ordinal << '\n';;
+    oflog << "*device:" << (device ? *device : 0) << '\n';
+    oflog << "ordinal:" << ordinal << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1342,7 +1342,7 @@ CUresult __stdcall cuDeviceGetCount(int *count)
     ret = g.m_cuDeviceGetCount(count);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*count:" << (count ? *count : 0) << '\n';;
+    oflog << "*count:" << (count ? *count : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1354,9 +1354,9 @@ CUresult __stdcall cuDeviceGetName(char *name, int len, CUdevice dev)
     ret = g.m_cuDeviceGetName(name, len, dev);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "name:" << name << '\n';;
-    oflog << "len:" << len << '\n';;
-    oflog << "dev:" << dev << '\n';;
+    oflog << "name:" << name << '\n';
+    oflog << "len:" << len << '\n';
+    oflog << "dev:" << dev << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1368,7 +1368,8 @@ CUresult __stdcall cuDeviceGetUuid(CUuuid *uuid, CUdevice dev)
     ret = g.m_cuDeviceGetUuid(uuid, dev);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dev:" << dev << '\n';;
+    oflog << "uuid->bytes:" << uuid->bytes << '\n';
+    oflog << "dev:" << dev << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1380,9 +1381,9 @@ CUresult __stdcall cuDeviceGetLuid(char *luid, unsigned int *deviceNodeMask, CUd
     ret = g.m_cuDeviceGetLuid(luid, deviceNodeMask, dev);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "luid:" << luid << '\n';;
-    oflog << "*deviceNodeMask:" << (deviceNodeMask ? *deviceNodeMask : 0) << '\n';;
-    oflog << "dev:" << dev << '\n';;
+    oflog << "luid:" << luid << '\n';
+    oflog << "*deviceNodeMask:" << (deviceNodeMask ? *deviceNodeMask : 0) << '\n';
+    oflog << "dev:" << dev << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1394,8 +1395,8 @@ CUresult __stdcall cuDeviceTotalMem_v2(size_t *bytes, CUdevice dev)
     ret = g.m_cuDeviceTotalMem_v2(bytes, dev);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*bytes:" << (bytes ? *bytes : 0) << '\n';;
-    oflog << "dev:" << dev << '\n';;
+    oflog << "*bytes:" << (bytes ? *bytes : 0) << '\n';
+    oflog << "dev:" << dev << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1407,9 +1408,9 @@ CUresult __stdcall cuDeviceGetAttribute(int *pi, CUdevice_attribute attrib, CUde
     ret = g.m_cuDeviceGetAttribute(pi, attrib, dev);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pi:" << (pi ? *pi : 0) << '\n';;
-    oflog << "attrib:" << g.m_mapESCUdevice_attribute[attrib] << '\n';;
-    oflog << "dev:" << dev << '\n';;
+    oflog << "*pi:" << (pi ? *pi : 0) << '\n';
+    oflog << "attrib:" << g.m_mapESCUdevice_attribute[attrib] << attrib << '\n';
+    oflog << "dev:" << dev << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1421,7 +1422,21 @@ CUresult __stdcall cuDeviceGetProperties(CUdevprop *prop, CUdevice dev)
     ret = g.m_cuDeviceGetProperties(prop, dev);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dev:" << dev << '\n';;
+    oflog << "prop->maxThreadsPerBlock:" << prop->maxThreadsPerBlock << '\n'
+        << "prop->maxThreadsDim:" << prop->maxThreadsDim[0] << '\n'
+        << "prop->maxThreadsDim:" << prop->maxThreadsDim[1] << '\n'
+        << "prop->maxThreadsDim:" << prop->maxThreadsDim[2] << '\n'
+        << "prop->maxGridSize:" << prop->maxGridSize[0] << '\n'
+        << "prop->maxGridSize:" << prop->maxGridSize[1] << '\n'
+        << "prop->maxGridSize:" << prop->maxGridSize[2] << '\n'
+        << "prop->sharedMemPerBlock:" << prop->sharedMemPerBlock << '\n'
+        << "prop->totalConstantMemory:" << prop->totalConstantMemory << '\n'
+        << "prop->SIMDWidth:" << prop->SIMDWidth << '\n'
+        << "prop->memPitch:" << prop->memPitch << '\n'
+        << "prop->regsPerBlock:" << prop->regsPerBlock << '\n'
+        << "prop->clockRate:" << prop->clockRate << '\n'
+        << "prop->textureAlign:" << prop->textureAlign << '\n';
+    oflog << "dev:" << dev << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1433,9 +1448,9 @@ CUresult __stdcall cuDeviceComputeCapability(int *major, int *minor, CUdevice de
     ret = g.m_cuDeviceComputeCapability(major, minor, dev);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*major:" << (major ? *major : 0) << '\n';;
-    oflog << "*minor:" << (minor ? *minor : 0) << '\n';;
-    oflog << "dev:" << dev << '\n';;
+    oflog << "*major:" << (major ? *major : 0) << '\n';
+    oflog << "*minor:" << (minor ? *minor : 0) << '\n';
+    oflog << "dev:" << dev << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1447,8 +1462,8 @@ CUresult __stdcall cuDevicePrimaryCtxRetain(CUcontext *pctx, CUdevice dev)
     ret = g.m_cuDevicePrimaryCtxRetain(pctx, dev);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "pctx:" << pctx << '\n';;
-    oflog << "dev:" << dev << '\n';;
+    oflog << "pctx:" << pctx << '\n';
+    oflog << "dev:" << dev << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1460,7 +1475,7 @@ CUresult __stdcall cuDevicePrimaryCtxRelease(CUdevice dev)
     ret = g.m_cuDevicePrimaryCtxRelease(dev);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dev:" << dev << '\n';;
+    oflog << "dev:" << dev << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1472,8 +1487,8 @@ CUresult __stdcall cuDevicePrimaryCtxSetFlags(CUdevice dev, unsigned int flags)
     ret = g.m_cuDevicePrimaryCtxSetFlags(dev, flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dev:" << dev << '\n';;
-    oflog << "flags:" << flags << '\n';;
+    oflog << "dev:" << dev << '\n';
+    oflog << "flags:" << flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1485,9 +1500,9 @@ CUresult __stdcall cuDevicePrimaryCtxGetState(CUdevice dev, unsigned int *flags,
     ret = g.m_cuDevicePrimaryCtxGetState(dev, flags, active);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dev:" << dev << '\n';;
-    oflog << "*flags:" << (flags ? *flags : 0) << '\n';;
-    oflog << "*active:" << (active ? *active : 0) << '\n';;
+    oflog << "dev:" << dev << '\n';
+    oflog << "*flags:" << (flags ? *flags : 0) << '\n';
+    oflog << "*active:" << (active ? *active : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1499,7 +1514,7 @@ CUresult __stdcall cuDevicePrimaryCtxReset(CUdevice dev)
     ret = g.m_cuDevicePrimaryCtxReset(dev);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dev:" << dev << '\n';;
+    oflog << "dev:" << dev << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1511,9 +1526,9 @@ CUresult __stdcall cuCtxCreate_v2(CUcontext *pctx, unsigned int flags, CUdevice 
     ret = g.m_cuCtxCreate_v2(pctx, flags, dev);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "pctx:" << pctx << '\n';;
-    oflog << "flags:" << flags << '\n';;
-    oflog << "dev:" << dev << '\n';;
+    oflog << "pctx:" << pctx << '\n';
+    oflog << "flags:" << flags << '\n';
+    oflog << "dev:" << dev << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1525,7 +1540,7 @@ CUresult __stdcall cuCtxDestroy_v2(CUcontext ctx)
     ret = g.m_cuCtxDestroy_v2(ctx);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "ctx:" << ctx << '\n';;
+    oflog << "ctx:" << ctx << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1537,7 +1552,7 @@ CUresult __stdcall cuCtxPushCurrent_v2(CUcontext ctx)
     ret = g.m_cuCtxPushCurrent_v2(ctx);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "ctx:" << ctx << '\n';;
+    oflog << "ctx:" << ctx << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1549,7 +1564,7 @@ CUresult __stdcall cuCtxPopCurrent_v2(CUcontext *pctx)
     ret = g.m_cuCtxPopCurrent_v2(pctx);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "pctx:" << pctx << '\n';;
+    oflog << "pctx:" << pctx << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1561,7 +1576,7 @@ CUresult __stdcall cuCtxSetCurrent(CUcontext ctx)
     ret = g.m_cuCtxSetCurrent(ctx);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "ctx:" << ctx << '\n';;
+    oflog << "ctx:" << ctx << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1573,7 +1588,7 @@ CUresult __stdcall cuCtxGetCurrent(CUcontext *pctx)
     ret = g.m_cuCtxGetCurrent(pctx);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "pctx:" << pctx << '\n';;
+    oflog << "pctx:" << pctx << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1585,7 +1600,7 @@ CUresult __stdcall cuCtxGetDevice(CUdevice *device)
     ret = g.m_cuCtxGetDevice(device);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*device:" << (device ? *device : 0) << '\n';;
+    oflog << "*device:" << (device ? *device : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1597,7 +1612,7 @@ CUresult __stdcall cuCtxGetFlags(unsigned int *flags)
     ret = g.m_cuCtxGetFlags(flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*flags:" << (flags ? *flags : 0) << '\n';;
+    oflog << "*flags:" << (flags ? *flags : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1620,8 +1635,8 @@ CUresult __stdcall cuCtxSetLimit(CUlimit limit, size_t value)
     ret = g.m_cuCtxSetLimit(limit, value);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "limit:" << g.m_mapESCUlimit[limit] << '\n';;
-    oflog << "value:" << value << '\n';;
+    oflog << "limit:" << g.m_mapESCUlimit[limit] << limit << '\n';
+    oflog << "value:" << value << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1633,8 +1648,8 @@ CUresult __stdcall cuCtxGetLimit(size_t *pvalue, CUlimit limit)
     ret = g.m_cuCtxGetLimit(pvalue, limit);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pvalue:" << (pvalue ? *pvalue : 0) << '\n';;
-    oflog << "limit:" << g.m_mapESCUlimit[limit] << '\n';;
+    oflog << "*pvalue:" << (pvalue ? *pvalue : 0) << '\n';
+    oflog << "limit:" << g.m_mapESCUlimit[limit] << limit << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1646,7 +1661,7 @@ CUresult __stdcall cuCtxGetCacheConfig(CUfunc_cache *pconfig)
     ret = g.m_cuCtxGetCacheConfig(pconfig);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pconfig:" << g.m_mapESCUfunc_cache[*pconfig] << '\n';;
+    oflog << "*pconfig:" << g.m_mapESCUfunc_cache[*pconfig] << pconfig << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1658,7 +1673,7 @@ CUresult __stdcall cuCtxSetCacheConfig(CUfunc_cache config)
     ret = g.m_cuCtxSetCacheConfig(config);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "config:" << g.m_mapESCUfunc_cache[config] << '\n';;
+    oflog << "config:" << g.m_mapESCUfunc_cache[config] << config << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1670,7 +1685,7 @@ CUresult __stdcall cuCtxGetSharedMemConfig(CUsharedconfig *pConfig)
     ret = g.m_cuCtxGetSharedMemConfig(pConfig);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pConfig:" << g.m_mapESCUsharedconfig[*pConfig] << '\n';;
+    oflog << "*pConfig:" << g.m_mapESCUsharedconfig[*pConfig] << pConfig << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1682,7 +1697,7 @@ CUresult __stdcall cuCtxSetSharedMemConfig(CUsharedconfig config)
     ret = g.m_cuCtxSetSharedMemConfig(config);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "config:" << g.m_mapESCUsharedconfig[config] << '\n';;
+    oflog << "config:" << g.m_mapESCUsharedconfig[config] << config << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1694,8 +1709,8 @@ CUresult __stdcall cuCtxGetApiVersion(CUcontext ctx, unsigned int *version)
     ret = g.m_cuCtxGetApiVersion(ctx, version);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "ctx:" << ctx << '\n';;
-    oflog << "*version:" << (version ? *version : 0) << '\n';;
+    oflog << "ctx:" << ctx << '\n';
+    oflog << "*version:" << (version ? *version : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1707,8 +1722,8 @@ CUresult __stdcall cuCtxGetStreamPriorityRange(int *leastPriority, int *greatest
     ret = g.m_cuCtxGetStreamPriorityRange(leastPriority, greatestPriority);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*leastPriority:" << (leastPriority ? *leastPriority : 0) << '\n';;
-    oflog << "*greatestPriority:" << (greatestPriority ? *greatestPriority : 0) << '\n';;
+    oflog << "*leastPriority:" << (leastPriority ? *leastPriority : 0) << '\n';
+    oflog << "*greatestPriority:" << (greatestPriority ? *greatestPriority : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1720,8 +1735,8 @@ CUresult __stdcall cuCtxAttach(CUcontext *pctx, unsigned int flags)
     ret = g.m_cuCtxAttach(pctx, flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "pctx:" << pctx << '\n';;
-    oflog << "flags:" << flags << '\n';;
+    oflog << "pctx:" << pctx << '\n';
+    oflog << "flags:" << flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1733,7 +1748,7 @@ CUresult __stdcall cuCtxDetach(CUcontext ctx)
     ret = g.m_cuCtxDetach(ctx);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "ctx:" << ctx << '\n';;
+    oflog << "ctx:" << ctx << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1745,8 +1760,8 @@ CUresult __stdcall cuModuleLoad(CUmodule *module, const char *fname)
     ret = g.m_cuModuleLoad(module, fname);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "module:" << module << '\n';;
-    oflog << "fname:" << fname << '\n';;
+    oflog << "module:" << module << '\n';
+    oflog << "fname:" << fname << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1758,8 +1773,8 @@ CUresult __stdcall cuModuleLoadData(CUmodule *module, const void *image)
     ret = g.m_cuModuleLoadData(module, image);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "module:" << module << '\n';;
-    oflog << "image:" << image << '\n';;
+    oflog << "module:" << module << '\n';
+    oflog << "image:" << image << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1771,11 +1786,11 @@ CUresult __stdcall cuModuleLoadDataEx(CUmodule *module, const void *image, unsig
     ret = g.m_cuModuleLoadDataEx(module, image, numOptions, options, optionValues);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "module:" << module << '\n';;
-    oflog << "image:" << image << '\n';;
-    oflog << "numOptions:" << numOptions << '\n';;
-    oflog << "*options:" << g.m_mapESCUjit_option[*options] << '\n';;
-    oflog << "*optionValues:" << (optionValues ? *optionValues : 0) << '\n';;
+    oflog << "module:" << module << '\n';
+    oflog << "image:" << image << '\n';
+    oflog << "numOptions:" << numOptions << '\n';
+    oflog << "*options:" << g.m_mapESCUjit_option[*options] << options << '\n';
+    oflog << "*optionValues:" << (optionValues ? *optionValues : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1787,8 +1802,8 @@ CUresult __stdcall cuModuleLoadFatBinary(CUmodule *module, const void *fatCubin)
     ret = g.m_cuModuleLoadFatBinary(module, fatCubin);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "module:" << module << '\n';;
-    oflog << "fatCubin:" << fatCubin << '\n';;
+    oflog << "module:" << module << '\n';
+    oflog << "fatCubin:" << fatCubin << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1800,7 +1815,7 @@ CUresult __stdcall cuModuleUnload(CUmodule hmod)
     ret = g.m_cuModuleUnload(hmod);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hmod:" << hmod << '\n';;
+    oflog << "hmod:" << hmod << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1812,9 +1827,9 @@ CUresult __stdcall cuModuleGetFunction(CUfunction *hfunc, CUmodule hmod, const c
     ret = g.m_cuModuleGetFunction(hfunc, hmod, name);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hfunc:" << hfunc << '\n';;
-    oflog << "hmod:" << hmod << '\n';;
-    oflog << "name:" << name << '\n';;
+    oflog << "hfunc:" << hfunc << '\n';
+    oflog << "hmod:" << hmod << '\n';
+    oflog << "name:" << name << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1826,10 +1841,10 @@ CUresult __stdcall cuModuleGetGlobal_v2(CUdeviceptr *dptr, size_t *bytes, CUmodu
     ret = g.m_cuModuleGetGlobal_v2(dptr, bytes, hmod, name);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*dptr:" << (dptr ? *dptr : 0) << '\n';;
-    oflog << "*bytes:" << (bytes ? *bytes : 0) << '\n';;
-    oflog << "hmod:" << hmod << '\n';;
-    oflog << "name:" << name << '\n';;
+    oflog << "*dptr:" << (dptr ? *dptr : 0) << '\n';
+    oflog << "*bytes:" << (bytes ? *bytes : 0) << '\n';
+    oflog << "hmod:" << hmod << '\n';
+    oflog << "name:" << name << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1841,9 +1856,9 @@ CUresult __stdcall cuModuleGetTexRef(CUtexref *pTexRef, CUmodule hmod, const cha
     ret = g.m_cuModuleGetTexRef(pTexRef, hmod, name);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "pTexRef:" << pTexRef << '\n';;
-    oflog << "hmod:" << hmod << '\n';;
-    oflog << "name:" << name << '\n';;
+    oflog << "pTexRef:" << pTexRef << '\n';
+    oflog << "hmod:" << hmod << '\n';
+    oflog << "name:" << name << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1855,9 +1870,9 @@ CUresult __stdcall cuModuleGetSurfRef(CUsurfref *pSurfRef, CUmodule hmod, const 
     ret = g.m_cuModuleGetSurfRef(pSurfRef, hmod, name);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "pSurfRef:" << pSurfRef << '\n';;
-    oflog << "hmod:" << hmod << '\n';;
-    oflog << "name:" << name << '\n';;
+    oflog << "pSurfRef:" << pSurfRef << '\n';
+    oflog << "hmod:" << hmod << '\n';
+    oflog << "name:" << name << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1869,10 +1884,10 @@ CUresult __stdcall cuLinkCreate_v2(unsigned int numOptions, CUjit_option *option
     ret = g.m_cuLinkCreate_v2(numOptions, options, optionValues, stateOut);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "numOptions:" << numOptions << '\n';;
-    oflog << "*options:" << g.m_mapESCUjit_option[*options] << '\n';;
-    oflog << "*optionValues:" << (optionValues ? *optionValues : 0) << '\n';;
-    oflog << "stateOut:" << stateOut << '\n';;
+    oflog << "numOptions:" << numOptions << '\n';
+    oflog << "*options:" << g.m_mapESCUjit_option[*options] << options << '\n';
+    oflog << "*optionValues:" << (optionValues ? *optionValues : 0) << '\n';
+    oflog << "stateOut:" << stateOut << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1884,14 +1899,14 @@ CUresult __stdcall cuLinkAddData_v2(CUlinkState state, CUjitInputType type, void
     ret = g.m_cuLinkAddData_v2(state, type, data, size, name, numOptions, options, optionValues);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "state:" << state << '\n';;
-    oflog << "type:" << g.m_mapESCUjitInputType[type] << '\n';;
-    oflog << "data:" << data << '\n';;
-    oflog << "size:" << size << '\n';;
-    oflog << "name:" << name << '\n';;
-    oflog << "numOptions:" << numOptions << '\n';;
-    oflog << "*options:" << g.m_mapESCUjit_option[*options] << '\n';;
-    oflog << "*optionValues:" << (optionValues ? *optionValues : 0) << '\n';;
+    oflog << "state:" << state << '\n';
+    oflog << "type:" << g.m_mapESCUjitInputType[type] << type << '\n';
+    oflog << "data:" << data << '\n';
+    oflog << "size:" << size << '\n';
+    oflog << "name:" << name << '\n';
+    oflog << "numOptions:" << numOptions << '\n';
+    oflog << "*options:" << g.m_mapESCUjit_option[*options] << options << '\n';
+    oflog << "*optionValues:" << (optionValues ? *optionValues : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1903,12 +1918,12 @@ CUresult __stdcall cuLinkAddFile_v2(CUlinkState state, CUjitInputType type, cons
     ret = g.m_cuLinkAddFile_v2(state, type, path, numOptions, options, optionValues);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "state:" << state << '\n';;
-    oflog << "type:" << g.m_mapESCUjitInputType[type] << '\n';;
-    oflog << "path:" << path << '\n';;
-    oflog << "numOptions:" << numOptions << '\n';;
-    oflog << "*options:" << g.m_mapESCUjit_option[*options] << '\n';;
-    oflog << "*optionValues:" << (optionValues ? *optionValues : 0) << '\n';;
+    oflog << "state:" << state << '\n';
+    oflog << "type:" << g.m_mapESCUjitInputType[type] << type << '\n';
+    oflog << "path:" << path << '\n';
+    oflog << "numOptions:" << numOptions << '\n';
+    oflog << "*options:" << g.m_mapESCUjit_option[*options] << options << '\n';
+    oflog << "*optionValues:" << (optionValues ? *optionValues : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1920,9 +1935,9 @@ CUresult __stdcall cuLinkComplete(CUlinkState state, void **cubinOut, size_t *si
     ret = g.m_cuLinkComplete(state, cubinOut, sizeOut);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "state:" << state << '\n';;
-    oflog << "*cubinOut:" << (cubinOut ? *cubinOut : 0) << '\n';;
-    oflog << "*sizeOut:" << (sizeOut ? *sizeOut : 0) << '\n';;
+    oflog << "state:" << state << '\n';
+    oflog << "*cubinOut:" << (cubinOut ? *cubinOut : 0) << '\n';
+    oflog << "*sizeOut:" << (sizeOut ? *sizeOut : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1934,7 +1949,7 @@ CUresult __stdcall cuLinkDestroy(CUlinkState state)
     ret = g.m_cuLinkDestroy(state);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "state:" << state << '\n';;
+    oflog << "state:" << state << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1946,8 +1961,8 @@ CUresult __stdcall cuMemGetInfo_v2(size_t *free, size_t *total)
     ret = g.m_cuMemGetInfo_v2(free, total);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*free:" << (free ? *free : 0) << '\n';;
-    oflog << "*total:" << (total ? *total : 0) << '\n';;
+    oflog << "*free:" << (free ? *free : 0) << '\n';
+    oflog << "*total:" << (total ? *total : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1959,8 +1974,8 @@ CUresult __stdcall cuMemAlloc_v2(CUdeviceptr *dptr, size_t bytesize)
     ret = g.m_cuMemAlloc_v2(dptr, bytesize);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*dptr:" << (dptr ? *dptr : 0) << '\n';;
-    oflog << "bytesize:" << bytesize << '\n';;
+    oflog << "*dptr:" << (dptr ? *dptr : 0) << '\n';
+    oflog << "bytesize:" << bytesize << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1972,11 +1987,11 @@ CUresult __stdcall cuMemAllocPitch_v2(CUdeviceptr *dptr, size_t *pPitch, size_t 
     ret = g.m_cuMemAllocPitch_v2(dptr, pPitch, WidthInBytes, Height, ElementSizeBytes);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*dptr:" << (dptr ? *dptr : 0) << '\n';;
-    oflog << "*pPitch:" << (pPitch ? *pPitch : 0) << '\n';;
-    oflog << "WidthInBytes:" << WidthInBytes << '\n';;
-    oflog << "Height:" << Height << '\n';;
-    oflog << "ElementSizeBytes:" << ElementSizeBytes << '\n';;
+    oflog << "*dptr:" << (dptr ? *dptr : 0) << '\n';
+    oflog << "*pPitch:" << (pPitch ? *pPitch : 0) << '\n';
+    oflog << "WidthInBytes:" << WidthInBytes << '\n';
+    oflog << "Height:" << Height << '\n';
+    oflog << "ElementSizeBytes:" << ElementSizeBytes << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -1988,7 +2003,7 @@ CUresult __stdcall cuMemFree_v2(CUdeviceptr dptr)
     ret = g.m_cuMemFree_v2(dptr);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dptr:" << dptr << '\n';;
+    oflog << "dptr:" << dptr << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2000,9 +2015,9 @@ CUresult __stdcall cuMemGetAddressRange_v2(CUdeviceptr *pbase, size_t *psize, CU
     ret = g.m_cuMemGetAddressRange_v2(pbase, psize, dptr);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pbase:" << (pbase ? *pbase : 0) << '\n';;
-    oflog << "*psize:" << (psize ? *psize : 0) << '\n';;
-    oflog << "dptr:" << dptr << '\n';;
+    oflog << "*pbase:" << (pbase ? *pbase : 0) << '\n';
+    oflog << "*psize:" << (psize ? *psize : 0) << '\n';
+    oflog << "dptr:" << dptr << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2014,8 +2029,8 @@ CUresult __stdcall cuMemAllocHost_v2(void **pp, size_t bytesize)
     ret = g.m_cuMemAllocHost_v2(pp, bytesize);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pp:" << (pp ? *pp : 0) << '\n';;
-    oflog << "bytesize:" << bytesize << '\n';;
+    oflog << "*pp:" << (pp ? *pp : 0) << '\n';
+    oflog << "bytesize:" << bytesize << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2027,7 +2042,7 @@ CUresult __stdcall cuMemFreeHost(void *p)
     ret = g.m_cuMemFreeHost(p);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "p:" << p << '\n';;
+    oflog << "p:" << p << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2039,9 +2054,9 @@ CUresult __stdcall cuMemHostAlloc(void **pp, size_t bytesize, unsigned int Flags
     ret = g.m_cuMemHostAlloc(pp, bytesize, Flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pp:" << (pp ? *pp : 0) << '\n';;
-    oflog << "bytesize:" << bytesize << '\n';;
-    oflog << "Flags:" << Flags << '\n';;
+    oflog << "*pp:" << (pp ? *pp : 0) << '\n';
+    oflog << "bytesize:" << bytesize << '\n';
+    oflog << "Flags:" << Flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2053,9 +2068,9 @@ CUresult __stdcall cuMemHostGetDevicePointer_v2(CUdeviceptr *pdptr, void *p, uns
     ret = g.m_cuMemHostGetDevicePointer_v2(pdptr, p, Flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pdptr:" << (pdptr ? *pdptr : 0) << '\n';;
-    oflog << "p:" << p << '\n';;
-    oflog << "Flags:" << Flags << '\n';;
+    oflog << "*pdptr:" << (pdptr ? *pdptr : 0) << '\n';
+    oflog << "p:" << p << '\n';
+    oflog << "Flags:" << Flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2067,8 +2082,8 @@ CUresult __stdcall cuMemHostGetFlags(unsigned int *pFlags, void *p)
     ret = g.m_cuMemHostGetFlags(pFlags, p);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pFlags:" << (pFlags ? *pFlags : 0) << '\n';;
-    oflog << "p:" << p << '\n';;
+    oflog << "*pFlags:" << (pFlags ? *pFlags : 0) << '\n';
+    oflog << "p:" << p << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2080,9 +2095,9 @@ CUresult __stdcall cuMemAllocManaged(CUdeviceptr *dptr, size_t bytesize, unsigne
     ret = g.m_cuMemAllocManaged(dptr, bytesize, flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*dptr:" << (dptr ? *dptr : 0) << '\n';;
-    oflog << "bytesize:" << bytesize << '\n';;
-    oflog << "flags:" << flags << '\n';;
+    oflog << "*dptr:" << (dptr ? *dptr : 0) << '\n';
+    oflog << "bytesize:" << bytesize << '\n';
+    oflog << "flags:" << flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2094,8 +2109,8 @@ CUresult __stdcall cuDeviceGetByPCIBusId(CUdevice *dev, const char *pciBusId)
     ret = g.m_cuDeviceGetByPCIBusId(dev, pciBusId);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*dev:" << (dev ? *dev : 0) << '\n';;
-    oflog << "pciBusId:" << pciBusId << '\n';;
+    oflog << "*dev:" << (dev ? *dev : 0) << '\n';
+    oflog << "pciBusId:" << pciBusId << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2107,9 +2122,9 @@ CUresult __stdcall cuDeviceGetPCIBusId(char *pciBusId, int len, CUdevice dev)
     ret = g.m_cuDeviceGetPCIBusId(pciBusId, len, dev);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "pciBusId:" << pciBusId << '\n';;
-    oflog << "len:" << len << '\n';;
-    oflog << "dev:" << dev << '\n';;
+    oflog << "pciBusId:" << pciBusId << '\n';
+    oflog << "len:" << len << '\n';
+    oflog << "dev:" << dev << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2121,7 +2136,7 @@ CUresult __stdcall cuIpcGetEventHandle(CUipcEventHandle *pHandle, CUevent event)
     ret = g.m_cuIpcGetEventHandle(pHandle, event);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "event:" << event << '\n';;
+    oflog << "event:" << event << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2133,7 +2148,7 @@ CUresult __stdcall cuIpcOpenEventHandle(CUevent *phEvent, CUipcEventHandle handl
     ret = g.m_cuIpcOpenEventHandle(phEvent, handle);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "phEvent:" << phEvent << '\n';;
+    oflog << "phEvent:" << phEvent << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2145,7 +2160,7 @@ CUresult __stdcall cuIpcGetMemHandle(CUipcMemHandle *pHandle, CUdeviceptr dptr)
     ret = g.m_cuIpcGetMemHandle(pHandle, dptr);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dptr:" << dptr << '\n';;
+    oflog << "dptr:" << dptr << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2157,8 +2172,8 @@ CUresult __stdcall cuIpcOpenMemHandle(CUdeviceptr *pdptr, CUipcMemHandle handle,
     ret = g.m_cuIpcOpenMemHandle(pdptr, handle, Flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pdptr:" << (pdptr ? *pdptr : 0) << '\n';;
-    oflog << "Flags:" << Flags << '\n';;
+    oflog << "*pdptr:" << (pdptr ? *pdptr : 0) << '\n';
+    oflog << "Flags:" << Flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2170,7 +2185,7 @@ CUresult __stdcall cuIpcCloseMemHandle(CUdeviceptr dptr)
     ret = g.m_cuIpcCloseMemHandle(dptr);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dptr:" << dptr << '\n';;
+    oflog << "dptr:" << dptr << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2182,9 +2197,9 @@ CUresult __stdcall cuMemHostRegister_v2(void *p, size_t bytesize, unsigned int F
     ret = g.m_cuMemHostRegister_v2(p, bytesize, Flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "p:" << p << '\n';;
-    oflog << "bytesize:" << bytesize << '\n';;
-    oflog << "Flags:" << Flags << '\n';;
+    oflog << "p:" << p << '\n';
+    oflog << "bytesize:" << bytesize << '\n';
+    oflog << "Flags:" << Flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2196,7 +2211,7 @@ CUresult __stdcall cuMemHostUnregister(void *p)
     ret = g.m_cuMemHostUnregister(p);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "p:" << p << '\n';;
+    oflog << "p:" << p << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2208,9 +2223,9 @@ CUresult __stdcall cuMemcpy(CUdeviceptr dst, CUdeviceptr src, size_t ByteCount)
     ret = g.m_cuMemcpy(dst, src, ByteCount);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dst:" << dst << '\n';;
-    oflog << "src:" << src << '\n';;
-    oflog << "ByteCount:" << ByteCount << '\n';;
+    oflog << "dst:" << dst << '\n';
+    oflog << "src:" << src << '\n';
+    oflog << "ByteCount:" << ByteCount << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2222,11 +2237,11 @@ CUresult __stdcall cuMemcpyPeer(CUdeviceptr dstDevice, CUcontext dstContext, CUd
     ret = g.m_cuMemcpyPeer(dstDevice, dstContext, srcDevice, srcContext, ByteCount);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstDevice:" << dstDevice << '\n';;
-    oflog << "dstContext:" << dstContext << '\n';;
-    oflog << "srcDevice:" << srcDevice << '\n';;
-    oflog << "srcContext:" << srcContext << '\n';;
-    oflog << "ByteCount:" << ByteCount << '\n';;
+    oflog << "dstDevice:" << dstDevice << '\n';
+    oflog << "dstContext:" << dstContext << '\n';
+    oflog << "srcDevice:" << srcDevice << '\n';
+    oflog << "srcContext:" << srcContext << '\n';
+    oflog << "ByteCount:" << ByteCount << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2238,9 +2253,9 @@ CUresult __stdcall cuMemcpyHtoD_v2(CUdeviceptr dstDevice, const void *srcHost, s
     ret = g.m_cuMemcpyHtoD_v2(dstDevice, srcHost, ByteCount);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstDevice:" << dstDevice << '\n';;
-    oflog << "srcHost:" << srcHost << '\n';;
-    oflog << "ByteCount:" << ByteCount << '\n';;
+    oflog << "dstDevice:" << dstDevice << '\n';
+    oflog << "srcHost:" << srcHost << '\n';
+    oflog << "ByteCount:" << ByteCount << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2252,9 +2267,9 @@ CUresult __stdcall cuMemcpyDtoH_v2(void *dstHost, CUdeviceptr srcDevice, size_t 
     ret = g.m_cuMemcpyDtoH_v2(dstHost, srcDevice, ByteCount);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstHost:" << dstHost << '\n';;
-    oflog << "srcDevice:" << srcDevice << '\n';;
-    oflog << "ByteCount:" << ByteCount << '\n';;
+    oflog << "dstHost:" << dstHost << '\n';
+    oflog << "srcDevice:" << srcDevice << '\n';
+    oflog << "ByteCount:" << ByteCount << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2266,9 +2281,9 @@ CUresult __stdcall cuMemcpyDtoD_v2(CUdeviceptr dstDevice, CUdeviceptr srcDevice,
     ret = g.m_cuMemcpyDtoD_v2(dstDevice, srcDevice, ByteCount);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstDevice:" << dstDevice << '\n';;
-    oflog << "srcDevice:" << srcDevice << '\n';;
-    oflog << "ByteCount:" << ByteCount << '\n';;
+    oflog << "dstDevice:" << dstDevice << '\n';
+    oflog << "srcDevice:" << srcDevice << '\n';
+    oflog << "ByteCount:" << ByteCount << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2280,10 +2295,10 @@ CUresult __stdcall cuMemcpyDtoA_v2(CUarray dstArray, size_t dstOffset, CUdevicep
     ret = g.m_cuMemcpyDtoA_v2(dstArray, dstOffset, srcDevice, ByteCount);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstArray:" << dstArray << '\n';;
-    oflog << "dstOffset:" << dstOffset << '\n';;
-    oflog << "srcDevice:" << srcDevice << '\n';;
-    oflog << "ByteCount:" << ByteCount << '\n';;
+    oflog << "dstArray:" << dstArray << '\n';
+    oflog << "dstOffset:" << dstOffset << '\n';
+    oflog << "srcDevice:" << srcDevice << '\n';
+    oflog << "ByteCount:" << ByteCount << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2295,10 +2310,10 @@ CUresult __stdcall cuMemcpyAtoD_v2(CUdeviceptr dstDevice, CUarray srcArray, size
     ret = g.m_cuMemcpyAtoD_v2(dstDevice, srcArray, srcOffset, ByteCount);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstDevice:" << dstDevice << '\n';;
-    oflog << "srcArray:" << srcArray << '\n';;
-    oflog << "srcOffset:" << srcOffset << '\n';;
-    oflog << "ByteCount:" << ByteCount << '\n';;
+    oflog << "dstDevice:" << dstDevice << '\n';
+    oflog << "srcArray:" << srcArray << '\n';
+    oflog << "srcOffset:" << srcOffset << '\n';
+    oflog << "ByteCount:" << ByteCount << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2310,10 +2325,10 @@ CUresult __stdcall cuMemcpyHtoA_v2(CUarray dstArray, size_t dstOffset, const voi
     ret = g.m_cuMemcpyHtoA_v2(dstArray, dstOffset, srcHost, ByteCount);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstArray:" << dstArray << '\n';;
-    oflog << "dstOffset:" << dstOffset << '\n';;
-    oflog << "srcHost:" << srcHost << '\n';;
-    oflog << "ByteCount:" << ByteCount << '\n';;
+    oflog << "dstArray:" << dstArray << '\n';
+    oflog << "dstOffset:" << dstOffset << '\n';
+    oflog << "srcHost:" << srcHost << '\n';
+    oflog << "ByteCount:" << ByteCount << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2325,10 +2340,10 @@ CUresult __stdcall cuMemcpyAtoH_v2(void *dstHost, CUarray srcArray, size_t srcOf
     ret = g.m_cuMemcpyAtoH_v2(dstHost, srcArray, srcOffset, ByteCount);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstHost:" << dstHost << '\n';;
-    oflog << "srcArray:" << srcArray << '\n';;
-    oflog << "srcOffset:" << srcOffset << '\n';;
-    oflog << "ByteCount:" << ByteCount << '\n';;
+    oflog << "dstHost:" << dstHost << '\n';
+    oflog << "srcArray:" << srcArray << '\n';
+    oflog << "srcOffset:" << srcOffset << '\n';
+    oflog << "ByteCount:" << ByteCount << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2340,11 +2355,11 @@ CUresult __stdcall cuMemcpyAtoA_v2(CUarray dstArray, size_t dstOffset, CUarray s
     ret = g.m_cuMemcpyAtoA_v2(dstArray, dstOffset, srcArray, srcOffset, ByteCount);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstArray:" << dstArray << '\n';;
-    oflog << "dstOffset:" << dstOffset << '\n';;
-    oflog << "srcArray:" << srcArray << '\n';;
-    oflog << "srcOffset:" << srcOffset << '\n';;
-    oflog << "ByteCount:" << ByteCount << '\n';;
+    oflog << "dstArray:" << dstArray << '\n';
+    oflog << "dstOffset:" << dstOffset << '\n';
+    oflog << "srcArray:" << srcArray << '\n';
+    oflog << "srcOffset:" << srcOffset << '\n';
+    oflog << "ByteCount:" << ByteCount << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2356,6 +2371,22 @@ CUresult __stdcall cuMemcpy2D_v2(const CUDA_MEMCPY2D *pCopy)
     ret = g.m_cuMemcpy2D_v2(pCopy);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
+    oflog << "pCopy->srcXInBytes:" << pCopy->srcXInBytes << '\n'
+        << "pCopy->srcY:" << pCopy->srcY << '\n'
+        << "pCopy->srcMemoryType:" << g.m_mapESCUmemorytype[pCopy->srcMemoryType] << pCopy->srcMemoryType << '\n'
+        << "pCopy->srcHost:" << pCopy->srcHost << '\n'
+        << "pCopy->srcDevice:" << pCopy->srcDevice << '\n'
+        << "pCopy->srcArray:" << pCopy->srcArray << '\n'
+        << "pCopy->srcPitch:" << pCopy->srcPitch << '\n'
+        << "pCopy->dstXInBytes:" << pCopy->dstXInBytes << '\n'
+        << "pCopy->dstY:" << pCopy->dstY << '\n'
+        << "pCopy->dstMemoryType:" << g.m_mapESCUmemorytype[pCopy->dstMemoryType] << pCopy->dstMemoryType << '\n'
+        << "pCopy->dstHost:" << pCopy->dstHost << '\n'
+        << "pCopy->dstDevice:" << pCopy->dstDevice << '\n'
+        << "pCopy->dstArray:" << pCopy->dstArray << '\n'
+        << "pCopy->dstPitch:" << pCopy->dstPitch << '\n'
+        << "pCopy->WidthInBytes:" << pCopy->WidthInBytes << '\n'
+        << "pCopy->Height:" << pCopy->Height << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2367,6 +2398,22 @@ CUresult __stdcall cuMemcpy2DUnaligned_v2(const CUDA_MEMCPY2D *pCopy)
     ret = g.m_cuMemcpy2DUnaligned_v2(pCopy);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
+    oflog << "pCopy->srcXInBytes:" << pCopy->srcXInBytes << '\n'
+        << "pCopy->srcY:" << pCopy->srcY << '\n'
+        << "pCopy->srcMemoryType:" << g.m_mapESCUmemorytype[pCopy->srcMemoryType] << pCopy->srcMemoryType << '\n'
+        << "pCopy->srcHost:" << pCopy->srcHost << '\n'
+        << "pCopy->srcDevice:" << pCopy->srcDevice << '\n'
+        << "pCopy->srcArray:" << pCopy->srcArray << '\n'
+        << "pCopy->srcPitch:" << pCopy->srcPitch << '\n'
+        << "pCopy->dstXInBytes:" << pCopy->dstXInBytes << '\n'
+        << "pCopy->dstY:" << pCopy->dstY << '\n'
+        << "pCopy->dstMemoryType:" << g.m_mapESCUmemorytype[pCopy->dstMemoryType] << pCopy->dstMemoryType << '\n'
+        << "pCopy->dstHost:" << pCopy->dstHost << '\n'
+        << "pCopy->dstDevice:" << pCopy->dstDevice << '\n'
+        << "pCopy->dstArray:" << pCopy->dstArray << '\n'
+        << "pCopy->dstPitch:" << pCopy->dstPitch << '\n'
+        << "pCopy->WidthInBytes:" << pCopy->WidthInBytes << '\n'
+        << "pCopy->Height:" << pCopy->Height << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2378,6 +2425,29 @@ CUresult __stdcall cuMemcpy3D_v2(const CUDA_MEMCPY3D *pCopy)
     ret = g.m_cuMemcpy3D_v2(pCopy);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
+    oflog << "pCopy->srcXInBytes:" << pCopy->srcXInBytes << '\n'
+        << "pCopy->srcY:" << pCopy->srcY << '\n'
+        << "pCopy->srcZ:" << pCopy->srcZ << '\n'
+        << "pCopy->srcLOD:" << pCopy->srcLOD << '\n'
+        << "pCopy->srcMemoryType:" << g.m_mapESCUmemorytype[pCopy->srcMemoryType] << pCopy->srcMemoryType << '\n'
+        << "pCopy->srcHost:" << pCopy->srcHost << '\n'
+        << "pCopy->srcDevice:" << pCopy->srcDevice << '\n'
+        << "pCopy->srcArray:" << pCopy->srcArray << '\n'
+        << "pCopy->srcPitch:" << pCopy->srcPitch << '\n'
+        << "pCopy->srcHeight:" << pCopy->srcHeight << '\n'
+        << "pCopy->dstXInBytes:" << pCopy->dstXInBytes << '\n'
+        << "pCopy->dstY:" << pCopy->dstY << '\n'
+        << "pCopy->dstZ:" << pCopy->dstZ << '\n'
+        << "pCopy->dstLOD:" << pCopy->dstLOD << '\n'
+        << "pCopy->dstMemoryType:" << g.m_mapESCUmemorytype[pCopy->dstMemoryType] << pCopy->dstMemoryType << '\n'
+        << "pCopy->dstHost:" << pCopy->dstHost << '\n'
+        << "pCopy->dstDevice:" << pCopy->dstDevice << '\n'
+        << "pCopy->dstArray:" << pCopy->dstArray << '\n'
+        << "pCopy->dstPitch:" << pCopy->dstPitch << '\n'
+        << "pCopy->dstHeight:" << pCopy->dstHeight << '\n'
+        << "pCopy->WidthInBytes:" << pCopy->WidthInBytes << '\n'
+        << "pCopy->Height:" << pCopy->Height << '\n'
+        << "pCopy->Depth:" << pCopy->Depth << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2389,6 +2459,31 @@ CUresult __stdcall cuMemcpy3DPeer(const CUDA_MEMCPY3D_PEER *pCopy)
     ret = g.m_cuMemcpy3DPeer(pCopy);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
+    oflog << "pCopy->srcXInBytes:" << pCopy->srcXInBytes << '\n'
+        << "pCopy->srcY:" << pCopy->srcY << '\n'
+        << "pCopy->srcZ:" << pCopy->srcZ << '\n'
+        << "pCopy->srcLOD:" << pCopy->srcLOD << '\n'
+        << "pCopy->srcMemoryType:" << g.m_mapESCUmemorytype[pCopy->srcMemoryType] << pCopy->srcMemoryType << '\n'
+        << "pCopy->srcHost:" << pCopy->srcHost << '\n'
+        << "pCopy->srcDevice:" << pCopy->srcDevice << '\n'
+        << "pCopy->srcArray:" << pCopy->srcArray << '\n'
+        << "pCopy->srcContext:" << pCopy->srcContext << '\n'
+        << "pCopy->srcPitch:" << pCopy->srcPitch << '\n'
+        << "pCopy->srcHeight:" << pCopy->srcHeight << '\n'
+        << "pCopy->dstXInBytes:" << pCopy->dstXInBytes << '\n'
+        << "pCopy->dstY:" << pCopy->dstY << '\n'
+        << "pCopy->dstZ:" << pCopy->dstZ << '\n'
+        << "pCopy->dstLOD:" << pCopy->dstLOD << '\n'
+        << "pCopy->dstMemoryType:" << g.m_mapESCUmemorytype[pCopy->dstMemoryType] << pCopy->dstMemoryType << '\n'
+        << "pCopy->dstHost:" << pCopy->dstHost << '\n'
+        << "pCopy->dstDevice:" << pCopy->dstDevice << '\n'
+        << "pCopy->dstArray:" << pCopy->dstArray << '\n'
+        << "pCopy->dstContext:" << pCopy->dstContext << '\n'
+        << "pCopy->dstPitch:" << pCopy->dstPitch << '\n'
+        << "pCopy->dstHeight:" << pCopy->dstHeight << '\n'
+        << "pCopy->WidthInBytes:" << pCopy->WidthInBytes << '\n'
+        << "pCopy->Height:" << pCopy->Height << '\n'
+        << "pCopy->Depth:" << pCopy->Depth << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2400,10 +2495,10 @@ CUresult __stdcall cuMemcpyAsync(CUdeviceptr dst, CUdeviceptr src, size_t ByteCo
     ret = g.m_cuMemcpyAsync(dst, src, ByteCount, hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dst:" << dst << '\n';;
-    oflog << "src:" << src << '\n';;
-    oflog << "ByteCount:" << ByteCount << '\n';;
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "dst:" << dst << '\n';
+    oflog << "src:" << src << '\n';
+    oflog << "ByteCount:" << ByteCount << '\n';
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2415,12 +2510,12 @@ CUresult __stdcall cuMemcpyPeerAsync(CUdeviceptr dstDevice, CUcontext dstContext
     ret = g.m_cuMemcpyPeerAsync(dstDevice, dstContext, srcDevice, srcContext, ByteCount, hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstDevice:" << dstDevice << '\n';;
-    oflog << "dstContext:" << dstContext << '\n';;
-    oflog << "srcDevice:" << srcDevice << '\n';;
-    oflog << "srcContext:" << srcContext << '\n';;
-    oflog << "ByteCount:" << ByteCount << '\n';;
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "dstDevice:" << dstDevice << '\n';
+    oflog << "dstContext:" << dstContext << '\n';
+    oflog << "srcDevice:" << srcDevice << '\n';
+    oflog << "srcContext:" << srcContext << '\n';
+    oflog << "ByteCount:" << ByteCount << '\n';
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2432,10 +2527,10 @@ CUresult __stdcall cuMemcpyHtoDAsync_v2(CUdeviceptr dstDevice, const void *srcHo
     ret = g.m_cuMemcpyHtoDAsync_v2(dstDevice, srcHost, ByteCount, hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstDevice:" << dstDevice << '\n';;
-    oflog << "srcHost:" << srcHost << '\n';;
-    oflog << "ByteCount:" << ByteCount << '\n';;
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "dstDevice:" << dstDevice << '\n';
+    oflog << "srcHost:" << srcHost << '\n';
+    oflog << "ByteCount:" << ByteCount << '\n';
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2447,10 +2542,10 @@ CUresult __stdcall cuMemcpyDtoHAsync_v2(void *dstHost, CUdeviceptr srcDevice, si
     ret = g.m_cuMemcpyDtoHAsync_v2(dstHost, srcDevice, ByteCount, hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstHost:" << dstHost << '\n';;
-    oflog << "srcDevice:" << srcDevice << '\n';;
-    oflog << "ByteCount:" << ByteCount << '\n';;
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "dstHost:" << dstHost << '\n';
+    oflog << "srcDevice:" << srcDevice << '\n';
+    oflog << "ByteCount:" << ByteCount << '\n';
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2462,10 +2557,10 @@ CUresult __stdcall cuMemcpyDtoDAsync_v2(CUdeviceptr dstDevice, CUdeviceptr srcDe
     ret = g.m_cuMemcpyDtoDAsync_v2(dstDevice, srcDevice, ByteCount, hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstDevice:" << dstDevice << '\n';;
-    oflog << "srcDevice:" << srcDevice << '\n';;
-    oflog << "ByteCount:" << ByteCount << '\n';;
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "dstDevice:" << dstDevice << '\n';
+    oflog << "srcDevice:" << srcDevice << '\n';
+    oflog << "ByteCount:" << ByteCount << '\n';
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2477,11 +2572,11 @@ CUresult __stdcall cuMemcpyHtoAAsync_v2(CUarray dstArray, size_t dstOffset, cons
     ret = g.m_cuMemcpyHtoAAsync_v2(dstArray, dstOffset, srcHost, ByteCount, hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstArray:" << dstArray << '\n';;
-    oflog << "dstOffset:" << dstOffset << '\n';;
-    oflog << "srcHost:" << srcHost << '\n';;
-    oflog << "ByteCount:" << ByteCount << '\n';;
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "dstArray:" << dstArray << '\n';
+    oflog << "dstOffset:" << dstOffset << '\n';
+    oflog << "srcHost:" << srcHost << '\n';
+    oflog << "ByteCount:" << ByteCount << '\n';
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2493,11 +2588,11 @@ CUresult __stdcall cuMemcpyAtoHAsync_v2(void *dstHost, CUarray srcArray, size_t 
     ret = g.m_cuMemcpyAtoHAsync_v2(dstHost, srcArray, srcOffset, ByteCount, hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstHost:" << dstHost << '\n';;
-    oflog << "srcArray:" << srcArray << '\n';;
-    oflog << "srcOffset:" << srcOffset << '\n';;
-    oflog << "ByteCount:" << ByteCount << '\n';;
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "dstHost:" << dstHost << '\n';
+    oflog << "srcArray:" << srcArray << '\n';
+    oflog << "srcOffset:" << srcOffset << '\n';
+    oflog << "ByteCount:" << ByteCount << '\n';
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2509,7 +2604,23 @@ CUresult __stdcall cuMemcpy2DAsync_v2(const CUDA_MEMCPY2D *pCopy, CUstream hStre
     ret = g.m_cuMemcpy2DAsync_v2(pCopy, hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "pCopy->srcXInBytes:" << pCopy->srcXInBytes << '\n'
+        << "pCopy->srcY:" << pCopy->srcY << '\n'
+        << "pCopy->srcMemoryType:" << g.m_mapESCUmemorytype[pCopy->srcMemoryType] << pCopy->srcMemoryType << '\n'
+        << "pCopy->srcHost:" << pCopy->srcHost << '\n'
+        << "pCopy->srcDevice:" << pCopy->srcDevice << '\n'
+        << "pCopy->srcArray:" << pCopy->srcArray << '\n'
+        << "pCopy->srcPitch:" << pCopy->srcPitch << '\n'
+        << "pCopy->dstXInBytes:" << pCopy->dstXInBytes << '\n'
+        << "pCopy->dstY:" << pCopy->dstY << '\n'
+        << "pCopy->dstMemoryType:" << g.m_mapESCUmemorytype[pCopy->dstMemoryType] << pCopy->dstMemoryType << '\n'
+        << "pCopy->dstHost:" << pCopy->dstHost << '\n'
+        << "pCopy->dstDevice:" << pCopy->dstDevice << '\n'
+        << "pCopy->dstArray:" << pCopy->dstArray << '\n'
+        << "pCopy->dstPitch:" << pCopy->dstPitch << '\n'
+        << "pCopy->WidthInBytes:" << pCopy->WidthInBytes << '\n'
+        << "pCopy->Height:" << pCopy->Height << '\n';
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2521,7 +2632,30 @@ CUresult __stdcall cuMemcpy3DAsync_v2(const CUDA_MEMCPY3D *pCopy, CUstream hStre
     ret = g.m_cuMemcpy3DAsync_v2(pCopy, hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "pCopy->srcXInBytes:" << pCopy->srcXInBytes << '\n'
+        << "pCopy->srcY:" << pCopy->srcY << '\n'
+        << "pCopy->srcZ:" << pCopy->srcZ << '\n'
+        << "pCopy->srcLOD:" << pCopy->srcLOD << '\n'
+        << "pCopy->srcMemoryType:" << g.m_mapESCUmemorytype[pCopy->srcMemoryType] << pCopy->srcMemoryType << '\n'
+        << "pCopy->srcHost:" << pCopy->srcHost << '\n'
+        << "pCopy->srcDevice:" << pCopy->srcDevice << '\n'
+        << "pCopy->srcArray:" << pCopy->srcArray << '\n'
+        << "pCopy->srcPitch:" << pCopy->srcPitch << '\n'
+        << "pCopy->srcHeight:" << pCopy->srcHeight << '\n'
+        << "pCopy->dstXInBytes:" << pCopy->dstXInBytes << '\n'
+        << "pCopy->dstY:" << pCopy->dstY << '\n'
+        << "pCopy->dstZ:" << pCopy->dstZ << '\n'
+        << "pCopy->dstLOD:" << pCopy->dstLOD << '\n'
+        << "pCopy->dstMemoryType:" << g.m_mapESCUmemorytype[pCopy->dstMemoryType] << pCopy->dstMemoryType << '\n'
+        << "pCopy->dstHost:" << pCopy->dstHost << '\n'
+        << "pCopy->dstDevice:" << pCopy->dstDevice << '\n'
+        << "pCopy->dstArray:" << pCopy->dstArray << '\n'
+        << "pCopy->dstPitch:" << pCopy->dstPitch << '\n'
+        << "pCopy->dstHeight:" << pCopy->dstHeight << '\n'
+        << "pCopy->WidthInBytes:" << pCopy->WidthInBytes << '\n'
+        << "pCopy->Height:" << pCopy->Height << '\n'
+        << "pCopy->Depth:" << pCopy->Depth << '\n';
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2533,7 +2667,32 @@ CUresult __stdcall cuMemcpy3DPeerAsync(const CUDA_MEMCPY3D_PEER *pCopy, CUstream
     ret = g.m_cuMemcpy3DPeerAsync(pCopy, hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "pCopy->srcXInBytes:" << pCopy->srcXInBytes << '\n'
+        << "pCopy->srcY:" << pCopy->srcY << '\n'
+        << "pCopy->srcZ:" << pCopy->srcZ << '\n'
+        << "pCopy->srcLOD:" << pCopy->srcLOD << '\n'
+        << "pCopy->srcMemoryType:" << g.m_mapESCUmemorytype[pCopy->srcMemoryType] << pCopy->srcMemoryType << '\n'
+        << "pCopy->srcHost:" << pCopy->srcHost << '\n'
+        << "pCopy->srcDevice:" << pCopy->srcDevice << '\n'
+        << "pCopy->srcArray:" << pCopy->srcArray << '\n'
+        << "pCopy->srcContext:" << pCopy->srcContext << '\n'
+        << "pCopy->srcPitch:" << pCopy->srcPitch << '\n'
+        << "pCopy->srcHeight:" << pCopy->srcHeight << '\n'
+        << "pCopy->dstXInBytes:" << pCopy->dstXInBytes << '\n'
+        << "pCopy->dstY:" << pCopy->dstY << '\n'
+        << "pCopy->dstZ:" << pCopy->dstZ << '\n'
+        << "pCopy->dstLOD:" << pCopy->dstLOD << '\n'
+        << "pCopy->dstMemoryType:" << g.m_mapESCUmemorytype[pCopy->dstMemoryType] << pCopy->dstMemoryType << '\n'
+        << "pCopy->dstHost:" << pCopy->dstHost << '\n'
+        << "pCopy->dstDevice:" << pCopy->dstDevice << '\n'
+        << "pCopy->dstArray:" << pCopy->dstArray << '\n'
+        << "pCopy->dstContext:" << pCopy->dstContext << '\n'
+        << "pCopy->dstPitch:" << pCopy->dstPitch << '\n'
+        << "pCopy->dstHeight:" << pCopy->dstHeight << '\n'
+        << "pCopy->WidthInBytes:" << pCopy->WidthInBytes << '\n'
+        << "pCopy->Height:" << pCopy->Height << '\n'
+        << "pCopy->Depth:" << pCopy->Depth << '\n';
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2545,9 +2704,9 @@ CUresult __stdcall cuMemsetD8_v2(CUdeviceptr dstDevice, unsigned char uc, size_t
     ret = g.m_cuMemsetD8_v2(dstDevice, uc, N);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstDevice:" << dstDevice << '\n';;
-    oflog << "uc:" << uc << '\n';;
-    oflog << "N:" << N << '\n';;
+    oflog << "dstDevice:" << dstDevice << '\n';
+    oflog << "uc:" << uc << '\n';
+    oflog << "N:" << N << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2559,9 +2718,9 @@ CUresult __stdcall cuMemsetD16_v2(CUdeviceptr dstDevice, unsigned short us, size
     ret = g.m_cuMemsetD16_v2(dstDevice, us, N);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstDevice:" << dstDevice << '\n';;
-    oflog << "us:" << us << '\n';;
-    oflog << "N:" << N << '\n';;
+    oflog << "dstDevice:" << dstDevice << '\n';
+    oflog << "us:" << us << '\n';
+    oflog << "N:" << N << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2573,9 +2732,9 @@ CUresult __stdcall cuMemsetD32_v2(CUdeviceptr dstDevice, unsigned int ui, size_t
     ret = g.m_cuMemsetD32_v2(dstDevice, ui, N);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstDevice:" << dstDevice << '\n';;
-    oflog << "ui:" << ui << '\n';;
-    oflog << "N:" << N << '\n';;
+    oflog << "dstDevice:" << dstDevice << '\n';
+    oflog << "ui:" << ui << '\n';
+    oflog << "N:" << N << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2587,11 +2746,11 @@ CUresult __stdcall cuMemsetD2D8_v2(CUdeviceptr dstDevice, size_t dstPitch, unsig
     ret = g.m_cuMemsetD2D8_v2(dstDevice, dstPitch, uc, Width, Height);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstDevice:" << dstDevice << '\n';;
-    oflog << "dstPitch:" << dstPitch << '\n';;
-    oflog << "uc:" << uc << '\n';;
-    oflog << "Width:" << Width << '\n';;
-    oflog << "Height:" << Height << '\n';;
+    oflog << "dstDevice:" << dstDevice << '\n';
+    oflog << "dstPitch:" << dstPitch << '\n';
+    oflog << "uc:" << uc << '\n';
+    oflog << "Width:" << Width << '\n';
+    oflog << "Height:" << Height << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2603,11 +2762,11 @@ CUresult __stdcall cuMemsetD2D16_v2(CUdeviceptr dstDevice, size_t dstPitch, unsi
     ret = g.m_cuMemsetD2D16_v2(dstDevice, dstPitch, us, Width, Height);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstDevice:" << dstDevice << '\n';;
-    oflog << "dstPitch:" << dstPitch << '\n';;
-    oflog << "us:" << us << '\n';;
-    oflog << "Width:" << Width << '\n';;
-    oflog << "Height:" << Height << '\n';;
+    oflog << "dstDevice:" << dstDevice << '\n';
+    oflog << "dstPitch:" << dstPitch << '\n';
+    oflog << "us:" << us << '\n';
+    oflog << "Width:" << Width << '\n';
+    oflog << "Height:" << Height << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2619,11 +2778,11 @@ CUresult __stdcall cuMemsetD2D32_v2(CUdeviceptr dstDevice, size_t dstPitch, unsi
     ret = g.m_cuMemsetD2D32_v2(dstDevice, dstPitch, ui, Width, Height);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstDevice:" << dstDevice << '\n';;
-    oflog << "dstPitch:" << dstPitch << '\n';;
-    oflog << "ui:" << ui << '\n';;
-    oflog << "Width:" << Width << '\n';;
-    oflog << "Height:" << Height << '\n';;
+    oflog << "dstDevice:" << dstDevice << '\n';
+    oflog << "dstPitch:" << dstPitch << '\n';
+    oflog << "ui:" << ui << '\n';
+    oflog << "Width:" << Width << '\n';
+    oflog << "Height:" << Height << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2635,10 +2794,10 @@ CUresult __stdcall cuMemsetD8Async(CUdeviceptr dstDevice, unsigned char uc, size
     ret = g.m_cuMemsetD8Async(dstDevice, uc, N, hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstDevice:" << dstDevice << '\n';;
-    oflog << "uc:" << uc << '\n';;
-    oflog << "N:" << N << '\n';;
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "dstDevice:" << dstDevice << '\n';
+    oflog << "uc:" << uc << '\n';
+    oflog << "N:" << N << '\n';
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2650,10 +2809,10 @@ CUresult __stdcall cuMemsetD16Async(CUdeviceptr dstDevice, unsigned short us, si
     ret = g.m_cuMemsetD16Async(dstDevice, us, N, hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstDevice:" << dstDevice << '\n';;
-    oflog << "us:" << us << '\n';;
-    oflog << "N:" << N << '\n';;
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "dstDevice:" << dstDevice << '\n';
+    oflog << "us:" << us << '\n';
+    oflog << "N:" << N << '\n';
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2665,10 +2824,10 @@ CUresult __stdcall cuMemsetD32Async(CUdeviceptr dstDevice, unsigned int ui, size
     ret = g.m_cuMemsetD32Async(dstDevice, ui, N, hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstDevice:" << dstDevice << '\n';;
-    oflog << "ui:" << ui << '\n';;
-    oflog << "N:" << N << '\n';;
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "dstDevice:" << dstDevice << '\n';
+    oflog << "ui:" << ui << '\n';
+    oflog << "N:" << N << '\n';
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2680,12 +2839,12 @@ CUresult __stdcall cuMemsetD2D8Async(CUdeviceptr dstDevice, size_t dstPitch, uns
     ret = g.m_cuMemsetD2D8Async(dstDevice, dstPitch, uc, Width, Height, hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstDevice:" << dstDevice << '\n';;
-    oflog << "dstPitch:" << dstPitch << '\n';;
-    oflog << "uc:" << uc << '\n';;
-    oflog << "Width:" << Width << '\n';;
-    oflog << "Height:" << Height << '\n';;
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "dstDevice:" << dstDevice << '\n';
+    oflog << "dstPitch:" << dstPitch << '\n';
+    oflog << "uc:" << uc << '\n';
+    oflog << "Width:" << Width << '\n';
+    oflog << "Height:" << Height << '\n';
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2697,12 +2856,12 @@ CUresult __stdcall cuMemsetD2D16Async(CUdeviceptr dstDevice, size_t dstPitch, un
     ret = g.m_cuMemsetD2D16Async(dstDevice, dstPitch, us, Width, Height, hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstDevice:" << dstDevice << '\n';;
-    oflog << "dstPitch:" << dstPitch << '\n';;
-    oflog << "us:" << us << '\n';;
-    oflog << "Width:" << Width << '\n';;
-    oflog << "Height:" << Height << '\n';;
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "dstDevice:" << dstDevice << '\n';
+    oflog << "dstPitch:" << dstPitch << '\n';
+    oflog << "us:" << us << '\n';
+    oflog << "Width:" << Width << '\n';
+    oflog << "Height:" << Height << '\n';
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2714,12 +2873,12 @@ CUresult __stdcall cuMemsetD2D32Async(CUdeviceptr dstDevice, size_t dstPitch, un
     ret = g.m_cuMemsetD2D32Async(dstDevice, dstPitch, ui, Width, Height, hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "dstDevice:" << dstDevice << '\n';;
-    oflog << "dstPitch:" << dstPitch << '\n';;
-    oflog << "ui:" << ui << '\n';;
-    oflog << "Width:" << Width << '\n';;
-    oflog << "Height:" << Height << '\n';;
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "dstDevice:" << dstDevice << '\n';
+    oflog << "dstPitch:" << dstPitch << '\n';
+    oflog << "ui:" << ui << '\n';
+    oflog << "Width:" << Width << '\n';
+    oflog << "Height:" << Height << '\n';
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2731,7 +2890,11 @@ CUresult __stdcall cuArrayCreate_v2(CUarray *pHandle, const CUDA_ARRAY_DESCRIPTO
     ret = g.m_cuArrayCreate_v2(pHandle, pAllocateArray);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "pHandle:" << pHandle << '\n';;
+    oflog << "pHandle:" << pHandle << '\n';
+    oflog << "pAllocateArray->Width:" << pAllocateArray->Width << '\n'
+        << "pAllocateArray->Height:" << pAllocateArray->Height << '\n'
+        << "pAllocateArray->Format:" << g.m_mapESCUarray_format[pAllocateArray->Format] << pAllocateArray->Format << '\n'
+        << "pAllocateArray->NumChannels:" << pAllocateArray->NumChannels << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2743,7 +2906,11 @@ CUresult __stdcall cuArrayGetDescriptor_v2(CUDA_ARRAY_DESCRIPTOR *pArrayDescript
     ret = g.m_cuArrayGetDescriptor_v2(pArrayDescriptor, hArray);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hArray:" << hArray << '\n';;
+    oflog << "pArrayDescriptor->Width:" << pArrayDescriptor->Width << '\n'
+        << "pArrayDescriptor->Height:" << pArrayDescriptor->Height << '\n'
+        << "pArrayDescriptor->Format:" << g.m_mapESCUarray_format[pArrayDescriptor->Format] << pArrayDescriptor->Format << '\n'
+        << "pArrayDescriptor->NumChannels:" << pArrayDescriptor->NumChannels << '\n';
+    oflog << "hArray:" << hArray << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2755,7 +2922,7 @@ CUresult __stdcall cuArrayDestroy(CUarray hArray)
     ret = g.m_cuArrayDestroy(hArray);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hArray:" << hArray << '\n';;
+    oflog << "hArray:" << hArray << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2767,7 +2934,13 @@ CUresult __stdcall cuArray3DCreate_v2(CUarray *pHandle, const CUDA_ARRAY3D_DESCR
     ret = g.m_cuArray3DCreate_v2(pHandle, pAllocateArray);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "pHandle:" << pHandle << '\n';;
+    oflog << "pHandle:" << pHandle << '\n';
+    oflog << "pAllocateArray->Width:" << pAllocateArray->Width << '\n'
+        << "pAllocateArray->Height:" << pAllocateArray->Height << '\n'
+        << "pAllocateArray->Depth:" << pAllocateArray->Depth << '\n'
+        << "pAllocateArray->Format:" << g.m_mapESCUarray_format[pAllocateArray->Format] << pAllocateArray->Format << '\n'
+        << "pAllocateArray->NumChannels:" << pAllocateArray->NumChannels << '\n'
+        << "pAllocateArray->Flags:" << pAllocateArray->Flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2779,7 +2952,13 @@ CUresult __stdcall cuArray3DGetDescriptor_v2(CUDA_ARRAY3D_DESCRIPTOR *pArrayDesc
     ret = g.m_cuArray3DGetDescriptor_v2(pArrayDescriptor, hArray);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hArray:" << hArray << '\n';;
+    oflog << "pArrayDescriptor->Width:" << pArrayDescriptor->Width << '\n'
+        << "pArrayDescriptor->Height:" << pArrayDescriptor->Height << '\n'
+        << "pArrayDescriptor->Depth:" << pArrayDescriptor->Depth << '\n'
+        << "pArrayDescriptor->Format:" << g.m_mapESCUarray_format[pArrayDescriptor->Format] << pArrayDescriptor->Format << '\n'
+        << "pArrayDescriptor->NumChannels:" << pArrayDescriptor->NumChannels << '\n'
+        << "pArrayDescriptor->Flags:" << pArrayDescriptor->Flags << '\n';
+    oflog << "hArray:" << hArray << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2791,8 +2970,14 @@ CUresult __stdcall cuMipmappedArrayCreate(CUmipmappedArray *pHandle, const CUDA_
     ret = g.m_cuMipmappedArrayCreate(pHandle, pMipmappedArrayDesc, numMipmapLevels);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "pHandle:" << pHandle << '\n';;
-    oflog << "numMipmapLevels:" << numMipmapLevels << '\n';;
+    oflog << "pHandle:" << pHandle << '\n';
+    oflog << "pMipmappedArrayDesc->Width:" << pMipmappedArrayDesc->Width << '\n'
+        << "pMipmappedArrayDesc->Height:" << pMipmappedArrayDesc->Height << '\n'
+        << "pMipmappedArrayDesc->Depth:" << pMipmappedArrayDesc->Depth << '\n'
+        << "pMipmappedArrayDesc->Format:" << g.m_mapESCUarray_format[pMipmappedArrayDesc->Format] << pMipmappedArrayDesc->Format << '\n'
+        << "pMipmappedArrayDesc->NumChannels:" << pMipmappedArrayDesc->NumChannels << '\n'
+        << "pMipmappedArrayDesc->Flags:" << pMipmappedArrayDesc->Flags << '\n';
+    oflog << "numMipmapLevels:" << numMipmapLevels << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2804,9 +2989,9 @@ CUresult __stdcall cuMipmappedArrayGetLevel(CUarray *pLevelArray, CUmipmappedArr
     ret = g.m_cuMipmappedArrayGetLevel(pLevelArray, hMipmappedArray, level);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "pLevelArray:" << pLevelArray << '\n';;
-    oflog << "hMipmappedArray:" << hMipmappedArray << '\n';;
-    oflog << "level:" << level << '\n';;
+    oflog << "pLevelArray:" << pLevelArray << '\n';
+    oflog << "hMipmappedArray:" << hMipmappedArray << '\n';
+    oflog << "level:" << level << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2818,7 +3003,7 @@ CUresult __stdcall cuMipmappedArrayDestroy(CUmipmappedArray hMipmappedArray)
     ret = g.m_cuMipmappedArrayDestroy(hMipmappedArray);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hMipmappedArray:" << hMipmappedArray << '\n';;
+    oflog << "hMipmappedArray:" << hMipmappedArray << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2830,9 +3015,9 @@ CUresult __stdcall cuPointerGetAttribute(void *data, CUpointer_attribute attribu
     ret = g.m_cuPointerGetAttribute(data, attribute, ptr);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "data:" << data << '\n';;
-    oflog << "attribute:" << g.m_mapESCUpointer_attribute[attribute] << '\n';;
-    oflog << "ptr:" << ptr << '\n';;
+    oflog << "data:" << data << '\n';
+    oflog << "attribute:" << g.m_mapESCUpointer_attribute[attribute] << attribute << '\n';
+    oflog << "ptr:" << ptr << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2844,10 +3029,10 @@ CUresult __stdcall cuMemPrefetchAsync(CUdeviceptr devPtr, size_t count, CUdevice
     ret = g.m_cuMemPrefetchAsync(devPtr, count, dstDevice, hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "devPtr:" << devPtr << '\n';;
-    oflog << "count:" << count << '\n';;
-    oflog << "dstDevice:" << dstDevice << '\n';;
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "devPtr:" << devPtr << '\n';
+    oflog << "count:" << count << '\n';
+    oflog << "dstDevice:" << dstDevice << '\n';
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2859,10 +3044,10 @@ CUresult __stdcall cuMemAdvise(CUdeviceptr devPtr, size_t count, CUmem_advise ad
     ret = g.m_cuMemAdvise(devPtr, count, advice, device);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "devPtr:" << devPtr << '\n';;
-    oflog << "count:" << count << '\n';;
-    oflog << "advice:" << g.m_mapESCUmem_advise[advice] << '\n';;
-    oflog << "device:" << device << '\n';;
+    oflog << "devPtr:" << devPtr << '\n';
+    oflog << "count:" << count << '\n';
+    oflog << "advice:" << g.m_mapESCUmem_advise[advice] << advice << '\n';
+    oflog << "device:" << device << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2874,11 +3059,11 @@ CUresult __stdcall cuMemRangeGetAttribute(void *data, size_t dataSize, CUmem_ran
     ret = g.m_cuMemRangeGetAttribute(data, dataSize, attribute, devPtr, count);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "data:" << data << '\n';;
-    oflog << "dataSize:" << dataSize << '\n';;
-    oflog << "attribute:" << g.m_mapESCUmem_range_attribute[attribute] << '\n';;
-    oflog << "devPtr:" << devPtr << '\n';;
-    oflog << "count:" << count << '\n';;
+    oflog << "data:" << data << '\n';
+    oflog << "dataSize:" << dataSize << '\n';
+    oflog << "attribute:" << g.m_mapESCUmem_range_attribute[attribute] << attribute << '\n';
+    oflog << "devPtr:" << devPtr << '\n';
+    oflog << "count:" << count << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2890,12 +3075,12 @@ CUresult __stdcall cuMemRangeGetAttributes(void **data, size_t *dataSizes, CUmem
     ret = g.m_cuMemRangeGetAttributes(data, dataSizes, attributes, numAttributes, devPtr, count);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*data:" << (data ? *data : 0) << '\n';;
-    oflog << "*dataSizes:" << (dataSizes ? *dataSizes : 0) << '\n';;
-    oflog << "*attributes:" << g.m_mapESCUmem_range_attribute[*attributes] << '\n';;
-    oflog << "numAttributes:" << numAttributes << '\n';;
-    oflog << "devPtr:" << devPtr << '\n';;
-    oflog << "count:" << count << '\n';;
+    oflog << "*data:" << (data ? *data : 0) << '\n';
+    oflog << "*dataSizes:" << (dataSizes ? *dataSizes : 0) << '\n';
+    oflog << "*attributes:" << g.m_mapESCUmem_range_attribute[*attributes] << attributes << '\n';
+    oflog << "numAttributes:" << numAttributes << '\n';
+    oflog << "devPtr:" << devPtr << '\n';
+    oflog << "count:" << count << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2907,9 +3092,9 @@ CUresult __stdcall cuPointerSetAttribute(const void *value, CUpointer_attribute 
     ret = g.m_cuPointerSetAttribute(value, attribute, ptr);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "value:" << value << '\n';;
-    oflog << "attribute:" << g.m_mapESCUpointer_attribute[attribute] << '\n';;
-    oflog << "ptr:" << ptr << '\n';;
+    oflog << "value:" << value << '\n';
+    oflog << "attribute:" << g.m_mapESCUpointer_attribute[attribute] << attribute << '\n';
+    oflog << "ptr:" << ptr << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2921,10 +3106,10 @@ CUresult __stdcall cuPointerGetAttributes(unsigned int numAttributes, CUpointer_
     ret = g.m_cuPointerGetAttributes(numAttributes, attributes, data, ptr);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "numAttributes:" << numAttributes << '\n';;
-    oflog << "*attributes:" << g.m_mapESCUpointer_attribute[*attributes] << '\n';;
-    oflog << "*data:" << (data ? *data : 0) << '\n';;
-    oflog << "ptr:" << ptr << '\n';;
+    oflog << "numAttributes:" << numAttributes << '\n';
+    oflog << "*attributes:" << g.m_mapESCUpointer_attribute[*attributes] << attributes << '\n';
+    oflog << "*data:" << (data ? *data : 0) << '\n';
+    oflog << "ptr:" << ptr << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2936,8 +3121,8 @@ CUresult __stdcall cuStreamCreate(CUstream *phStream, unsigned int Flags)
     ret = g.m_cuStreamCreate(phStream, Flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "phStream:" << phStream << '\n';;
-    oflog << "Flags:" << Flags << '\n';;
+    oflog << "phStream:" << phStream << '\n';
+    oflog << "Flags:" << Flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2949,9 +3134,9 @@ CUresult __stdcall cuStreamCreateWithPriority(CUstream *phStream, unsigned int f
     ret = g.m_cuStreamCreateWithPriority(phStream, flags, priority);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "phStream:" << phStream << '\n';;
-    oflog << "flags:" << flags << '\n';;
-    oflog << "priority:" << priority << '\n';;
+    oflog << "phStream:" << phStream << '\n';
+    oflog << "flags:" << flags << '\n';
+    oflog << "priority:" << priority << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2963,8 +3148,8 @@ CUresult __stdcall cuStreamGetPriority(CUstream hStream, int *priority)
     ret = g.m_cuStreamGetPriority(hStream, priority);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hStream:" << hStream << '\n';;
-    oflog << "*priority:" << (priority ? *priority : 0) << '\n';;
+    oflog << "hStream:" << hStream << '\n';
+    oflog << "*priority:" << (priority ? *priority : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2976,8 +3161,8 @@ CUresult __stdcall cuStreamGetFlags(CUstream hStream, unsigned int *flags)
     ret = g.m_cuStreamGetFlags(hStream, flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hStream:" << hStream << '\n';;
-    oflog << "*flags:" << (flags ? *flags : 0) << '\n';;
+    oflog << "hStream:" << hStream << '\n';
+    oflog << "*flags:" << (flags ? *flags : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -2989,8 +3174,8 @@ CUresult __stdcall cuStreamGetCtx(CUstream hStream, CUcontext *pctx)
     ret = g.m_cuStreamGetCtx(hStream, pctx);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hStream:" << hStream << '\n';;
-    oflog << "pctx:" << pctx << '\n';;
+    oflog << "hStream:" << hStream << '\n';
+    oflog << "pctx:" << pctx << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3002,9 +3187,9 @@ CUresult __stdcall cuStreamWaitEvent(CUstream hStream, CUevent hEvent, unsigned 
     ret = g.m_cuStreamWaitEvent(hStream, hEvent, Flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hStream:" << hStream << '\n';;
-    oflog << "hEvent:" << hEvent << '\n';;
-    oflog << "Flags:" << Flags << '\n';;
+    oflog << "hStream:" << hStream << '\n';
+    oflog << "hEvent:" << hEvent << '\n';
+    oflog << "Flags:" << Flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3016,10 +3201,10 @@ CUresult __stdcall cuStreamAddCallback(CUstream hStream, CUstreamCallback callba
     ret = g.m_cuStreamAddCallback(hStream, callback, userData, flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hStream:" << hStream << '\n';;
-    oflog << "callback:" << callback << '\n';;
-    oflog << "userData:" << userData << '\n';;
-    oflog << "flags:" << flags << '\n';;
+    oflog << "hStream:" << hStream << '\n';
+    oflog << "callback:" << callback << '\n';
+    oflog << "userData:" << userData << '\n';
+    oflog << "flags:" << flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3031,7 +3216,7 @@ CUresult __stdcall cuStreamBeginCapture(CUstream hStream)
     ret = g.m_cuStreamBeginCapture(hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3043,8 +3228,8 @@ CUresult __stdcall cuStreamEndCapture(CUstream hStream, CUgraph *phGraph)
     ret = g.m_cuStreamEndCapture(hStream, phGraph);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hStream:" << hStream << '\n';;
-    oflog << "phGraph:" << phGraph << '\n';;
+    oflog << "hStream:" << hStream << '\n';
+    oflog << "phGraph:" << phGraph << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3056,8 +3241,8 @@ CUresult __stdcall cuStreamIsCapturing(CUstream hStream, CUstreamCaptureStatus *
     ret = g.m_cuStreamIsCapturing(hStream, captureStatus);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hStream:" << hStream << '\n';;
-    oflog << "*captureStatus:" << g.m_mapESCUstreamCaptureStatus[*captureStatus] << '\n';;
+    oflog << "hStream:" << hStream << '\n';
+    oflog << "*captureStatus:" << g.m_mapESCUstreamCaptureStatus[*captureStatus] << captureStatus << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3069,10 +3254,10 @@ CUresult __stdcall cuStreamAttachMemAsync(CUstream hStream, CUdeviceptr dptr, si
     ret = g.m_cuStreamAttachMemAsync(hStream, dptr, length, flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hStream:" << hStream << '\n';;
-    oflog << "dptr:" << dptr << '\n';;
-    oflog << "length:" << length << '\n';;
-    oflog << "flags:" << flags << '\n';;
+    oflog << "hStream:" << hStream << '\n';
+    oflog << "dptr:" << dptr << '\n';
+    oflog << "length:" << length << '\n';
+    oflog << "flags:" << flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3084,7 +3269,7 @@ CUresult __stdcall cuStreamQuery(CUstream hStream)
     ret = g.m_cuStreamQuery(hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3096,7 +3281,7 @@ CUresult __stdcall cuStreamSynchronize(CUstream hStream)
     ret = g.m_cuStreamSynchronize(hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3108,7 +3293,7 @@ CUresult __stdcall cuStreamDestroy_v2(CUstream hStream)
     ret = g.m_cuStreamDestroy_v2(hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3120,8 +3305,8 @@ CUresult __stdcall cuEventCreate(CUevent *phEvent, unsigned int Flags)
     ret = g.m_cuEventCreate(phEvent, Flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "phEvent:" << phEvent << '\n';;
-    oflog << "Flags:" << Flags << '\n';;
+    oflog << "phEvent:" << phEvent << '\n';
+    oflog << "Flags:" << Flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3133,8 +3318,8 @@ CUresult __stdcall cuEventRecord(CUevent hEvent, CUstream hStream)
     ret = g.m_cuEventRecord(hEvent, hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hEvent:" << hEvent << '\n';;
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "hEvent:" << hEvent << '\n';
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3146,7 +3331,7 @@ CUresult __stdcall cuEventQuery(CUevent hEvent)
     ret = g.m_cuEventQuery(hEvent);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hEvent:" << hEvent << '\n';;
+    oflog << "hEvent:" << hEvent << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3158,7 +3343,7 @@ CUresult __stdcall cuEventSynchronize(CUevent hEvent)
     ret = g.m_cuEventSynchronize(hEvent);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hEvent:" << hEvent << '\n';;
+    oflog << "hEvent:" << hEvent << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3170,7 +3355,7 @@ CUresult __stdcall cuEventDestroy_v2(CUevent hEvent)
     ret = g.m_cuEventDestroy_v2(hEvent);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hEvent:" << hEvent << '\n';;
+    oflog << "hEvent:" << hEvent << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3182,9 +3367,9 @@ CUresult __stdcall cuEventElapsedTime(float *pMilliseconds, CUevent hStart, CUev
     ret = g.m_cuEventElapsedTime(pMilliseconds, hStart, hEnd);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pMilliseconds:" << (pMilliseconds ? *pMilliseconds : 0) << '\n';;
-    oflog << "hStart:" << hStart << '\n';;
-    oflog << "hEnd:" << hEnd << '\n';;
+    oflog << "*pMilliseconds:" << (pMilliseconds ? *pMilliseconds : 0) << '\n';
+    oflog << "hStart:" << hStart << '\n';
+    oflog << "hEnd:" << hEnd << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3196,7 +3381,13 @@ CUresult __stdcall cuImportExternalMemory(CUexternalMemory *extMem_out, const CU
     ret = g.m_cuImportExternalMemory(extMem_out, memHandleDesc);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "extMem_out:" << extMem_out << '\n';;
+    oflog << "extMem_out:" << extMem_out << '\n';
+    oflog << "memHandleDesc->type:" << g.m_mapESCUexternalMemoryHandleType[memHandleDesc->type] << memHandleDesc->type << '\n'
+        << "memHandleDesc->handle.fd:" << memHandleDesc->handle.fd << '\n'
+        << "memHandleDesc->handle.win32.handle:" << memHandleDesc->handle.win32.handle << '\n'
+        << "memHandleDesc->handle.win32.name:" << memHandleDesc->handle.win32.name << '\n'
+        << "memHandleDesc->size:" << memHandleDesc->size << '\n'
+        << "memHandleDesc->flags:" << memHandleDesc->flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3208,8 +3399,11 @@ CUresult __stdcall cuExternalMemoryGetMappedBuffer(CUdeviceptr *devPtr, CUextern
     ret = g.m_cuExternalMemoryGetMappedBuffer(devPtr, extMem, bufferDesc);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*devPtr:" << (devPtr ? *devPtr : 0) << '\n';;
-    oflog << "extMem:" << extMem << '\n';;
+    oflog << "*devPtr:" << (devPtr ? *devPtr : 0) << '\n';
+    oflog << "extMem:" << extMem << '\n';
+    oflog << "bufferDesc->offset:" << bufferDesc->offset << '\n'
+        << "bufferDesc->size:" << bufferDesc->size << '\n'
+        << "bufferDesc->flags:" << bufferDesc->flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3221,8 +3415,16 @@ CUresult __stdcall cuExternalMemoryGetMappedMipmappedArray(CUmipmappedArray *mip
     ret = g.m_cuExternalMemoryGetMappedMipmappedArray(mipmap, extMem, mipmapDesc);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "mipmap:" << mipmap << '\n';;
-    oflog << "extMem:" << extMem << '\n';;
+    oflog << "mipmap:" << mipmap << '\n';
+    oflog << "extMem:" << extMem << '\n';
+    oflog << "mipmapDesc->offset:" << mipmapDesc->offset << '\n'
+        << "mipmapDesc->arrayDesc.Width:" << mipmapDesc->arrayDesc.Width << '\n'
+        << "mipmapDesc->arrayDesc.Height:" << mipmapDesc->arrayDesc.Height << '\n'
+        << "mipmapDesc->arrayDesc.Depth:" << mipmapDesc->arrayDesc.Depth << '\n'
+        << "mipmapDesc->arrayDesc.Format:" << g.m_mapESCUarray_format[mipmapDesc->arrayDesc.Format] << mipmapDesc->arrayDesc.Format << '\n'
+        << "mipmapDesc->arrayDesc.NumChannels:" << mipmapDesc->arrayDesc.NumChannels << '\n'
+        << "mipmapDesc->arrayDesc.Flags:" << mipmapDesc->arrayDesc.Flags << '\n'
+        << "mipmapDesc->numLevels:" << mipmapDesc->numLevels << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3234,7 +3436,7 @@ CUresult __stdcall cuDestroyExternalMemory(CUexternalMemory extMem)
     ret = g.m_cuDestroyExternalMemory(extMem);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "extMem:" << extMem << '\n';;
+    oflog << "extMem:" << extMem << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3246,7 +3448,12 @@ CUresult __stdcall cuImportExternalSemaphore(CUexternalSemaphore *extSem_out, co
     ret = g.m_cuImportExternalSemaphore(extSem_out, semHandleDesc);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "extSem_out:" << extSem_out << '\n';;
+    oflog << "extSem_out:" << extSem_out << '\n';
+    oflog << "semHandleDesc->type:" << g.m_mapESCUexternalSemaphoreHandleType[semHandleDesc->type] << semHandleDesc->type << '\n'
+        << "semHandleDesc->handle.fd:" << semHandleDesc->handle.fd << '\n'
+        << "semHandleDesc->handle.win32.handle:" << semHandleDesc->handle.win32.handle << '\n'
+        << "semHandleDesc->handle.win32.name:" << semHandleDesc->handle.win32.name << '\n'
+        << "semHandleDesc->flags:" << semHandleDesc->flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3258,9 +3465,11 @@ CUresult __stdcall cuSignalExternalSemaphoresAsync(const CUexternalSemaphore *ex
     ret = g.m_cuSignalExternalSemaphoresAsync(extSemArray, paramsArray, numExtSems, stream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "extSemArray:" << extSemArray << '\n';;
-    oflog << "numExtSems:" << numExtSems << '\n';;
-    oflog << "stream:" << stream << '\n';;
+    oflog << "extSemArray:" << extSemArray << '\n';
+    oflog << "paramsArray->params.fence.value:" << paramsArray->params.fence.value << '\n'
+        << "paramsArray->flags:" << paramsArray->flags << '\n';
+    oflog << "numExtSems:" << numExtSems << '\n';
+    oflog << "stream:" << stream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3272,9 +3481,11 @@ CUresult __stdcall cuWaitExternalSemaphoresAsync(const CUexternalSemaphore *extS
     ret = g.m_cuWaitExternalSemaphoresAsync(extSemArray, paramsArray, numExtSems, stream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "extSemArray:" << extSemArray << '\n';;
-    oflog << "numExtSems:" << numExtSems << '\n';;
-    oflog << "stream:" << stream << '\n';;
+    oflog << "extSemArray:" << extSemArray << '\n';
+    oflog << "paramsArray->params.fence.value:" << paramsArray->params.fence.value << '\n'
+        << "paramsArray->flags:" << paramsArray->flags << '\n';
+    oflog << "numExtSems:" << numExtSems << '\n';
+    oflog << "stream:" << stream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3286,7 +3497,7 @@ CUresult __stdcall cuDestroyExternalSemaphore(CUexternalSemaphore extSem)
     ret = g.m_cuDestroyExternalSemaphore(extSem);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "extSem:" << extSem << '\n';;
+    oflog << "extSem:" << extSem << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3298,10 +3509,10 @@ CUresult __stdcall cuStreamWaitValue32(CUstream stream, CUdeviceptr addr, cuuint
     ret = g.m_cuStreamWaitValue32(stream, addr, value, flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "stream:" << stream << '\n';;
-    oflog << "addr:" << addr << '\n';;
-    oflog << "value:" << value << '\n';;
-    oflog << "flags:" << flags << '\n';;
+    oflog << "stream:" << stream << '\n';
+    oflog << "addr:" << addr << '\n';
+    oflog << "value:" << value << '\n';
+    oflog << "flags:" << flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3313,10 +3524,10 @@ CUresult __stdcall cuStreamWaitValue64(CUstream stream, CUdeviceptr addr, cuuint
     ret = g.m_cuStreamWaitValue64(stream, addr, value, flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "stream:" << stream << '\n';;
-    oflog << "addr:" << addr << '\n';;
-    oflog << "value:" << value << '\n';;
-    oflog << "flags:" << flags << '\n';;
+    oflog << "stream:" << stream << '\n';
+    oflog << "addr:" << addr << '\n';
+    oflog << "value:" << value << '\n';
+    oflog << "flags:" << flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3328,10 +3539,10 @@ CUresult __stdcall cuStreamWriteValue32(CUstream stream, CUdeviceptr addr, cuuin
     ret = g.m_cuStreamWriteValue32(stream, addr, value, flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "stream:" << stream << '\n';;
-    oflog << "addr:" << addr << '\n';;
-    oflog << "value:" << value << '\n';;
-    oflog << "flags:" << flags << '\n';;
+    oflog << "stream:" << stream << '\n';
+    oflog << "addr:" << addr << '\n';
+    oflog << "value:" << value << '\n';
+    oflog << "flags:" << flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3343,10 +3554,10 @@ CUresult __stdcall cuStreamWriteValue64(CUstream stream, CUdeviceptr addr, cuuin
     ret = g.m_cuStreamWriteValue64(stream, addr, value, flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "stream:" << stream << '\n';;
-    oflog << "addr:" << addr << '\n';;
-    oflog << "value:" << value << '\n';;
-    oflog << "flags:" << flags << '\n';;
+    oflog << "stream:" << stream << '\n';
+    oflog << "addr:" << addr << '\n';
+    oflog << "value:" << value << '\n';
+    oflog << "flags:" << flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3358,9 +3569,20 @@ CUresult __stdcall cuStreamBatchMemOp(CUstream stream, unsigned int count, CUstr
     ret = g.m_cuStreamBatchMemOp(stream, count, paramArray, flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "stream:" << stream << '\n';;
-    oflog << "count:" << count << '\n';;
-    oflog << "flags:" << flags << '\n';;
+    oflog << "stream:" << stream << '\n';
+    oflog << "count:" << count << '\n';
+    oflog << "paramArray->operation:" << g.m_mapESCUstreamBatchMemOpType[paramArray->operation] << paramArray->operation << '\n'
+        << "paramArray->waitValue.operation:" << g.m_mapESCUstreamBatchMemOpType[paramArray->waitValue.operation] << paramArray->waitValue.operation << '\n'
+        << "paramArray->waitValue.address:" << paramArray->waitValue.address << '\n'
+        << "paramArray->waitValue.flags:" << paramArray->waitValue.flags << '\n'
+        << "paramArray->waitValue.alias:" << paramArray->waitValue.alias << '\n'
+        << "paramArray->writeValue.operation:" << g.m_mapESCUstreamBatchMemOpType[paramArray->writeValue.operation] << paramArray->writeValue.operation << '\n'
+        << "paramArray->writeValue.address:" << paramArray->writeValue.address << '\n'
+        << "paramArray->writeValue.flags:" << paramArray->writeValue.flags << '\n'
+        << "paramArray->writeValue.alias:" << paramArray->writeValue.alias << '\n'
+        << "paramArray->flushRemoteWrites.operation:" << g.m_mapESCUstreamBatchMemOpType[paramArray->flushRemoteWrites.operation] << paramArray->flushRemoteWrites.operation << '\n'
+        << "paramArray->flushRemoteWrites.flags:" << paramArray->flushRemoteWrites.flags << '\n';
+    oflog << "flags:" << flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3372,9 +3594,9 @@ CUresult __stdcall cuFuncGetAttribute(int *pi, CUfunction_attribute attrib, CUfu
     ret = g.m_cuFuncGetAttribute(pi, attrib, hfunc);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pi:" << (pi ? *pi : 0) << '\n';;
-    oflog << "attrib:" << g.m_mapESCUfunction_attribute[attrib] << '\n';;
-    oflog << "hfunc:" << hfunc << '\n';;
+    oflog << "*pi:" << (pi ? *pi : 0) << '\n';
+    oflog << "attrib:" << g.m_mapESCUfunction_attribute[attrib] << attrib << '\n';
+    oflog << "hfunc:" << hfunc << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3386,9 +3608,9 @@ CUresult __stdcall cuFuncSetAttribute(CUfunction hfunc, CUfunction_attribute att
     ret = g.m_cuFuncSetAttribute(hfunc, attrib, value);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hfunc:" << hfunc << '\n';;
-    oflog << "attrib:" << g.m_mapESCUfunction_attribute[attrib] << '\n';;
-    oflog << "value:" << value << '\n';;
+    oflog << "hfunc:" << hfunc << '\n';
+    oflog << "attrib:" << g.m_mapESCUfunction_attribute[attrib] << attrib << '\n';
+    oflog << "value:" << value << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3400,8 +3622,8 @@ CUresult __stdcall cuFuncSetCacheConfig(CUfunction hfunc, CUfunc_cache config)
     ret = g.m_cuFuncSetCacheConfig(hfunc, config);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hfunc:" << hfunc << '\n';;
-    oflog << "config:" << g.m_mapESCUfunc_cache[config] << '\n';;
+    oflog << "hfunc:" << hfunc << '\n';
+    oflog << "config:" << g.m_mapESCUfunc_cache[config] << config << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3413,8 +3635,8 @@ CUresult __stdcall cuFuncSetSharedMemConfig(CUfunction hfunc, CUsharedconfig con
     ret = g.m_cuFuncSetSharedMemConfig(hfunc, config);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hfunc:" << hfunc << '\n';;
-    oflog << "config:" << g.m_mapESCUsharedconfig[config] << '\n';;
+    oflog << "hfunc:" << hfunc << '\n';
+    oflog << "config:" << g.m_mapESCUsharedconfig[config] << config << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3426,17 +3648,17 @@ CUresult __stdcall cuLaunchKernel(CUfunction f, unsigned int gridDimX, unsigned 
     ret = g.m_cuLaunchKernel(f, gridDimX, gridDimY, gridDimZ, blockDimX, blockDimY, blockDimZ, sharedMemBytes, hStream, kernelParams, extra);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "f:" << f << '\n';;
-    oflog << "gridDimX:" << gridDimX << '\n';;
-    oflog << "gridDimY:" << gridDimY << '\n';;
-    oflog << "gridDimZ:" << gridDimZ << '\n';;
-    oflog << "blockDimX:" << blockDimX << '\n';;
-    oflog << "blockDimY:" << blockDimY << '\n';;
-    oflog << "blockDimZ:" << blockDimZ << '\n';;
-    oflog << "sharedMemBytes:" << sharedMemBytes << '\n';;
-    oflog << "hStream:" << hStream << '\n';;
-    oflog << "*kernelParams:" << (kernelParams ? *kernelParams : 0) << '\n';;
-    oflog << "*extra:" << (extra ? *extra : 0) << '\n';;
+    oflog << "f:" << f << '\n';
+    oflog << "gridDimX:" << gridDimX << '\n';
+    oflog << "gridDimY:" << gridDimY << '\n';
+    oflog << "gridDimZ:" << gridDimZ << '\n';
+    oflog << "blockDimX:" << blockDimX << '\n';
+    oflog << "blockDimY:" << blockDimY << '\n';
+    oflog << "blockDimZ:" << blockDimZ << '\n';
+    oflog << "sharedMemBytes:" << sharedMemBytes << '\n';
+    oflog << "hStream:" << hStream << '\n';
+    oflog << "*kernelParams:" << (kernelParams ? *kernelParams : 0) << '\n';
+    oflog << "*extra:" << (extra ? *extra : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3448,16 +3670,16 @@ CUresult __stdcall cuLaunchCooperativeKernel(CUfunction f, unsigned int gridDimX
     ret = g.m_cuLaunchCooperativeKernel(f, gridDimX, gridDimY, gridDimZ, blockDimX, blockDimY, blockDimZ, sharedMemBytes, hStream, kernelParams);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "f:" << f << '\n';;
-    oflog << "gridDimX:" << gridDimX << '\n';;
-    oflog << "gridDimY:" << gridDimY << '\n';;
-    oflog << "gridDimZ:" << gridDimZ << '\n';;
-    oflog << "blockDimX:" << blockDimX << '\n';;
-    oflog << "blockDimY:" << blockDimY << '\n';;
-    oflog << "blockDimZ:" << blockDimZ << '\n';;
-    oflog << "sharedMemBytes:" << sharedMemBytes << '\n';;
-    oflog << "hStream:" << hStream << '\n';;
-    oflog << "*kernelParams:" << (kernelParams ? *kernelParams : 0) << '\n';;
+    oflog << "f:" << f << '\n';
+    oflog << "gridDimX:" << gridDimX << '\n';
+    oflog << "gridDimY:" << gridDimY << '\n';
+    oflog << "gridDimZ:" << gridDimZ << '\n';
+    oflog << "blockDimX:" << blockDimX << '\n';
+    oflog << "blockDimY:" << blockDimY << '\n';
+    oflog << "blockDimZ:" << blockDimZ << '\n';
+    oflog << "sharedMemBytes:" << sharedMemBytes << '\n';
+    oflog << "hStream:" << hStream << '\n';
+    oflog << "*kernelParams:" << (kernelParams ? *kernelParams : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3469,8 +3691,18 @@ CUresult __stdcall cuLaunchCooperativeKernelMultiDevice(CUDA_LAUNCH_PARAMS *laun
     ret = g.m_cuLaunchCooperativeKernelMultiDevice(launchParamsList, numDevices, flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "numDevices:" << numDevices << '\n';;
-    oflog << "flags:" << flags << '\n';;
+    oflog << "launchParamsList->function:" << launchParamsList->function << '\n'
+        << "launchParamsList->gridDimX:" << launchParamsList->gridDimX << '\n'
+        << "launchParamsList->gridDimY:" << launchParamsList->gridDimY << '\n'
+        << "launchParamsList->gridDimZ:" << launchParamsList->gridDimZ << '\n'
+        << "launchParamsList->blockDimX:" << launchParamsList->blockDimX << '\n'
+        << "launchParamsList->blockDimY:" << launchParamsList->blockDimY << '\n'
+        << "launchParamsList->blockDimZ:" << launchParamsList->blockDimZ << '\n'
+        << "launchParamsList->sharedMemBytes:" << launchParamsList->sharedMemBytes << '\n'
+        << "launchParamsList->hStream:" << launchParamsList->hStream << '\n'
+        << "*launchParamsList->kernelParams:" << (launchParamsList->kernelParams ? *launchParamsList->kernelParams : 0) << '\n';
+    oflog << "numDevices:" << numDevices << '\n';
+    oflog << "flags:" << flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3482,9 +3714,9 @@ CUresult __stdcall cuLaunchHostFunc(CUstream hStream, CUhostFn fn, void *userDat
     ret = g.m_cuLaunchHostFunc(hStream, fn, userData);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hStream:" << hStream << '\n';;
-    oflog << "fn:" << fn << '\n';;
-    oflog << "userData:" << userData << '\n';;
+    oflog << "hStream:" << hStream << '\n';
+    oflog << "fn:" << fn << '\n';
+    oflog << "userData:" << userData << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3496,10 +3728,10 @@ CUresult __stdcall cuFuncSetBlockShape(CUfunction hfunc, int x, int y, int z)
     ret = g.m_cuFuncSetBlockShape(hfunc, x, y, z);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hfunc:" << hfunc << '\n';;
-    oflog << "x:" << x << '\n';;
-    oflog << "y:" << y << '\n';;
-    oflog << "z:" << z << '\n';;
+    oflog << "hfunc:" << hfunc << '\n';
+    oflog << "x:" << x << '\n';
+    oflog << "y:" << y << '\n';
+    oflog << "z:" << z << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3511,8 +3743,8 @@ CUresult __stdcall cuFuncSetSharedSize(CUfunction hfunc, unsigned int bytes)
     ret = g.m_cuFuncSetSharedSize(hfunc, bytes);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hfunc:" << hfunc << '\n';;
-    oflog << "bytes:" << bytes << '\n';;
+    oflog << "hfunc:" << hfunc << '\n';
+    oflog << "bytes:" << bytes << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3524,8 +3756,8 @@ CUresult __stdcall cuParamSetSize(CUfunction hfunc, unsigned int numbytes)
     ret = g.m_cuParamSetSize(hfunc, numbytes);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hfunc:" << hfunc << '\n';;
-    oflog << "numbytes:" << numbytes << '\n';;
+    oflog << "hfunc:" << hfunc << '\n';
+    oflog << "numbytes:" << numbytes << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3537,9 +3769,9 @@ CUresult __stdcall cuParamSeti(CUfunction hfunc, int offset, unsigned int value)
     ret = g.m_cuParamSeti(hfunc, offset, value);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hfunc:" << hfunc << '\n';;
-    oflog << "offset:" << offset << '\n';;
-    oflog << "value:" << value << '\n';;
+    oflog << "hfunc:" << hfunc << '\n';
+    oflog << "offset:" << offset << '\n';
+    oflog << "value:" << value << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3551,9 +3783,9 @@ CUresult __stdcall cuParamSetf(CUfunction hfunc, int offset, float value)
     ret = g.m_cuParamSetf(hfunc, offset, value);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hfunc:" << hfunc << '\n';;
-    oflog << "offset:" << offset << '\n';;
-    oflog << "value:" << value << '\n';;
+    oflog << "hfunc:" << hfunc << '\n';
+    oflog << "offset:" << offset << '\n';
+    oflog << "value:" << value << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3565,10 +3797,10 @@ CUresult __stdcall cuParamSetv(CUfunction hfunc, int offset, void *ptr, unsigned
     ret = g.m_cuParamSetv(hfunc, offset, ptr, numbytes);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hfunc:" << hfunc << '\n';;
-    oflog << "offset:" << offset << '\n';;
-    oflog << "ptr:" << ptr << '\n';;
-    oflog << "numbytes:" << numbytes << '\n';;
+    oflog << "hfunc:" << hfunc << '\n';
+    oflog << "offset:" << offset << '\n';
+    oflog << "ptr:" << ptr << '\n';
+    oflog << "numbytes:" << numbytes << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3580,7 +3812,7 @@ CUresult __stdcall cuLaunch(CUfunction f)
     ret = g.m_cuLaunch(f);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "f:" << f << '\n';;
+    oflog << "f:" << f << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3592,9 +3824,9 @@ CUresult __stdcall cuLaunchGrid(CUfunction f, int grid_width, int grid_height)
     ret = g.m_cuLaunchGrid(f, grid_width, grid_height);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "f:" << f << '\n';;
-    oflog << "grid_width:" << grid_width << '\n';;
-    oflog << "grid_height:" << grid_height << '\n';;
+    oflog << "f:" << f << '\n';
+    oflog << "grid_width:" << grid_width << '\n';
+    oflog << "grid_height:" << grid_height << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3606,10 +3838,10 @@ CUresult __stdcall cuLaunchGridAsync(CUfunction f, int grid_width, int grid_heig
     ret = g.m_cuLaunchGridAsync(f, grid_width, grid_height, hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "f:" << f << '\n';;
-    oflog << "grid_width:" << grid_width << '\n';;
-    oflog << "grid_height:" << grid_height << '\n';;
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "f:" << f << '\n';
+    oflog << "grid_width:" << grid_width << '\n';
+    oflog << "grid_height:" << grid_height << '\n';
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3621,9 +3853,9 @@ CUresult __stdcall cuParamSetTexRef(CUfunction hfunc, int texunit, CUtexref hTex
     ret = g.m_cuParamSetTexRef(hfunc, texunit, hTexRef);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hfunc:" << hfunc << '\n';;
-    oflog << "texunit:" << texunit << '\n';;
-    oflog << "hTexRef:" << hTexRef << '\n';;
+    oflog << "hfunc:" << hfunc << '\n';
+    oflog << "texunit:" << texunit << '\n';
+    oflog << "hTexRef:" << hTexRef << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3635,8 +3867,8 @@ CUresult __stdcall cuGraphCreate(CUgraph *phGraph, unsigned int flags)
     ret = g.m_cuGraphCreate(phGraph, flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "phGraph:" << phGraph << '\n';;
-    oflog << "flags:" << flags << '\n';;
+    oflog << "phGraph:" << phGraph << '\n';
+    oflog << "flags:" << flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3648,10 +3880,20 @@ CUresult __stdcall cuGraphAddKernelNode(CUgraphNode *phGraphNode, CUgraph hGraph
     ret = g.m_cuGraphAddKernelNode(phGraphNode, hGraph, dependencies, numDependencies, nodeParams);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "phGraphNode:" << phGraphNode << '\n';;
-    oflog << "hGraph:" << hGraph << '\n';;
-    oflog << "dependencies:" << dependencies << '\n';;
-    oflog << "numDependencies:" << numDependencies << '\n';;
+    oflog << "phGraphNode:" << phGraphNode << '\n';
+    oflog << "hGraph:" << hGraph << '\n';
+    oflog << "dependencies:" << dependencies << '\n';
+    oflog << "numDependencies:" << numDependencies << '\n';
+    oflog << "nodeParams->func:" << nodeParams->func << '\n'
+        << "nodeParams->gridDimX:" << nodeParams->gridDimX << '\n'
+        << "nodeParams->gridDimY:" << nodeParams->gridDimY << '\n'
+        << "nodeParams->gridDimZ:" << nodeParams->gridDimZ << '\n'
+        << "nodeParams->blockDimX:" << nodeParams->blockDimX << '\n'
+        << "nodeParams->blockDimY:" << nodeParams->blockDimY << '\n'
+        << "nodeParams->blockDimZ:" << nodeParams->blockDimZ << '\n'
+        << "nodeParams->sharedMemBytes:" << nodeParams->sharedMemBytes << '\n'
+        << "*nodeParams->kernelParams:" << (nodeParams->kernelParams ? *nodeParams->kernelParams : 0) << '\n'
+        << "*nodeParams->extra:" << (nodeParams->extra ? *nodeParams->extra : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3663,7 +3905,17 @@ CUresult __stdcall cuGraphKernelNodeGetParams(CUgraphNode hNode, CUDA_KERNEL_NOD
     ret = g.m_cuGraphKernelNodeGetParams(hNode, nodeParams);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hNode:" << hNode << '\n';;
+    oflog << "hNode:" << hNode << '\n';
+    oflog << "nodeParams->func:" << nodeParams->func << '\n'
+        << "nodeParams->gridDimX:" << nodeParams->gridDimX << '\n'
+        << "nodeParams->gridDimY:" << nodeParams->gridDimY << '\n'
+        << "nodeParams->gridDimZ:" << nodeParams->gridDimZ << '\n'
+        << "nodeParams->blockDimX:" << nodeParams->blockDimX << '\n'
+        << "nodeParams->blockDimY:" << nodeParams->blockDimY << '\n'
+        << "nodeParams->blockDimZ:" << nodeParams->blockDimZ << '\n'
+        << "nodeParams->sharedMemBytes:" << nodeParams->sharedMemBytes << '\n'
+        << "*nodeParams->kernelParams:" << (nodeParams->kernelParams ? *nodeParams->kernelParams : 0) << '\n'
+        << "*nodeParams->extra:" << (nodeParams->extra ? *nodeParams->extra : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3675,7 +3927,17 @@ CUresult __stdcall cuGraphKernelNodeSetParams(CUgraphNode hNode, const CUDA_KERN
     ret = g.m_cuGraphKernelNodeSetParams(hNode, nodeParams);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hNode:" << hNode << '\n';;
+    oflog << "hNode:" << hNode << '\n';
+    oflog << "nodeParams->func:" << nodeParams->func << '\n'
+        << "nodeParams->gridDimX:" << nodeParams->gridDimX << '\n'
+        << "nodeParams->gridDimY:" << nodeParams->gridDimY << '\n'
+        << "nodeParams->gridDimZ:" << nodeParams->gridDimZ << '\n'
+        << "nodeParams->blockDimX:" << nodeParams->blockDimX << '\n'
+        << "nodeParams->blockDimY:" << nodeParams->blockDimY << '\n'
+        << "nodeParams->blockDimZ:" << nodeParams->blockDimZ << '\n'
+        << "nodeParams->sharedMemBytes:" << nodeParams->sharedMemBytes << '\n'
+        << "*nodeParams->kernelParams:" << (nodeParams->kernelParams ? *nodeParams->kernelParams : 0) << '\n'
+        << "*nodeParams->extra:" << (nodeParams->extra ? *nodeParams->extra : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3687,11 +3949,34 @@ CUresult __stdcall cuGraphAddMemcpyNode(CUgraphNode *phGraphNode, CUgraph hGraph
     ret = g.m_cuGraphAddMemcpyNode(phGraphNode, hGraph, dependencies, numDependencies, copyParams, ctx);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "phGraphNode:" << phGraphNode << '\n';;
-    oflog << "hGraph:" << hGraph << '\n';;
-    oflog << "dependencies:" << dependencies << '\n';;
-    oflog << "numDependencies:" << numDependencies << '\n';;
-    oflog << "ctx:" << ctx << '\n';;
+    oflog << "phGraphNode:" << phGraphNode << '\n';
+    oflog << "hGraph:" << hGraph << '\n';
+    oflog << "dependencies:" << dependencies << '\n';
+    oflog << "numDependencies:" << numDependencies << '\n';
+    oflog << "copyParams->srcXInBytes:" << copyParams->srcXInBytes << '\n'
+        << "copyParams->srcY:" << copyParams->srcY << '\n'
+        << "copyParams->srcZ:" << copyParams->srcZ << '\n'
+        << "copyParams->srcLOD:" << copyParams->srcLOD << '\n'
+        << "copyParams->srcMemoryType:" << g.m_mapESCUmemorytype[copyParams->srcMemoryType] << copyParams->srcMemoryType << '\n'
+        << "copyParams->srcHost:" << copyParams->srcHost << '\n'
+        << "copyParams->srcDevice:" << copyParams->srcDevice << '\n'
+        << "copyParams->srcArray:" << copyParams->srcArray << '\n'
+        << "copyParams->srcPitch:" << copyParams->srcPitch << '\n'
+        << "copyParams->srcHeight:" << copyParams->srcHeight << '\n'
+        << "copyParams->dstXInBytes:" << copyParams->dstXInBytes << '\n'
+        << "copyParams->dstY:" << copyParams->dstY << '\n'
+        << "copyParams->dstZ:" << copyParams->dstZ << '\n'
+        << "copyParams->dstLOD:" << copyParams->dstLOD << '\n'
+        << "copyParams->dstMemoryType:" << g.m_mapESCUmemorytype[copyParams->dstMemoryType] << copyParams->dstMemoryType << '\n'
+        << "copyParams->dstHost:" << copyParams->dstHost << '\n'
+        << "copyParams->dstDevice:" << copyParams->dstDevice << '\n'
+        << "copyParams->dstArray:" << copyParams->dstArray << '\n'
+        << "copyParams->dstPitch:" << copyParams->dstPitch << '\n'
+        << "copyParams->dstHeight:" << copyParams->dstHeight << '\n'
+        << "copyParams->WidthInBytes:" << copyParams->WidthInBytes << '\n'
+        << "copyParams->Height:" << copyParams->Height << '\n'
+        << "copyParams->Depth:" << copyParams->Depth << '\n';
+    oflog << "ctx:" << ctx << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3703,7 +3988,30 @@ CUresult __stdcall cuGraphMemcpyNodeGetParams(CUgraphNode hNode, CUDA_MEMCPY3D *
     ret = g.m_cuGraphMemcpyNodeGetParams(hNode, nodeParams);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hNode:" << hNode << '\n';;
+    oflog << "hNode:" << hNode << '\n';
+    oflog << "nodeParams->srcXInBytes:" << nodeParams->srcXInBytes << '\n'
+        << "nodeParams->srcY:" << nodeParams->srcY << '\n'
+        << "nodeParams->srcZ:" << nodeParams->srcZ << '\n'
+        << "nodeParams->srcLOD:" << nodeParams->srcLOD << '\n'
+        << "nodeParams->srcMemoryType:" << g.m_mapESCUmemorytype[nodeParams->srcMemoryType] << nodeParams->srcMemoryType << '\n'
+        << "nodeParams->srcHost:" << nodeParams->srcHost << '\n'
+        << "nodeParams->srcDevice:" << nodeParams->srcDevice << '\n'
+        << "nodeParams->srcArray:" << nodeParams->srcArray << '\n'
+        << "nodeParams->srcPitch:" << nodeParams->srcPitch << '\n'
+        << "nodeParams->srcHeight:" << nodeParams->srcHeight << '\n'
+        << "nodeParams->dstXInBytes:" << nodeParams->dstXInBytes << '\n'
+        << "nodeParams->dstY:" << nodeParams->dstY << '\n'
+        << "nodeParams->dstZ:" << nodeParams->dstZ << '\n'
+        << "nodeParams->dstLOD:" << nodeParams->dstLOD << '\n'
+        << "nodeParams->dstMemoryType:" << g.m_mapESCUmemorytype[nodeParams->dstMemoryType] << nodeParams->dstMemoryType << '\n'
+        << "nodeParams->dstHost:" << nodeParams->dstHost << '\n'
+        << "nodeParams->dstDevice:" << nodeParams->dstDevice << '\n'
+        << "nodeParams->dstArray:" << nodeParams->dstArray << '\n'
+        << "nodeParams->dstPitch:" << nodeParams->dstPitch << '\n'
+        << "nodeParams->dstHeight:" << nodeParams->dstHeight << '\n'
+        << "nodeParams->WidthInBytes:" << nodeParams->WidthInBytes << '\n'
+        << "nodeParams->Height:" << nodeParams->Height << '\n'
+        << "nodeParams->Depth:" << nodeParams->Depth << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3715,7 +4023,30 @@ CUresult __stdcall cuGraphMemcpyNodeSetParams(CUgraphNode hNode, const CUDA_MEMC
     ret = g.m_cuGraphMemcpyNodeSetParams(hNode, nodeParams);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hNode:" << hNode << '\n';;
+    oflog << "hNode:" << hNode << '\n';
+    oflog << "nodeParams->srcXInBytes:" << nodeParams->srcXInBytes << '\n'
+        << "nodeParams->srcY:" << nodeParams->srcY << '\n'
+        << "nodeParams->srcZ:" << nodeParams->srcZ << '\n'
+        << "nodeParams->srcLOD:" << nodeParams->srcLOD << '\n'
+        << "nodeParams->srcMemoryType:" << g.m_mapESCUmemorytype[nodeParams->srcMemoryType] << nodeParams->srcMemoryType << '\n'
+        << "nodeParams->srcHost:" << nodeParams->srcHost << '\n'
+        << "nodeParams->srcDevice:" << nodeParams->srcDevice << '\n'
+        << "nodeParams->srcArray:" << nodeParams->srcArray << '\n'
+        << "nodeParams->srcPitch:" << nodeParams->srcPitch << '\n'
+        << "nodeParams->srcHeight:" << nodeParams->srcHeight << '\n'
+        << "nodeParams->dstXInBytes:" << nodeParams->dstXInBytes << '\n'
+        << "nodeParams->dstY:" << nodeParams->dstY << '\n'
+        << "nodeParams->dstZ:" << nodeParams->dstZ << '\n'
+        << "nodeParams->dstLOD:" << nodeParams->dstLOD << '\n'
+        << "nodeParams->dstMemoryType:" << g.m_mapESCUmemorytype[nodeParams->dstMemoryType] << nodeParams->dstMemoryType << '\n'
+        << "nodeParams->dstHost:" << nodeParams->dstHost << '\n'
+        << "nodeParams->dstDevice:" << nodeParams->dstDevice << '\n'
+        << "nodeParams->dstArray:" << nodeParams->dstArray << '\n'
+        << "nodeParams->dstPitch:" << nodeParams->dstPitch << '\n'
+        << "nodeParams->dstHeight:" << nodeParams->dstHeight << '\n'
+        << "nodeParams->WidthInBytes:" << nodeParams->WidthInBytes << '\n'
+        << "nodeParams->Height:" << nodeParams->Height << '\n'
+        << "nodeParams->Depth:" << nodeParams->Depth << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3727,11 +4058,17 @@ CUresult __stdcall cuGraphAddMemsetNode(CUgraphNode *phGraphNode, CUgraph hGraph
     ret = g.m_cuGraphAddMemsetNode(phGraphNode, hGraph, dependencies, numDependencies, memsetParams, ctx);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "phGraphNode:" << phGraphNode << '\n';;
-    oflog << "hGraph:" << hGraph << '\n';;
-    oflog << "dependencies:" << dependencies << '\n';;
-    oflog << "numDependencies:" << numDependencies << '\n';;
-    oflog << "ctx:" << ctx << '\n';;
+    oflog << "phGraphNode:" << phGraphNode << '\n';
+    oflog << "hGraph:" << hGraph << '\n';
+    oflog << "dependencies:" << dependencies << '\n';
+    oflog << "numDependencies:" << numDependencies << '\n';
+    oflog << "memsetParams->dst:" << memsetParams->dst << '\n'
+        << "memsetParams->pitch:" << memsetParams->pitch << '\n'
+        << "memsetParams->value:" << memsetParams->value << '\n'
+        << "memsetParams->elementSize:" << memsetParams->elementSize << '\n'
+        << "memsetParams->width:" << memsetParams->width << '\n'
+        << "memsetParams->height:" << memsetParams->height << '\n';
+    oflog << "ctx:" << ctx << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3743,7 +4080,13 @@ CUresult __stdcall cuGraphMemsetNodeGetParams(CUgraphNode hNode, CUDA_MEMSET_NOD
     ret = g.m_cuGraphMemsetNodeGetParams(hNode, nodeParams);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hNode:" << hNode << '\n';;
+    oflog << "hNode:" << hNode << '\n';
+    oflog << "nodeParams->dst:" << nodeParams->dst << '\n'
+        << "nodeParams->pitch:" << nodeParams->pitch << '\n'
+        << "nodeParams->value:" << nodeParams->value << '\n'
+        << "nodeParams->elementSize:" << nodeParams->elementSize << '\n'
+        << "nodeParams->width:" << nodeParams->width << '\n'
+        << "nodeParams->height:" << nodeParams->height << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3755,7 +4098,13 @@ CUresult __stdcall cuGraphMemsetNodeSetParams(CUgraphNode hNode, const CUDA_MEMS
     ret = g.m_cuGraphMemsetNodeSetParams(hNode, nodeParams);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hNode:" << hNode << '\n';;
+    oflog << "hNode:" << hNode << '\n';
+    oflog << "nodeParams->dst:" << nodeParams->dst << '\n'
+        << "nodeParams->pitch:" << nodeParams->pitch << '\n'
+        << "nodeParams->value:" << nodeParams->value << '\n'
+        << "nodeParams->elementSize:" << nodeParams->elementSize << '\n'
+        << "nodeParams->width:" << nodeParams->width << '\n'
+        << "nodeParams->height:" << nodeParams->height << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3767,10 +4116,12 @@ CUresult __stdcall cuGraphAddHostNode(CUgraphNode *phGraphNode, CUgraph hGraph, 
     ret = g.m_cuGraphAddHostNode(phGraphNode, hGraph, dependencies, numDependencies, nodeParams);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "phGraphNode:" << phGraphNode << '\n';;
-    oflog << "hGraph:" << hGraph << '\n';;
-    oflog << "dependencies:" << dependencies << '\n';;
-    oflog << "numDependencies:" << numDependencies << '\n';;
+    oflog << "phGraphNode:" << phGraphNode << '\n';
+    oflog << "hGraph:" << hGraph << '\n';
+    oflog << "dependencies:" << dependencies << '\n';
+    oflog << "numDependencies:" << numDependencies << '\n';
+    oflog << "nodeParams->fn:" << nodeParams->fn << '\n'
+        << "nodeParams->userData:" << nodeParams->userData << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3782,7 +4133,9 @@ CUresult __stdcall cuGraphHostNodeGetParams(CUgraphNode hNode, CUDA_HOST_NODE_PA
     ret = g.m_cuGraphHostNodeGetParams(hNode, nodeParams);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hNode:" << hNode << '\n';;
+    oflog << "hNode:" << hNode << '\n';
+    oflog << "nodeParams->fn:" << nodeParams->fn << '\n'
+        << "nodeParams->userData:" << nodeParams->userData << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3794,7 +4147,9 @@ CUresult __stdcall cuGraphHostNodeSetParams(CUgraphNode hNode, const CUDA_HOST_N
     ret = g.m_cuGraphHostNodeSetParams(hNode, nodeParams);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hNode:" << hNode << '\n';;
+    oflog << "hNode:" << hNode << '\n';
+    oflog << "nodeParams->fn:" << nodeParams->fn << '\n'
+        << "nodeParams->userData:" << nodeParams->userData << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3806,11 +4161,11 @@ CUresult __stdcall cuGraphAddChildGraphNode(CUgraphNode *phGraphNode, CUgraph hG
     ret = g.m_cuGraphAddChildGraphNode(phGraphNode, hGraph, dependencies, numDependencies, childGraph);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "phGraphNode:" << phGraphNode << '\n';;
-    oflog << "hGraph:" << hGraph << '\n';;
-    oflog << "dependencies:" << dependencies << '\n';;
-    oflog << "numDependencies:" << numDependencies << '\n';;
-    oflog << "childGraph:" << childGraph << '\n';;
+    oflog << "phGraphNode:" << phGraphNode << '\n';
+    oflog << "hGraph:" << hGraph << '\n';
+    oflog << "dependencies:" << dependencies << '\n';
+    oflog << "numDependencies:" << numDependencies << '\n';
+    oflog << "childGraph:" << childGraph << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3822,8 +4177,8 @@ CUresult __stdcall cuGraphChildGraphNodeGetGraph(CUgraphNode hNode, CUgraph *phG
     ret = g.m_cuGraphChildGraphNodeGetGraph(hNode, phGraph);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hNode:" << hNode << '\n';;
-    oflog << "phGraph:" << phGraph << '\n';;
+    oflog << "hNode:" << hNode << '\n';
+    oflog << "phGraph:" << phGraph << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3835,10 +4190,10 @@ CUresult __stdcall cuGraphAddEmptyNode(CUgraphNode *phGraphNode, CUgraph hGraph,
     ret = g.m_cuGraphAddEmptyNode(phGraphNode, hGraph, dependencies, numDependencies);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "phGraphNode:" << phGraphNode << '\n';;
-    oflog << "hGraph:" << hGraph << '\n';;
-    oflog << "dependencies:" << dependencies << '\n';;
-    oflog << "numDependencies:" << numDependencies << '\n';;
+    oflog << "phGraphNode:" << phGraphNode << '\n';
+    oflog << "hGraph:" << hGraph << '\n';
+    oflog << "dependencies:" << dependencies << '\n';
+    oflog << "numDependencies:" << numDependencies << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3850,8 +4205,8 @@ CUresult __stdcall cuGraphClone(CUgraph *phGraphClone, CUgraph originalGraph)
     ret = g.m_cuGraphClone(phGraphClone, originalGraph);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "phGraphClone:" << phGraphClone << '\n';;
-    oflog << "originalGraph:" << originalGraph << '\n';;
+    oflog << "phGraphClone:" << phGraphClone << '\n';
+    oflog << "originalGraph:" << originalGraph << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3863,9 +4218,9 @@ CUresult __stdcall cuGraphNodeFindInClone(CUgraphNode *phNode, CUgraphNode hOrig
     ret = g.m_cuGraphNodeFindInClone(phNode, hOriginalNode, hClonedGraph);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "phNode:" << phNode << '\n';;
-    oflog << "hOriginalNode:" << hOriginalNode << '\n';;
-    oflog << "hClonedGraph:" << hClonedGraph << '\n';;
+    oflog << "phNode:" << phNode << '\n';
+    oflog << "hOriginalNode:" << hOriginalNode << '\n';
+    oflog << "hClonedGraph:" << hClonedGraph << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3877,8 +4232,8 @@ CUresult __stdcall cuGraphNodeGetType(CUgraphNode hNode, CUgraphNodeType *type)
     ret = g.m_cuGraphNodeGetType(hNode, type);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hNode:" << hNode << '\n';;
-    oflog << "*type:" << g.m_mapESCUgraphNodeType[*type] << '\n';;
+    oflog << "hNode:" << hNode << '\n';
+    oflog << "*type:" << g.m_mapESCUgraphNodeType[*type] << type << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3890,9 +4245,9 @@ CUresult __stdcall cuGraphGetNodes(CUgraph hGraph, CUgraphNode *nodes, size_t *n
     ret = g.m_cuGraphGetNodes(hGraph, nodes, numNodes);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hGraph:" << hGraph << '\n';;
-    oflog << "nodes:" << nodes << '\n';;
-    oflog << "*numNodes:" << (numNodes ? *numNodes : 0) << '\n';;
+    oflog << "hGraph:" << hGraph << '\n';
+    oflog << "nodes:" << nodes << '\n';
+    oflog << "*numNodes:" << (numNodes ? *numNodes : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3904,9 +4259,9 @@ CUresult __stdcall cuGraphGetRootNodes(CUgraph hGraph, CUgraphNode *rootNodes, s
     ret = g.m_cuGraphGetRootNodes(hGraph, rootNodes, numRootNodes);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hGraph:" << hGraph << '\n';;
-    oflog << "rootNodes:" << rootNodes << '\n';;
-    oflog << "*numRootNodes:" << (numRootNodes ? *numRootNodes : 0) << '\n';;
+    oflog << "hGraph:" << hGraph << '\n';
+    oflog << "rootNodes:" << rootNodes << '\n';
+    oflog << "*numRootNodes:" << (numRootNodes ? *numRootNodes : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3918,10 +4273,10 @@ CUresult __stdcall cuGraphGetEdges(CUgraph hGraph, CUgraphNode *from, CUgraphNod
     ret = g.m_cuGraphGetEdges(hGraph, from, to, numEdges);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hGraph:" << hGraph << '\n';;
-    oflog << "from:" << from << '\n';;
-    oflog << "to:" << to << '\n';;
-    oflog << "*numEdges:" << (numEdges ? *numEdges : 0) << '\n';;
+    oflog << "hGraph:" << hGraph << '\n';
+    oflog << "from:" << from << '\n';
+    oflog << "to:" << to << '\n';
+    oflog << "*numEdges:" << (numEdges ? *numEdges : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3933,9 +4288,9 @@ CUresult __stdcall cuGraphNodeGetDependencies(CUgraphNode hNode, CUgraphNode *de
     ret = g.m_cuGraphNodeGetDependencies(hNode, dependencies, numDependencies);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hNode:" << hNode << '\n';;
-    oflog << "dependencies:" << dependencies << '\n';;
-    oflog << "*numDependencies:" << (numDependencies ? *numDependencies : 0) << '\n';;
+    oflog << "hNode:" << hNode << '\n';
+    oflog << "dependencies:" << dependencies << '\n';
+    oflog << "*numDependencies:" << (numDependencies ? *numDependencies : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3947,9 +4302,9 @@ CUresult __stdcall cuGraphNodeGetDependentNodes(CUgraphNode hNode, CUgraphNode *
     ret = g.m_cuGraphNodeGetDependentNodes(hNode, dependentNodes, numDependentNodes);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hNode:" << hNode << '\n';;
-    oflog << "dependentNodes:" << dependentNodes << '\n';;
-    oflog << "*numDependentNodes:" << (numDependentNodes ? *numDependentNodes : 0) << '\n';;
+    oflog << "hNode:" << hNode << '\n';
+    oflog << "dependentNodes:" << dependentNodes << '\n';
+    oflog << "*numDependentNodes:" << (numDependentNodes ? *numDependentNodes : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3961,10 +4316,10 @@ CUresult __stdcall cuGraphAddDependencies(CUgraph hGraph, CUgraphNode *from, CUg
     ret = g.m_cuGraphAddDependencies(hGraph, from, to, numDependencies);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hGraph:" << hGraph << '\n';;
-    oflog << "from:" << from << '\n';;
-    oflog << "to:" << to << '\n';;
-    oflog << "numDependencies:" << numDependencies << '\n';;
+    oflog << "hGraph:" << hGraph << '\n';
+    oflog << "from:" << from << '\n';
+    oflog << "to:" << to << '\n';
+    oflog << "numDependencies:" << numDependencies << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3976,10 +4331,10 @@ CUresult __stdcall cuGraphRemoveDependencies(CUgraph hGraph, CUgraphNode *from, 
     ret = g.m_cuGraphRemoveDependencies(hGraph, from, to, numDependencies);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hGraph:" << hGraph << '\n';;
-    oflog << "from:" << from << '\n';;
-    oflog << "to:" << to << '\n';;
-    oflog << "numDependencies:" << numDependencies << '\n';;
+    oflog << "hGraph:" << hGraph << '\n';
+    oflog << "from:" << from << '\n';
+    oflog << "to:" << to << '\n';
+    oflog << "numDependencies:" << numDependencies << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -3991,7 +4346,7 @@ CUresult __stdcall cuGraphDestroyNode(CUgraphNode hNode)
     ret = g.m_cuGraphDestroyNode(hNode);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hNode:" << hNode << '\n';;
+    oflog << "hNode:" << hNode << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4003,11 +4358,11 @@ CUresult __stdcall cuGraphInstantiate(CUgraphExec *phGraphExec, CUgraph hGraph, 
     ret = g.m_cuGraphInstantiate(phGraphExec, hGraph, phErrorNode, logBuffer, bufferSize);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "phGraphExec:" << phGraphExec << '\n';;
-    oflog << "hGraph:" << hGraph << '\n';;
-    oflog << "phErrorNode:" << phErrorNode << '\n';;
-    oflog << "logBuffer:" << logBuffer << '\n';;
-    oflog << "bufferSize:" << bufferSize << '\n';;
+    oflog << "phGraphExec:" << phGraphExec << '\n';
+    oflog << "hGraph:" << hGraph << '\n';
+    oflog << "phErrorNode:" << phErrorNode << '\n';
+    oflog << "logBuffer:" << logBuffer << '\n';
+    oflog << "bufferSize:" << bufferSize << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4019,8 +4374,8 @@ CUresult __stdcall cuGraphLaunch(CUgraphExec hGraphExec, CUstream hStream)
     ret = g.m_cuGraphLaunch(hGraphExec, hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hGraphExec:" << hGraphExec << '\n';;
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "hGraphExec:" << hGraphExec << '\n';
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4032,7 +4387,7 @@ CUresult __stdcall cuGraphExecDestroy(CUgraphExec hGraphExec)
     ret = g.m_cuGraphExecDestroy(hGraphExec);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hGraphExec:" << hGraphExec << '\n';;
+    oflog << "hGraphExec:" << hGraphExec << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4044,7 +4399,7 @@ CUresult __stdcall cuGraphDestroy(CUgraph hGraph)
     ret = g.m_cuGraphDestroy(hGraph);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hGraph:" << hGraph << '\n';;
+    oflog << "hGraph:" << hGraph << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4056,10 +4411,10 @@ CUresult __stdcall cuOccupancyMaxActiveBlocksPerMultiprocessor(int *numBlocks, C
     ret = g.m_cuOccupancyMaxActiveBlocksPerMultiprocessor(numBlocks, func, blockSize, dynamicSMemSize);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*numBlocks:" << (numBlocks ? *numBlocks : 0) << '\n';;
-    oflog << "func:" << func << '\n';;
-    oflog << "blockSize:" << blockSize << '\n';;
-    oflog << "dynamicSMemSize:" << dynamicSMemSize << '\n';;
+    oflog << "*numBlocks:" << (numBlocks ? *numBlocks : 0) << '\n';
+    oflog << "func:" << func << '\n';
+    oflog << "blockSize:" << blockSize << '\n';
+    oflog << "dynamicSMemSize:" << dynamicSMemSize << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4071,11 +4426,11 @@ CUresult __stdcall cuOccupancyMaxActiveBlocksPerMultiprocessorWithFlags(int *num
     ret = g.m_cuOccupancyMaxActiveBlocksPerMultiprocessorWithFlags(numBlocks, func, blockSize, dynamicSMemSize, flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*numBlocks:" << (numBlocks ? *numBlocks : 0) << '\n';;
-    oflog << "func:" << func << '\n';;
-    oflog << "blockSize:" << blockSize << '\n';;
-    oflog << "dynamicSMemSize:" << dynamicSMemSize << '\n';;
-    oflog << "flags:" << flags << '\n';;
+    oflog << "*numBlocks:" << (numBlocks ? *numBlocks : 0) << '\n';
+    oflog << "func:" << func << '\n';
+    oflog << "blockSize:" << blockSize << '\n';
+    oflog << "dynamicSMemSize:" << dynamicSMemSize << '\n';
+    oflog << "flags:" << flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4087,12 +4442,12 @@ CUresult __stdcall cuOccupancyMaxPotentialBlockSize(int *minGridSize, int *block
     ret = g.m_cuOccupancyMaxPotentialBlockSize(minGridSize, blockSize, func, blockSizeToDynamicSMemSize, dynamicSMemSize, blockSizeLimit);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*minGridSize:" << (minGridSize ? *minGridSize : 0) << '\n';;
-    oflog << "*blockSize:" << (blockSize ? *blockSize : 0) << '\n';;
-    oflog << "func:" << func << '\n';;
-    oflog << "blockSizeToDynamicSMemSize:" << blockSizeToDynamicSMemSize << '\n';;
-    oflog << "dynamicSMemSize:" << dynamicSMemSize << '\n';;
-    oflog << "blockSizeLimit:" << blockSizeLimit << '\n';;
+    oflog << "*minGridSize:" << (minGridSize ? *minGridSize : 0) << '\n';
+    oflog << "*blockSize:" << (blockSize ? *blockSize : 0) << '\n';
+    oflog << "func:" << func << '\n';
+    oflog << "blockSizeToDynamicSMemSize:" << blockSizeToDynamicSMemSize << '\n';
+    oflog << "dynamicSMemSize:" << dynamicSMemSize << '\n';
+    oflog << "blockSizeLimit:" << blockSizeLimit << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4104,13 +4459,13 @@ CUresult __stdcall cuOccupancyMaxPotentialBlockSizeWithFlags(int *minGridSize, i
     ret = g.m_cuOccupancyMaxPotentialBlockSizeWithFlags(minGridSize, blockSize, func, blockSizeToDynamicSMemSize, dynamicSMemSize, blockSizeLimit, flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*minGridSize:" << (minGridSize ? *minGridSize : 0) << '\n';;
-    oflog << "*blockSize:" << (blockSize ? *blockSize : 0) << '\n';;
-    oflog << "func:" << func << '\n';;
-    oflog << "blockSizeToDynamicSMemSize:" << blockSizeToDynamicSMemSize << '\n';;
-    oflog << "dynamicSMemSize:" << dynamicSMemSize << '\n';;
-    oflog << "blockSizeLimit:" << blockSizeLimit << '\n';;
-    oflog << "flags:" << flags << '\n';;
+    oflog << "*minGridSize:" << (minGridSize ? *minGridSize : 0) << '\n';
+    oflog << "*blockSize:" << (blockSize ? *blockSize : 0) << '\n';
+    oflog << "func:" << func << '\n';
+    oflog << "blockSizeToDynamicSMemSize:" << blockSizeToDynamicSMemSize << '\n';
+    oflog << "dynamicSMemSize:" << dynamicSMemSize << '\n';
+    oflog << "blockSizeLimit:" << blockSizeLimit << '\n';
+    oflog << "flags:" << flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4122,9 +4477,9 @@ CUresult __stdcall cuTexRefSetArray(CUtexref hTexRef, CUarray hArray, unsigned i
     ret = g.m_cuTexRefSetArray(hTexRef, hArray, Flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hTexRef:" << hTexRef << '\n';;
-    oflog << "hArray:" << hArray << '\n';;
-    oflog << "Flags:" << Flags << '\n';;
+    oflog << "hTexRef:" << hTexRef << '\n';
+    oflog << "hArray:" << hArray << '\n';
+    oflog << "Flags:" << Flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4136,9 +4491,9 @@ CUresult __stdcall cuTexRefSetMipmappedArray(CUtexref hTexRef, CUmipmappedArray 
     ret = g.m_cuTexRefSetMipmappedArray(hTexRef, hMipmappedArray, Flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hTexRef:" << hTexRef << '\n';;
-    oflog << "hMipmappedArray:" << hMipmappedArray << '\n';;
-    oflog << "Flags:" << Flags << '\n';;
+    oflog << "hTexRef:" << hTexRef << '\n';
+    oflog << "hMipmappedArray:" << hMipmappedArray << '\n';
+    oflog << "Flags:" << Flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4150,10 +4505,10 @@ CUresult __stdcall cuTexRefSetAddress_v2(size_t *ByteOffset, CUtexref hTexRef, C
     ret = g.m_cuTexRefSetAddress_v2(ByteOffset, hTexRef, dptr, bytes);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*ByteOffset:" << (ByteOffset ? *ByteOffset : 0) << '\n';;
-    oflog << "hTexRef:" << hTexRef << '\n';;
-    oflog << "dptr:" << dptr << '\n';;
-    oflog << "bytes:" << bytes << '\n';;
+    oflog << "*ByteOffset:" << (ByteOffset ? *ByteOffset : 0) << '\n';
+    oflog << "hTexRef:" << hTexRef << '\n';
+    oflog << "dptr:" << dptr << '\n';
+    oflog << "bytes:" << bytes << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4165,9 +4520,13 @@ CUresult __stdcall cuTexRefSetAddress2D_v3(CUtexref hTexRef, const CUDA_ARRAY_DE
     ret = g.m_cuTexRefSetAddress2D_v3(hTexRef, desc, dptr, Pitch);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hTexRef:" << hTexRef << '\n';;
-    oflog << "dptr:" << dptr << '\n';;
-    oflog << "Pitch:" << Pitch << '\n';;
+    oflog << "hTexRef:" << hTexRef << '\n';
+    oflog << "desc->Width:" << desc->Width << '\n'
+        << "desc->Height:" << desc->Height << '\n'
+        << "desc->Format:" << g.m_mapESCUarray_format[desc->Format] << desc->Format << '\n'
+        << "desc->NumChannels:" << desc->NumChannels << '\n';
+    oflog << "dptr:" << dptr << '\n';
+    oflog << "Pitch:" << Pitch << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4179,9 +4538,9 @@ CUresult __stdcall cuTexRefSetFormat(CUtexref hTexRef, CUarray_format fmt, int N
     ret = g.m_cuTexRefSetFormat(hTexRef, fmt, NumPackedComponents);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hTexRef:" << hTexRef << '\n';;
-    oflog << "fmt:" << g.m_mapESCUarray_format[fmt] << '\n';;
-    oflog << "NumPackedComponents:" << NumPackedComponents << '\n';;
+    oflog << "hTexRef:" << hTexRef << '\n';
+    oflog << "fmt:" << g.m_mapESCUarray_format[fmt] << fmt << '\n';
+    oflog << "NumPackedComponents:" << NumPackedComponents << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4193,9 +4552,9 @@ CUresult __stdcall cuTexRefSetAddressMode(CUtexref hTexRef, int dim, CUaddress_m
     ret = g.m_cuTexRefSetAddressMode(hTexRef, dim, am);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hTexRef:" << hTexRef << '\n';;
-    oflog << "dim:" << dim << '\n';;
-    oflog << "am:" << g.m_mapESCUaddress_mode[am] << '\n';;
+    oflog << "hTexRef:" << hTexRef << '\n';
+    oflog << "dim:" << dim << '\n';
+    oflog << "am:" << g.m_mapESCUaddress_mode[am] << am << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4207,8 +4566,8 @@ CUresult __stdcall cuTexRefSetFilterMode(CUtexref hTexRef, CUfilter_mode fm)
     ret = g.m_cuTexRefSetFilterMode(hTexRef, fm);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hTexRef:" << hTexRef << '\n';;
-    oflog << "fm:" << g.m_mapESCUfilter_mode[fm] << '\n';;
+    oflog << "hTexRef:" << hTexRef << '\n';
+    oflog << "fm:" << g.m_mapESCUfilter_mode[fm] << fm << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4220,8 +4579,8 @@ CUresult __stdcall cuTexRefSetMipmapFilterMode(CUtexref hTexRef, CUfilter_mode f
     ret = g.m_cuTexRefSetMipmapFilterMode(hTexRef, fm);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hTexRef:" << hTexRef << '\n';;
-    oflog << "fm:" << g.m_mapESCUfilter_mode[fm] << '\n';;
+    oflog << "hTexRef:" << hTexRef << '\n';
+    oflog << "fm:" << g.m_mapESCUfilter_mode[fm] << fm << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4233,8 +4592,8 @@ CUresult __stdcall cuTexRefSetMipmapLevelBias(CUtexref hTexRef, float bias)
     ret = g.m_cuTexRefSetMipmapLevelBias(hTexRef, bias);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hTexRef:" << hTexRef << '\n';;
-    oflog << "bias:" << bias << '\n';;
+    oflog << "hTexRef:" << hTexRef << '\n';
+    oflog << "bias:" << bias << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4246,9 +4605,9 @@ CUresult __stdcall cuTexRefSetMipmapLevelClamp(CUtexref hTexRef, float minMipmap
     ret = g.m_cuTexRefSetMipmapLevelClamp(hTexRef, minMipmapLevelClamp, maxMipmapLevelClamp);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hTexRef:" << hTexRef << '\n';;
-    oflog << "minMipmapLevelClamp:" << minMipmapLevelClamp << '\n';;
-    oflog << "maxMipmapLevelClamp:" << maxMipmapLevelClamp << '\n';;
+    oflog << "hTexRef:" << hTexRef << '\n';
+    oflog << "minMipmapLevelClamp:" << minMipmapLevelClamp << '\n';
+    oflog << "maxMipmapLevelClamp:" << maxMipmapLevelClamp << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4260,8 +4619,8 @@ CUresult __stdcall cuTexRefSetMaxAnisotropy(CUtexref hTexRef, unsigned int maxAn
     ret = g.m_cuTexRefSetMaxAnisotropy(hTexRef, maxAniso);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hTexRef:" << hTexRef << '\n';;
-    oflog << "maxAniso:" << maxAniso << '\n';;
+    oflog << "hTexRef:" << hTexRef << '\n';
+    oflog << "maxAniso:" << maxAniso << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4273,8 +4632,8 @@ CUresult __stdcall cuTexRefSetBorderColor(CUtexref hTexRef, float *pBorderColor)
     ret = g.m_cuTexRefSetBorderColor(hTexRef, pBorderColor);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hTexRef:" << hTexRef << '\n';;
-    oflog << "*pBorderColor:" << (pBorderColor ? *pBorderColor : 0) << '\n';;
+    oflog << "hTexRef:" << hTexRef << '\n';
+    oflog << "*pBorderColor:" << (pBorderColor ? *pBorderColor : 0) << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4286,8 +4645,8 @@ CUresult __stdcall cuTexRefSetFlags(CUtexref hTexRef, unsigned int Flags)
     ret = g.m_cuTexRefSetFlags(hTexRef, Flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hTexRef:" << hTexRef << '\n';;
-    oflog << "Flags:" << Flags << '\n';;
+    oflog << "hTexRef:" << hTexRef << '\n';
+    oflog << "Flags:" << Flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4299,8 +4658,8 @@ CUresult __stdcall cuTexRefGetAddress_v2(CUdeviceptr *pdptr, CUtexref hTexRef)
     ret = g.m_cuTexRefGetAddress_v2(pdptr, hTexRef);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pdptr:" << (pdptr ? *pdptr : 0) << '\n';;
-    oflog << "hTexRef:" << hTexRef << '\n';;
+    oflog << "*pdptr:" << (pdptr ? *pdptr : 0) << '\n';
+    oflog << "hTexRef:" << hTexRef << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4312,8 +4671,8 @@ CUresult __stdcall cuTexRefGetArray(CUarray *phArray, CUtexref hTexRef)
     ret = g.m_cuTexRefGetArray(phArray, hTexRef);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "phArray:" << phArray << '\n';;
-    oflog << "hTexRef:" << hTexRef << '\n';;
+    oflog << "phArray:" << phArray << '\n';
+    oflog << "hTexRef:" << hTexRef << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4325,8 +4684,8 @@ CUresult __stdcall cuTexRefGetMipmappedArray(CUmipmappedArray *phMipmappedArray,
     ret = g.m_cuTexRefGetMipmappedArray(phMipmappedArray, hTexRef);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "phMipmappedArray:" << phMipmappedArray << '\n';;
-    oflog << "hTexRef:" << hTexRef << '\n';;
+    oflog << "phMipmappedArray:" << phMipmappedArray << '\n';
+    oflog << "hTexRef:" << hTexRef << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4338,9 +4697,9 @@ CUresult __stdcall cuTexRefGetAddressMode(CUaddress_mode *pam, CUtexref hTexRef,
     ret = g.m_cuTexRefGetAddressMode(pam, hTexRef, dim);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pam:" << g.m_mapESCUaddress_mode[*pam] << '\n';;
-    oflog << "hTexRef:" << hTexRef << '\n';;
-    oflog << "dim:" << dim << '\n';;
+    oflog << "*pam:" << g.m_mapESCUaddress_mode[*pam] << pam << '\n';
+    oflog << "hTexRef:" << hTexRef << '\n';
+    oflog << "dim:" << dim << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4352,8 +4711,8 @@ CUresult __stdcall cuTexRefGetFilterMode(CUfilter_mode *pfm, CUtexref hTexRef)
     ret = g.m_cuTexRefGetFilterMode(pfm, hTexRef);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pfm:" << g.m_mapESCUfilter_mode[*pfm] << '\n';;
-    oflog << "hTexRef:" << hTexRef << '\n';;
+    oflog << "*pfm:" << g.m_mapESCUfilter_mode[*pfm] << pfm << '\n';
+    oflog << "hTexRef:" << hTexRef << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4365,9 +4724,9 @@ CUresult __stdcall cuTexRefGetFormat(CUarray_format *pFormat, int *pNumChannels,
     ret = g.m_cuTexRefGetFormat(pFormat, pNumChannels, hTexRef);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pFormat:" << g.m_mapESCUarray_format[*pFormat] << '\n';;
-    oflog << "*pNumChannels:" << (pNumChannels ? *pNumChannels : 0) << '\n';;
-    oflog << "hTexRef:" << hTexRef << '\n';;
+    oflog << "*pFormat:" << g.m_mapESCUarray_format[*pFormat] << pFormat << '\n';
+    oflog << "*pNumChannels:" << (pNumChannels ? *pNumChannels : 0) << '\n';
+    oflog << "hTexRef:" << hTexRef << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4379,8 +4738,8 @@ CUresult __stdcall cuTexRefGetMipmapFilterMode(CUfilter_mode *pfm, CUtexref hTex
     ret = g.m_cuTexRefGetMipmapFilterMode(pfm, hTexRef);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pfm:" << g.m_mapESCUfilter_mode[*pfm] << '\n';;
-    oflog << "hTexRef:" << hTexRef << '\n';;
+    oflog << "*pfm:" << g.m_mapESCUfilter_mode[*pfm] << pfm << '\n';
+    oflog << "hTexRef:" << hTexRef << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4392,8 +4751,8 @@ CUresult __stdcall cuTexRefGetMipmapLevelBias(float *pbias, CUtexref hTexRef)
     ret = g.m_cuTexRefGetMipmapLevelBias(pbias, hTexRef);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pbias:" << (pbias ? *pbias : 0) << '\n';;
-    oflog << "hTexRef:" << hTexRef << '\n';;
+    oflog << "*pbias:" << (pbias ? *pbias : 0) << '\n';
+    oflog << "hTexRef:" << hTexRef << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4405,9 +4764,9 @@ CUresult __stdcall cuTexRefGetMipmapLevelClamp(float *pminMipmapLevelClamp, floa
     ret = g.m_cuTexRefGetMipmapLevelClamp(pminMipmapLevelClamp, pmaxMipmapLevelClamp, hTexRef);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pminMipmapLevelClamp:" << (pminMipmapLevelClamp ? *pminMipmapLevelClamp : 0) << '\n';;
-    oflog << "*pmaxMipmapLevelClamp:" << (pmaxMipmapLevelClamp ? *pmaxMipmapLevelClamp : 0) << '\n';;
-    oflog << "hTexRef:" << hTexRef << '\n';;
+    oflog << "*pminMipmapLevelClamp:" << (pminMipmapLevelClamp ? *pminMipmapLevelClamp : 0) << '\n';
+    oflog << "*pmaxMipmapLevelClamp:" << (pmaxMipmapLevelClamp ? *pmaxMipmapLevelClamp : 0) << '\n';
+    oflog << "hTexRef:" << hTexRef << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4419,8 +4778,8 @@ CUresult __stdcall cuTexRefGetMaxAnisotropy(int *pmaxAniso, CUtexref hTexRef)
     ret = g.m_cuTexRefGetMaxAnisotropy(pmaxAniso, hTexRef);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pmaxAniso:" << (pmaxAniso ? *pmaxAniso : 0) << '\n';;
-    oflog << "hTexRef:" << hTexRef << '\n';;
+    oflog << "*pmaxAniso:" << (pmaxAniso ? *pmaxAniso : 0) << '\n';
+    oflog << "hTexRef:" << hTexRef << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4432,8 +4791,8 @@ CUresult __stdcall cuTexRefGetBorderColor(float *pBorderColor, CUtexref hTexRef)
     ret = g.m_cuTexRefGetBorderColor(pBorderColor, hTexRef);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pBorderColor:" << (pBorderColor ? *pBorderColor : 0) << '\n';;
-    oflog << "hTexRef:" << hTexRef << '\n';;
+    oflog << "*pBorderColor:" << (pBorderColor ? *pBorderColor : 0) << '\n';
+    oflog << "hTexRef:" << hTexRef << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4445,8 +4804,8 @@ CUresult __stdcall cuTexRefGetFlags(unsigned int *pFlags, CUtexref hTexRef)
     ret = g.m_cuTexRefGetFlags(pFlags, hTexRef);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pFlags:" << (pFlags ? *pFlags : 0) << '\n';;
-    oflog << "hTexRef:" << hTexRef << '\n';;
+    oflog << "*pFlags:" << (pFlags ? *pFlags : 0) << '\n';
+    oflog << "hTexRef:" << hTexRef << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4458,7 +4817,7 @@ CUresult __stdcall cuTexRefCreate(CUtexref *pTexRef)
     ret = g.m_cuTexRefCreate(pTexRef);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "pTexRef:" << pTexRef << '\n';;
+    oflog << "pTexRef:" << pTexRef << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4470,7 +4829,7 @@ CUresult __stdcall cuTexRefDestroy(CUtexref hTexRef)
     ret = g.m_cuTexRefDestroy(hTexRef);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hTexRef:" << hTexRef << '\n';;
+    oflog << "hTexRef:" << hTexRef << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4482,9 +4841,9 @@ CUresult __stdcall cuSurfRefSetArray(CUsurfref hSurfRef, CUarray hArray, unsigne
     ret = g.m_cuSurfRefSetArray(hSurfRef, hArray, Flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "hSurfRef:" << hSurfRef << '\n';;
-    oflog << "hArray:" << hArray << '\n';;
-    oflog << "Flags:" << Flags << '\n';;
+    oflog << "hSurfRef:" << hSurfRef << '\n';
+    oflog << "hArray:" << hArray << '\n';
+    oflog << "Flags:" << Flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4496,8 +4855,8 @@ CUresult __stdcall cuSurfRefGetArray(CUarray *phArray, CUsurfref hSurfRef)
     ret = g.m_cuSurfRefGetArray(phArray, hSurfRef);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "phArray:" << phArray << '\n';;
-    oflog << "hSurfRef:" << hSurfRef << '\n';;
+    oflog << "phArray:" << phArray << '\n';
+    oflog << "hSurfRef:" << hSurfRef << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4509,7 +4868,43 @@ CUresult __stdcall cuTexObjectCreate(CUtexObject *pTexObject, const CUDA_RESOURC
     ret = g.m_cuTexObjectCreate(pTexObject, pResDesc, pTexDesc, pResViewDesc);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pTexObject:" << (pTexObject ? *pTexObject : 0) << '\n';;
+    oflog << "*pTexObject:" << (pTexObject ? *pTexObject : 0) << '\n';
+    oflog << "pResDesc->resType:" << g.m_mapESCUresourcetype[pResDesc->resType] << pResDesc->resType << '\n'
+        << "pResDesc->res.array.hArray:" << pResDesc->res.array.hArray << '\n'
+        << "pResDesc->res.mipmap.hMipmappedArray:" << pResDesc->res.mipmap.hMipmappedArray << '\n'
+        << "pResDesc->res.linear.devPtr:" << pResDesc->res.linear.devPtr << '\n'
+        << "pResDesc->res.linear.format:" << g.m_mapESCUarray_format[pResDesc->res.linear.format] << pResDesc->res.linear.format << '\n'
+        << "pResDesc->res.linear.numChannels:" << pResDesc->res.linear.numChannels << '\n'
+        << "pResDesc->res.linear.sizeInBytes:" << pResDesc->res.linear.sizeInBytes << '\n'
+        << "pResDesc->res.pitch2D.devPtr:" << pResDesc->res.pitch2D.devPtr << '\n'
+        << "pResDesc->res.pitch2D.format:" << g.m_mapESCUarray_format[pResDesc->res.pitch2D.format] << pResDesc->res.pitch2D.format << '\n'
+        << "pResDesc->res.pitch2D.numChannels:" << pResDesc->res.pitch2D.numChannels << '\n'
+        << "pResDesc->res.pitch2D.width:" << pResDesc->res.pitch2D.width << '\n'
+        << "pResDesc->res.pitch2D.height:" << pResDesc->res.pitch2D.height << '\n'
+        << "pResDesc->res.pitch2D.pitchInBytes:" << pResDesc->res.pitch2D.pitchInBytes << '\n'
+        << "pResDesc->flags:" << pResDesc->flags << '\n';
+    oflog << "pTexDesc->addressMode[0]:" << g.m_mapESCUaddress_mode[pTexDesc->addressMode[0]] << pTexDesc->addressMode[0] << '\n'
+        << "pTexDesc->addressMode[1]:" << g.m_mapESCUaddress_mode[pTexDesc->addressMode[1]] << pTexDesc->addressMode[1] << '\n'
+        << "pTexDesc->addressMode[2]:" << g.m_mapESCUaddress_mode[pTexDesc->addressMode[2]] << pTexDesc->addressMode[2] << '\n'
+        << "pTexDesc->filterMode:" << g.m_mapESCUfilter_mode[pTexDesc->filterMode] << pTexDesc->filterMode << '\n'
+        << "pTexDesc->flags:" << pTexDesc->flags << '\n'
+        << "pTexDesc->maxAnisotropy:" << pTexDesc->maxAnisotropy << '\n'
+        << "pTexDesc->mipmapFilterMode:" << g.m_mapESCUfilter_mode[pTexDesc->mipmapFilterMode] << pTexDesc->mipmapFilterMode << '\n'
+        << "pTexDesc->mipmapLevelBias:" << pTexDesc->mipmapLevelBias << '\n'
+        << "pTexDesc->minMipmapLevelClamp:" << pTexDesc->minMipmapLevelClamp << '\n'
+        << "pTexDesc->maxMipmapLevelClamp:" << pTexDesc->maxMipmapLevelClamp << '\n'
+        << "pTexDesc->borderColor:" << pTexDesc->borderColor[0] << '\n'
+        << "pTexDesc->borderColor:" << pTexDesc->borderColor[1] << '\n'
+        << "pTexDesc->borderColor:" << pTexDesc->borderColor[2] << '\n'
+        << "pTexDesc->borderColor:" << pTexDesc->borderColor[3] << '\n';
+    oflog << "pResViewDesc->format:" << g.m_mapESCUresourceViewFormat[pResViewDesc->format] << pResViewDesc->format << '\n'
+        << "pResViewDesc->width:" << pResViewDesc->width << '\n'
+        << "pResViewDesc->height:" << pResViewDesc->height << '\n'
+        << "pResViewDesc->depth:" << pResViewDesc->depth << '\n'
+        << "pResViewDesc->firstMipmapLevel:" << pResViewDesc->firstMipmapLevel << '\n'
+        << "pResViewDesc->lastMipmapLevel:" << pResViewDesc->lastMipmapLevel << '\n'
+        << "pResViewDesc->firstLayer:" << pResViewDesc->firstLayer << '\n'
+        << "pResViewDesc->lastLayer:" << pResViewDesc->lastLayer << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4521,7 +4916,7 @@ CUresult __stdcall cuTexObjectDestroy(CUtexObject texObject)
     ret = g.m_cuTexObjectDestroy(texObject);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "texObject:" << texObject << '\n';;
+    oflog << "texObject:" << texObject << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4533,7 +4928,21 @@ CUresult __stdcall cuTexObjectGetResourceDesc(CUDA_RESOURCE_DESC *pResDesc, CUte
     ret = g.m_cuTexObjectGetResourceDesc(pResDesc, texObject);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "texObject:" << texObject << '\n';;
+    oflog << "pResDesc->resType:" << g.m_mapESCUresourcetype[pResDesc->resType] << pResDesc->resType << '\n'
+        << "pResDesc->res.array.hArray:" << pResDesc->res.array.hArray << '\n'
+        << "pResDesc->res.mipmap.hMipmappedArray:" << pResDesc->res.mipmap.hMipmappedArray << '\n'
+        << "pResDesc->res.linear.devPtr:" << pResDesc->res.linear.devPtr << '\n'
+        << "pResDesc->res.linear.format:" << g.m_mapESCUarray_format[pResDesc->res.linear.format] << pResDesc->res.linear.format << '\n'
+        << "pResDesc->res.linear.numChannels:" << pResDesc->res.linear.numChannels << '\n'
+        << "pResDesc->res.linear.sizeInBytes:" << pResDesc->res.linear.sizeInBytes << '\n'
+        << "pResDesc->res.pitch2D.devPtr:" << pResDesc->res.pitch2D.devPtr << '\n'
+        << "pResDesc->res.pitch2D.format:" << g.m_mapESCUarray_format[pResDesc->res.pitch2D.format] << pResDesc->res.pitch2D.format << '\n'
+        << "pResDesc->res.pitch2D.numChannels:" << pResDesc->res.pitch2D.numChannels << '\n'
+        << "pResDesc->res.pitch2D.width:" << pResDesc->res.pitch2D.width << '\n'
+        << "pResDesc->res.pitch2D.height:" << pResDesc->res.pitch2D.height << '\n'
+        << "pResDesc->res.pitch2D.pitchInBytes:" << pResDesc->res.pitch2D.pitchInBytes << '\n'
+        << "pResDesc->flags:" << pResDesc->flags << '\n';
+    oflog << "texObject:" << texObject << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4545,7 +4954,21 @@ CUresult __stdcall cuTexObjectGetTextureDesc(CUDA_TEXTURE_DESC *pTexDesc, CUtexO
     ret = g.m_cuTexObjectGetTextureDesc(pTexDesc, texObject);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "texObject:" << texObject << '\n';;
+    oflog << "pTexDesc->addressMode[0]:" << g.m_mapESCUaddress_mode[pTexDesc->addressMode[0]] << pTexDesc->addressMode[0] << '\n'
+        << "pTexDesc->addressMode[1]:" << g.m_mapESCUaddress_mode[pTexDesc->addressMode[1]] << pTexDesc->addressMode[1] << '\n'
+        << "pTexDesc->addressMode[2]:" << g.m_mapESCUaddress_mode[pTexDesc->addressMode[2]] << pTexDesc->addressMode[2] << '\n'
+        << "pTexDesc->filterMode:" << g.m_mapESCUfilter_mode[pTexDesc->filterMode] << pTexDesc->filterMode << '\n'
+        << "pTexDesc->flags:" << pTexDesc->flags << '\n'
+        << "pTexDesc->maxAnisotropy:" << pTexDesc->maxAnisotropy << '\n'
+        << "pTexDesc->mipmapFilterMode:" << g.m_mapESCUfilter_mode[pTexDesc->mipmapFilterMode] << pTexDesc->mipmapFilterMode << '\n'
+        << "pTexDesc->mipmapLevelBias:" << pTexDesc->mipmapLevelBias << '\n'
+        << "pTexDesc->minMipmapLevelClamp:" << pTexDesc->minMipmapLevelClamp << '\n'
+        << "pTexDesc->maxMipmapLevelClamp:" << pTexDesc->maxMipmapLevelClamp << '\n'
+        << "pTexDesc->borderColor:" << pTexDesc->borderColor[0] << '\n'
+        << "pTexDesc->borderColor:" << pTexDesc->borderColor[1] << '\n'
+        << "pTexDesc->borderColor:" << pTexDesc->borderColor[2] << '\n'
+        << "pTexDesc->borderColor:" << pTexDesc->borderColor[3] << '\n';
+    oflog << "texObject:" << texObject << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4557,7 +4980,15 @@ CUresult __stdcall cuTexObjectGetResourceViewDesc(CUDA_RESOURCE_VIEW_DESC *pResV
     ret = g.m_cuTexObjectGetResourceViewDesc(pResViewDesc, texObject);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "texObject:" << texObject << '\n';;
+    oflog << "pResViewDesc->format:" << g.m_mapESCUresourceViewFormat[pResViewDesc->format] << pResViewDesc->format << '\n'
+        << "pResViewDesc->width:" << pResViewDesc->width << '\n'
+        << "pResViewDesc->height:" << pResViewDesc->height << '\n'
+        << "pResViewDesc->depth:" << pResViewDesc->depth << '\n'
+        << "pResViewDesc->firstMipmapLevel:" << pResViewDesc->firstMipmapLevel << '\n'
+        << "pResViewDesc->lastMipmapLevel:" << pResViewDesc->lastMipmapLevel << '\n'
+        << "pResViewDesc->firstLayer:" << pResViewDesc->firstLayer << '\n'
+        << "pResViewDesc->lastLayer:" << pResViewDesc->lastLayer << '\n';
+    oflog << "texObject:" << texObject << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4569,7 +5000,21 @@ CUresult __stdcall cuSurfObjectCreate(CUsurfObject *pSurfObject, const CUDA_RESO
     ret = g.m_cuSurfObjectCreate(pSurfObject, pResDesc);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pSurfObject:" << (pSurfObject ? *pSurfObject : 0) << '\n';;
+    oflog << "*pSurfObject:" << (pSurfObject ? *pSurfObject : 0) << '\n';
+    oflog << "pResDesc->resType:" << g.m_mapESCUresourcetype[pResDesc->resType] << pResDesc->resType << '\n'
+        << "pResDesc->res.array.hArray:" << pResDesc->res.array.hArray << '\n'
+        << "pResDesc->res.mipmap.hMipmappedArray:" << pResDesc->res.mipmap.hMipmappedArray << '\n'
+        << "pResDesc->res.linear.devPtr:" << pResDesc->res.linear.devPtr << '\n'
+        << "pResDesc->res.linear.format:" << g.m_mapESCUarray_format[pResDesc->res.linear.format] << pResDesc->res.linear.format << '\n'
+        << "pResDesc->res.linear.numChannels:" << pResDesc->res.linear.numChannels << '\n'
+        << "pResDesc->res.linear.sizeInBytes:" << pResDesc->res.linear.sizeInBytes << '\n'
+        << "pResDesc->res.pitch2D.devPtr:" << pResDesc->res.pitch2D.devPtr << '\n'
+        << "pResDesc->res.pitch2D.format:" << g.m_mapESCUarray_format[pResDesc->res.pitch2D.format] << pResDesc->res.pitch2D.format << '\n'
+        << "pResDesc->res.pitch2D.numChannels:" << pResDesc->res.pitch2D.numChannels << '\n'
+        << "pResDesc->res.pitch2D.width:" << pResDesc->res.pitch2D.width << '\n'
+        << "pResDesc->res.pitch2D.height:" << pResDesc->res.pitch2D.height << '\n'
+        << "pResDesc->res.pitch2D.pitchInBytes:" << pResDesc->res.pitch2D.pitchInBytes << '\n'
+        << "pResDesc->flags:" << pResDesc->flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4581,7 +5026,7 @@ CUresult __stdcall cuSurfObjectDestroy(CUsurfObject surfObject)
     ret = g.m_cuSurfObjectDestroy(surfObject);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "surfObject:" << surfObject << '\n';;
+    oflog << "surfObject:" << surfObject << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4593,7 +5038,21 @@ CUresult __stdcall cuSurfObjectGetResourceDesc(CUDA_RESOURCE_DESC *pResDesc, CUs
     ret = g.m_cuSurfObjectGetResourceDesc(pResDesc, surfObject);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "surfObject:" << surfObject << '\n';;
+    oflog << "pResDesc->resType:" << g.m_mapESCUresourcetype[pResDesc->resType] << pResDesc->resType << '\n'
+        << "pResDesc->res.array.hArray:" << pResDesc->res.array.hArray << '\n'
+        << "pResDesc->res.mipmap.hMipmappedArray:" << pResDesc->res.mipmap.hMipmappedArray << '\n'
+        << "pResDesc->res.linear.devPtr:" << pResDesc->res.linear.devPtr << '\n'
+        << "pResDesc->res.linear.format:" << g.m_mapESCUarray_format[pResDesc->res.linear.format] << pResDesc->res.linear.format << '\n'
+        << "pResDesc->res.linear.numChannels:" << pResDesc->res.linear.numChannels << '\n'
+        << "pResDesc->res.linear.sizeInBytes:" << pResDesc->res.linear.sizeInBytes << '\n'
+        << "pResDesc->res.pitch2D.devPtr:" << pResDesc->res.pitch2D.devPtr << '\n'
+        << "pResDesc->res.pitch2D.format:" << g.m_mapESCUarray_format[pResDesc->res.pitch2D.format] << pResDesc->res.pitch2D.format << '\n'
+        << "pResDesc->res.pitch2D.numChannels:" << pResDesc->res.pitch2D.numChannels << '\n'
+        << "pResDesc->res.pitch2D.width:" << pResDesc->res.pitch2D.width << '\n'
+        << "pResDesc->res.pitch2D.height:" << pResDesc->res.pitch2D.height << '\n'
+        << "pResDesc->res.pitch2D.pitchInBytes:" << pResDesc->res.pitch2D.pitchInBytes << '\n'
+        << "pResDesc->flags:" << pResDesc->flags << '\n';
+    oflog << "surfObject:" << surfObject << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4605,9 +5064,9 @@ CUresult __stdcall cuDeviceCanAccessPeer(int *canAccessPeer, CUdevice dev, CUdev
     ret = g.m_cuDeviceCanAccessPeer(canAccessPeer, dev, peerDev);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*canAccessPeer:" << (canAccessPeer ? *canAccessPeer : 0) << '\n';;
-    oflog << "dev:" << dev << '\n';;
-    oflog << "peerDev:" << peerDev << '\n';;
+    oflog << "*canAccessPeer:" << (canAccessPeer ? *canAccessPeer : 0) << '\n';
+    oflog << "dev:" << dev << '\n';
+    oflog << "peerDev:" << peerDev << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4619,8 +5078,8 @@ CUresult __stdcall cuCtxEnablePeerAccess(CUcontext peerContext, unsigned int Fla
     ret = g.m_cuCtxEnablePeerAccess(peerContext, Flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "peerContext:" << peerContext << '\n';;
-    oflog << "Flags:" << Flags << '\n';;
+    oflog << "peerContext:" << peerContext << '\n';
+    oflog << "Flags:" << Flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4632,7 +5091,7 @@ CUresult __stdcall cuCtxDisablePeerAccess(CUcontext peerContext)
     ret = g.m_cuCtxDisablePeerAccess(peerContext);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "peerContext:" << peerContext << '\n';;
+    oflog << "peerContext:" << peerContext << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4644,10 +5103,10 @@ CUresult __stdcall cuDeviceGetP2PAttribute(int *value, CUdevice_P2PAttribute att
     ret = g.m_cuDeviceGetP2PAttribute(value, attrib, srcDevice, dstDevice);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*value:" << (value ? *value : 0) << '\n';;
-    oflog << "attrib:" << g.m_mapESCUdevice_P2PAttribute[attrib] << '\n';;
-    oflog << "srcDevice:" << srcDevice << '\n';;
-    oflog << "dstDevice:" << dstDevice << '\n';;
+    oflog << "*value:" << (value ? *value : 0) << '\n';
+    oflog << "attrib:" << g.m_mapESCUdevice_P2PAttribute[attrib] << attrib << '\n';
+    oflog << "srcDevice:" << srcDevice << '\n';
+    oflog << "dstDevice:" << dstDevice << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4659,7 +5118,7 @@ CUresult __stdcall cuGraphicsUnregisterResource(CUgraphicsResource resource)
     ret = g.m_cuGraphicsUnregisterResource(resource);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "resource:" << resource << '\n';;
+    oflog << "resource:" << resource << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4671,10 +5130,10 @@ CUresult __stdcall cuGraphicsSubResourceGetMappedArray(CUarray *pArray, CUgraphi
     ret = g.m_cuGraphicsSubResourceGetMappedArray(pArray, resource, arrayIndex, mipLevel);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "pArray:" << pArray << '\n';;
-    oflog << "resource:" << resource << '\n';;
-    oflog << "arrayIndex:" << arrayIndex << '\n';;
-    oflog << "mipLevel:" << mipLevel << '\n';;
+    oflog << "pArray:" << pArray << '\n';
+    oflog << "resource:" << resource << '\n';
+    oflog << "arrayIndex:" << arrayIndex << '\n';
+    oflog << "mipLevel:" << mipLevel << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4686,8 +5145,8 @@ CUresult __stdcall cuGraphicsResourceGetMappedMipmappedArray(CUmipmappedArray *p
     ret = g.m_cuGraphicsResourceGetMappedMipmappedArray(pMipmappedArray, resource);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "pMipmappedArray:" << pMipmappedArray << '\n';;
-    oflog << "resource:" << resource << '\n';;
+    oflog << "pMipmappedArray:" << pMipmappedArray << '\n';
+    oflog << "resource:" << resource << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4699,9 +5158,9 @@ CUresult __stdcall cuGraphicsResourceGetMappedPointer_v2(CUdeviceptr *pDevPtr, s
     ret = g.m_cuGraphicsResourceGetMappedPointer_v2(pDevPtr, pSize, resource);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*pDevPtr:" << (pDevPtr ? *pDevPtr : 0) << '\n';;
-    oflog << "*pSize:" << (pSize ? *pSize : 0) << '\n';;
-    oflog << "resource:" << resource << '\n';;
+    oflog << "*pDevPtr:" << (pDevPtr ? *pDevPtr : 0) << '\n';
+    oflog << "*pSize:" << (pSize ? *pSize : 0) << '\n';
+    oflog << "resource:" << resource << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4713,8 +5172,8 @@ CUresult __stdcall cuGraphicsResourceSetMapFlags_v2(CUgraphicsResource resource,
     ret = g.m_cuGraphicsResourceSetMapFlags_v2(resource, flags);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "resource:" << resource << '\n';;
-    oflog << "flags:" << flags << '\n';;
+    oflog << "resource:" << resource << '\n';
+    oflog << "flags:" << flags << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4726,9 +5185,9 @@ CUresult __stdcall cuGraphicsMapResources(unsigned int count, CUgraphicsResource
     ret = g.m_cuGraphicsMapResources(count, resources, hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "count:" << count << '\n';;
-    oflog << "resources:" << resources << '\n';;
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "count:" << count << '\n';
+    oflog << "resources:" << resources << '\n';
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4740,9 +5199,9 @@ CUresult __stdcall cuGraphicsUnmapResources(unsigned int count, CUgraphicsResour
     ret = g.m_cuGraphicsUnmapResources(count, resources, hStream);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "count:" << count << '\n';;
-    oflog << "resources:" << resources << '\n';;
-    oflog << "hStream:" << hStream << '\n';;
+    oflog << "count:" << count << '\n';
+    oflog << "resources:" << resources << '\n';
+    oflog << "hStream:" << hStream << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
@@ -4754,7 +5213,8 @@ CUresult __stdcall cuGetExportTable(const void **ppExportTable, const CUuuid *pE
     ret = g.m_cuGetExportTable(ppExportTable, pExportTableId);
     oflog << __FUNCTION__ << " start:\n";
     oflog << "CUresult:" << g.m_mapESCUresult[ret] << '\n';
-    oflog << "*ppExportTable:" << (ppExportTable ? *ppExportTable : 0) << '\n';;
+    oflog << "*ppExportTable:" << (ppExportTable ? *ppExportTable : 0) << '\n';
+    oflog << "pExportTableId->bytes:" << pExportTableId->bytes << '\n';
     oflog << __FUNCTION__ << " end:\n\n";
     return ret;
 }
