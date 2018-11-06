@@ -107,39 +107,39 @@ class cvar(object):
             if self.type == 'char':
                 if self.arraycnt == 1:
                     if self.pcnt < 2: 
-                        ret = ret + '"' + name + ':" << ' + name + ' << \'\\n\'\n << '
+                        ret = ret + '"' + name + ': " << ' + name + ' << \'\\n\'\n << '
                     else:
-                        ret = ret + '"*' + name + ':" << (' + name + ' ? *' + name + ' : 0) << \'\\n\'\n << '
+                        ret = ret + '"*' + name + ': " << (' + name + ' ? *' + name + ' : 0) << \'\\n\'\n << '
                 else:
                     if self.pcnt == 0:
-                        ret = ret + '"' + name + ':" << ' + name + ' << \'\\n\'\n << '
+                        ret = ret + '"' + name + ': " << ' + name + ' << \'\\n\'\n << '
                     else:
                         for i in range(self.arraycnt):
                             if self.pcnt == 1:
                                 aname = name + '[' + str(i) + ']'
-                                ret = ret + '"' + aname + ':" << ' + aname + '<< \'\\n\'\n << '
+                                ret = ret + '"' + aname + ': " << ' + aname + '<< \'\\n\'\n << '
                             else:
                                 print('Error:more than 2 pionter')
             elif self.type == 'void':
                 if self.pcnt == 1: 
-                    ret = ret + '"' + name + ':" << ' + name + ' << \'\\n\'\n << '
+                    ret = ret + '"' + name + ': " << ' + name + ' << \'\\n\'\n << '
                 elif self.pcnt == 2:
-                    ret = ret + '"*' + name + ':" << (' + name + ' ? *' + name + ' : 0)  << \'\\n\'\n << '
+                    ret = ret + '"*' + name + ': " << (' + name + ' ? *' + name + ' : 0)  << \'\\n\'\n << '
                 else:
                     print('void with no pointer cant support')
             else:
                 if self.arraycnt == 1:
                     if self.pcnt == 0: 
-                        ret = ret + '"' + name + ':" << ' + name + ' << \'\\n\'\n << '
+                        ret = ret + '"' + name + ': " << ' + name + ' << \'\\n\'\n << '
                     elif self.pcnt > 0:
-                        ret = ret + '"*' + name + ':" << (' + name + ' ? *' + name + ' : 0) << \'\\n\'\n << '
+                        ret = ret + '"*' + name + ': " << (' + name + ' ? *' + name + ' : 0) << \'\\n\'\n << '
                 else:
                     for i in range(self.arraycnt):
                         aname = name + '[' + str(i) + ']'
                         if self.pcnt == 0:
-                            ret = ret + '"' + name + ':" << ' + name + '[' + str(i) + '] << \'\\n\'\n << '
+                            ret = ret + '"' + name + ': " << ' + aname + ' << \'\\n\'\n << '
                         elif self.pcnt == 1:
-                            ret = ret + '"*' + aname + ':" << *' + aname +' << \'\\n\'\n << '
+                            ret = ret + '"*' + aname + ': " << *' + aname +' << \'\\n\'\n << '
                         else:
                             print('Error:more than 2 pionter')
         elif typefind == 'enum':
@@ -147,16 +147,16 @@ class cvar(object):
                 if self.pcnt == 0:
                     for i in range(self.arraycnt):
                         aname = name + '[' + str(i) + ']'
-                        ret = ret + '"' + aname + ':" << g.m_mapES' + self.type + '[' + aname + '] << " = " <<' + aname +' << \'\\n\'\n << '
+                        ret = ret + '"' + aname + ': " << g.m_mapES' + self.type + '[' + aname + '] << " = " <<' + aname +' << \'\\n\'\n << '
             elif self.pcnt == 0 :
-                ret = ret + '"' + name + ':" << g.m_mapES' + self.type + '[' + name + ']  << " = " <<' + name + ' << \'\\n\'\n << '
+                ret = ret + '"' + name + ': " << g.m_mapES' + self.type + '[' + name + ']  << " = " <<' + name + ' << \'\\n\'\n << '
             elif self.pcnt == 1 :
-                ret = ret + '"*' + name + ':" << g.m_mapES' + self.type + '[*' + name + '] << " = " << *' + name + ' << \'\\n\'\n << '
+                ret = ret + '"*' + name + ': " << g.m_mapES' + self.type + '[*' + name + '] << " = " << *' + name + ' << \'\\n\'\n << '
             else:
                 print ('**enum havent support yet')
         elif typefind == 'struct' or derivestruct != None:
             if self.pcnt > 1:
-                ret = ret + '"*' + name + ':" << (' + name + ' ? *' + name + ' : 0) << \'\\n\'\n << '
+                ret = ret + '"*' + name + ': " << (' + name + ' ? *' + name + ' : 0) << \'\\n\'\n << '
             else:
                 if derivestruct == None:
                     struct = gstructs.get(self.type)
@@ -182,7 +182,7 @@ class cvar(object):
                 else:
                     print ('cant find struct')
         elif typefind == 'struct*' or typefind == 'union*' or typefind == 'function*':
-            ret = ret + '"' + name + ':" << ' + name + ' << \'\\n\'\n << '
+            ret = ret + '"' + name + ': " << ' + name + ' << \'\\n\'\n << '
         else:
             print ('error: unknow type:' + self.type)
 
