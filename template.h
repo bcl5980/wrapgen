@@ -24,8 +24,8 @@ using std::string;
 
 void GetExcName(char *processname)
 {
-    GetModuleFileName(NULL, szExePath, sizeof(szExePath));
-    PathRemoveFileSpec(szExePath);
+    GetModuleFileName(NULL, processname, 256);
+    PathStripPath(processname);
 }
 
 #else
