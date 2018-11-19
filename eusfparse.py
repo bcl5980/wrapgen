@@ -439,6 +439,12 @@ with open('cudawrap.h', 'r') as f:
                 line = line[6:].strip()
                 for name in gfunctions:
                     output.append(line.replace('#name', name)+'\n')
+            elif line.startswith('#funcdeclare'):
+                line = line[12:].strip()
+                for name in gfunctions:
+                    declarefunc = line.replace('#name', name)
+                    declarefunc = declarefunc.replace('#params', gfunctions[name].strparams)
+                    output.append(declarefunc+'\n')
             elif line.startswith('#funcdefstart'):
                 logcontent = True
                 content = ''
