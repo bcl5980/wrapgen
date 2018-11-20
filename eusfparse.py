@@ -97,6 +97,16 @@ class cvar(object):
         self.pcnt = i
         self.name = name[i:]
 
+        if self.pcnt == 2:
+            self.output = True
+            self.input = False
+        elif self.const == True or self.pcnt == 0:
+            self.input = True
+            self.output = False
+        elif self.pcnt == 1:
+            self.input = False
+            self.output = True
+
     def genlogcode(self, prefix, derivestruct=None):
         if self.name == 'pad' or self.name.startswith('reserved'):
             return ''
@@ -182,7 +192,10 @@ class cvar(object):
                 else:
                     print ('cant find struct')
         elif typefind == 'struct*' or typefind == 'union*' or typefind == 'function*':
-            ret = ret + '"' + name + ': " << ' + name + ' << \'\\n\'\n << '
+            if self.pcnt == 0:
+                ret = ret + '"' + name + ': " << (void*)' + name + ' << \'\\n\'\n << '
+            else:
+                ret = ret + '"*' + name + ': " << (void*)*' + name + ' << \'\\n\'\n << '
         else:
             print ('error: unknow type:' + self.type)
 
@@ -270,6 +283,7 @@ class cfuntion(object):
         self.name = name
         self.calltype = calltype
         self.params = []
+        self.paramInout = []
         self.strparams = ''
         self.notypeparams = ''
         self.deprecated = False
@@ -292,13 +306,23 @@ class cfuntion(object):
         lines = basiccodes.split('\n')
         ret = ''
         for line in lines:
-            if line.startswith('#fparams'):
-                line = line[8:].strip()
+            paramstartcnt = 0
+            if line.startswith('#fparamsin'):
+                paramstartcnt = 10
+            elif line.startswith('#fparamsout'):
+                paramstartcnt = 11
+            elif line.startswith('#fparams'):
+                paramstartcnt = 8
+            if paramstartcnt != 0:
+                line = line[paramstartcnt:].strip()
                 for param in self.params:
                     logcode = param.genlogcode('')
                     if logcode != '':
-                        logcode = logcode[:-5]
-                        ret = ret + line.replace('#paramlog', logcode) +'\n'
+                        if (paramstartcnt == 8) or \
+                           (param.input == True and paramstartcnt == 10) or\
+                           (param.output == True and paramstartcnt == 11):
+                            logcode = logcode[:-5]
+                            ret = ret + line.replace('#paramlog', logcode) +'\n'                     
             else:
                 ret = ret + line + '\n'
         return ret
@@ -429,7 +453,7 @@ with open('cudawrap.h', 'r') as f:
 
             if line.startswith('#definefp'):
                 line = line[9:].strip()
-                for name in gfunctions:
+                for name in sorted(gfunctions):
                     deffp = line.replace('#result', gfunctions[name].ret)
                     deffp = deffp.replace('#calltype', gfunctions[name].calltype)
                     deffp = deffp.replace('#name', name)
@@ -437,20 +461,26 @@ with open('cudawrap.h', 'r') as f:
                     output.append(deffp+'\n')
             elif line.startswith('#memfp') or line.startswith('#getfp'):
                 line = line[6:].strip()
-                for name in gfunctions:
+                for name in sorted(gfunctions):
                     output.append(line.replace('#name', name)+'\n')
             elif line.startswith('#funcdeclare'):
                 line = line[12:].strip()
-                for name in gfunctions:
+                for name in sorted(gfunctions):
                     declarefunc = line.replace('#name', name)
                     declarefunc = declarefunc.replace('#params', gfunctions[name].strparams)
+                    output.append(declarefunc+'\n')
+            elif line.startswith('#funcstr'):
+                line = line[8:].strip()
+                for name in sorted(gfunctions):
+                    declarefunc = line.replace('#name', name)
+                    declarefunc = declarefunc.replace('#notypeparam', gfunctions[name].notypeparams)
                     output.append(declarefunc+'\n')
             elif line.startswith('#funcdefstart'):
                 logcontent = True
                 content = ''
             elif line.startswith('#funcdefend'):
                 content = content[:content.rfind('#')]
-                for name in gfunctions:
+                for name in sorted(gfunctions):
                     impfunc = content.replace('#result', gfunctions[name].ret)
                     impfunc = impfunc.replace('#calltype', gfunctions[name].calltype)
                     impfunc = impfunc.replace('#name', name)
@@ -476,7 +506,7 @@ with open('cudawrap.h', 'r') as f:
                 output.append(line)
 
         defout = "LIBRARY nvcuda\nEXPORTS\n"
-        for name in gfunctions:
+        for name in sorted(gfunctions):
             defout = defout + '\t' + name + '\n'
 
         with open('nvcuda.cpp', 'w') as f3:
