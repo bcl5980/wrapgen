@@ -50,6 +50,7 @@ class cenum(object):
         start = end + 1
         end = unit.find(';')
         self.name = unit[start:end].strip()
+        value = -1
         for member in enummembers:
             if member.find('=') != -1:
                 name, svalue = member.split('=')
@@ -68,8 +69,8 @@ class cenum(object):
                     self.enums[name] = value
                     self.values[value] = name
             else:
-                value = value + 1
                 name = member
+                value = value + 1
                 self.enums[member] = value 
                 self.values[value] = name
 
@@ -84,18 +85,30 @@ class cvar(object):
 
         self.type = vtype
         self.arraycnt = 1
-        start = name.find('[')
-        if (start) != -1:
-            end = name.find(']')
-            strarray = name[start + 1:end]
-            self.arraycnt = int(strarray)
-            name = name[:start]
 
         i = 0
-        while name[i] == '*':
-            i = i + 1
+        if name != '':
+            start = name.find('[')
+            if (start) != -1:
+                end = name.find(']')
+                strarray = name[start + 1:end]
+                self.arraycnt = int(strarray)
+                name = name[:start]
+
+            start = name.find(':')
+            if (start) != -1:
+                name = name[:start]
+
+            while name[i] == '*':
+                i = i + 1
+
+            if name[0] == '&':
+                i = 1
+                self.ref = True
+            self.name = name[i:]
+        else:
+            self.name = name
         self.pcnt = i
-        self.name = name[i:]
 
         if self.pcnt == 2:
             self.output = True
@@ -182,8 +195,8 @@ class cvar(object):
 
                     for vname in struct.varindex:
                         var = struct.varibles[vname]
-                        if var.type.startswith('__'):
-                            indx = int(var.type[2:]) - 1
+                        if var.type.startswith('@'):
+                            indx = int(var.type[1:]) - 1
                             ret = ret + var.genlogcode(rprefix, struct.empty[indx])
                         elif struct.structs.get(var.type) != None:
                             ret = ret + var.genlogcode(rprefix, struct.structs.get(var.type))
@@ -251,19 +264,28 @@ class cstruct(object):
                             brackets = brackets + 1
                         elif member.startswith('}') :
                             brackets = brackets - 1
-                            if brackets == 0 :
-                                break
+                        
+                        if member.find(';') != -1 and brackets == 0 :
+                            break
                         i = i + 1
 
                     struct = cstruct()
                     struct.init(content)
                     if struct.name == '':
                         self.empty.append(struct)
-                        vtype = '__' + str(len(self.empty))
+                        vtype = '@' + str(len(self.empty))
                         struct.name = vtype
                     else:
                         vtype = struct.name
                         self.structs[struct.name] = struct
+
+                    varnamestart = content.rfind('}')
+                    varnameend = content.rfind(';')
+                    varname = content[varnamestart+1:varnameend].strip()
+
+                    var = cvar(vtype, varname)
+                    self.varibles[varname] = var
+                    self.varindex.append(varname)
                 else:
                     if member.endswith(';'):
                         name = member[:-1].strip()
@@ -289,7 +311,7 @@ class cfuntion(object):
         self.deprecated = False
         
     def init(self, params):
-        if params != 'void':
+        if params != 'void' and params != '':
             self.strparams = params
             self.notypeparams = ''
             elements = params.split(',')
@@ -355,7 +377,7 @@ gtype['double'] = 'basic'
 gtype['uint32_t'] = 'basic'
 gtype['uint64_t'] = 'basic'
 
-with open('cudawrap.h', 'r') as f:
+with open('cixkmti.h', 'r') as f:
     strLines = f.readlines()
     units = SplitUnit(strLines, 'typedef')
 
@@ -509,8 +531,8 @@ with open('cudawrap.h', 'r') as f:
         for name in sorted(gfunctions):
             defout = defout + '\t' + name + '\n'
 
-        with open('nvcuda.cpp', 'w') as f3:
+        with open('kmtilog.cpp', 'w') as f3:
             f3.writelines(output)
 
-        with open('nvcuda.def', 'w') as f3:
-            f3.write(defout)
+        #with open('nvcuda.def', 'w') as f3:
+        #    f3.write(defout)
