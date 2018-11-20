@@ -1,4 +1,4 @@
-import re
+import argparse
 
 def SplitUnit(strLines, strPrefix):
     units = []
@@ -378,7 +378,13 @@ gtype['double'] = 'basic'
 gtype['uint32_t'] = 'basic'
 gtype['uint64_t'] = 'basic'
 
-with open('cixkmti.h', 'r') as f:
+parser = argparse.ArgumentParser()
+parser.add_argument("-s", "--source", help="source file")
+parser.add_argument("-t", "--template", help="template file")
+parser.add_argument("-g", "--generate", help="generate result")
+args = parser.parse_args()
+
+with open(args.source, 'r') as f:
     strLines = f.readlines()
     units = SplitUnit(strLines, 'typedef')
 
@@ -465,7 +471,7 @@ with open('cixkmti.h', 'r') as f:
             func.deprecated = deprecated
             gfunctions[func.name] = func
 
-    with open('template.h', 'r') as f2:
+    with open(args.template, 'r') as f2:
         strLines = f2.readlines() 
         output = []
         logcontent = False
@@ -490,7 +496,11 @@ with open('cixkmti.h', 'r') as f:
                 line = line[12:].strip()
                 for name in sorted(gfunctions):
                     declarefunc = line.replace('#name', name)
-                    declarefunc = declarefunc.replace('#params', gfunctions[name].strparams)
+                    if gfunctions[name].strparams.strip() == '' or gfunctions[name].strparams == 'void':
+                        declarefunc = declarefunc.replace('#params', '') 
+                        declarefunc = declarefunc.replace(', )', ')') 
+                    else:                
+                        declarefunc = declarefunc.replace('#params', gfunctions[name].strparams)
                     output.append(declarefunc+'\n')
             elif line.startswith('#funcstr'):
                 line = line[8:].strip()
@@ -507,8 +517,12 @@ with open('cixkmti.h', 'r') as f:
                     impfunc = content.replace('#result', gfunctions[name].ret)
                     impfunc = impfunc.replace('#calltype', gfunctions[name].calltype)
                     impfunc = impfunc.replace('#name', name)
-                    impfunc = impfunc.replace('#params', gfunctions[name].strparams)
-                    impfunc = impfunc.replace('#notypeparam', gfunctions[name].notypeparams)
+                    if gfunctions[name].strparams.strip() == '' or gfunctions[name].strparams == 'void':
+                        impfunc = impfunc.replace('#params', '') 
+                        impfunc = impfunc.replace(', )', ')') 
+                    else:
+                        impfunc = impfunc.replace('#params', gfunctions[name].strparams)
+                    impfunc = impfunc.replace('#notypeparam', gfunctions[name].notypeparams) 
                     impfunc = gfunctions[name].genlogcode(impfunc, gtype)
                     output.append(impfunc+'\n')
             elif line.startswith('#esdef'):
@@ -532,7 +546,7 @@ with open('cixkmti.h', 'r') as f:
         for name in sorted(gfunctions):
             defout = defout + '\t' + name + '\n'
 
-        with open('kmtilog.cpp', 'w') as f3:
+        with open(args.generate, 'w') as f3:
             f3.writelines(output)
 
         #with open('nvcuda.def', 'w') as f3:
