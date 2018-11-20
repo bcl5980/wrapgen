@@ -52,27 +52,28 @@ class cenum(object):
         self.name = unit[start:end].strip()
         value = -1
         for member in enummembers:
-            if member.find('=') != -1:
-                name, svalue = member.split('=')
-                name = name.strip()
-                svalue = svalue.strip()
-                if svalue.find('x') != -1:
-                    value = int(svalue, 16)
-                    self.enums[name] = value
-                    self.values[value] = name
-                elif svalue.find('<<') != -1:
-                    value = eval(svalue)
-                    self.enums[name] = value
-                    self.values[value] = name
+            if member != '':
+                if member.find('=') != -1:
+                    name, svalue = member.split('=')
+                    name = name.strip()
+                    svalue = svalue.strip()
+                    if svalue.find('x') != -1:
+                        value = int(svalue, 16)
+                        self.enums[name] = value
+                        self.values[value] = name
+                    elif svalue.find('<<') != -1:
+                        value = eval(svalue)
+                        self.enums[name] = value
+                        self.values[value] = name
+                    else:
+                        value = int(svalue)
+                        self.enums[name] = value
+                        self.values[value] = name
                 else:
-                    value = int(svalue)
-                    self.enums[name] = value
+                    name = member
+                    value = value + 1
+                    self.enums[member] = value 
                     self.values[value] = name
-            else:
-                name = member
-                value = value + 1
-                self.enums[member] = value 
-                self.values[value] = name
 
 
 class cvar(object):
