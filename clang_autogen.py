@@ -23,35 +23,42 @@ class astVariable(object):
         self.top = node
         # to do here if have global variable
 
+
 def ostream_basic(field, fieldname, indx):
     strTmpOStream = ''
-    if (field.name.find('pad') != -1 or field.name.find('reserved') != -1) and field.array_count != 0:
+    if (field.name.find('pad') != -1 or
+        field.name.find('reserved') != -1 or
+            field.name.find('Reserved') != -1) and field.array_count != 0:
         return strTmpOStream
-        
+
     if field.array_count == 0 or field.type.kind == TypeKind.CHAR_S:
-        strTmpOStream += '<< "    ' + fieldname + ' = " << s.'
+        strTmpOStream += '<< "    ' + '    ' * indx + fieldname + ' = " << s.'
         strTmpOStream += fieldname + ' << "\\n" \n        '
     else:
         for i in range(field.array_count):
-            strTmpOStream += '<< "    ' + fieldname + '[{}] = " << s.'.format(i)
+            strTmpOStream += '<< "    ' + '    ' * indx + \
+                fieldname + '[{}] = " << s.'.format(i)
             strTmpOStream += fieldname + '[{}] << "\\n" \n        '.format(i)
 
     return strTmpOStream
 
 
-def ostream_substructure(struct, prefix, indx = 0):
+def ostream_substructure(struct, prefix, indx=0):
     strTmpOStream = '<< "' + '    ' * indx + prefix + ' {\\n"\n        '
+
     for field in struct.fields:
         substruture = struct.symbols.get(field.canonical)
         fieldname = prefix + '.' + field.name
         if substruture == None:
-            ostream_basic(field, fieldname, indx)
+            strTmpOStream += ostream_basic(field, fieldname, indx)
         else:
-            strTmpOStream += ostream_substructure(substruture, fieldname, indx + 1)
-    
-    strTmpOStream += '<< "' + '    ' * indx +'}\\n"\n        '
-    
+            strTmpOStream += ostream_substructure(
+                substruture, fieldname, indx + 1)
+
+    strTmpOStream += '<< "' + '    ' * indx + '}\\n"\n        '
+
     return strTmpOStream
+
 
 class astStruct(object):
     class field:
@@ -98,20 +105,24 @@ class astStruct(object):
     @property
     def ostream(self):
         if not hasattr(self, '_ostream'):
-            strOStream = 'std::ostream& operator<<(std::ostream& os, const ' + self.typename + '& s)\n'
+            strOStream = 'std::ostream& operator<<(std::ostream& os, const ' + \
+                self.typename + '& s)\n'
             strOStream += '{\n'
-            strOStream += '    return os << "' + self.typename + ' {\\n"\n        '
+            strOStream += '    return os << "' + \
+                self.typename + ' {\\n"\n        '
             for field in self.fields:
                 substruture = self.symbols.get(field.canonical)
                 if substruture == None:
                     strOStream += ostream_basic(field, field.name, 0)
                 else:
-                    strOStream += ostream_substructure(substruture, field.name, 1)
+                    strOStream += ostream_substructure(
+                        substruture, field.name, 1)
             strOStream += '<< "}\\n";\n'
             strOStream += '}\n'
             self._ostream = strOStream
 
         return self._ostream
+
 
 class astEnum(object):
     def __init__(self, node):
@@ -156,6 +167,7 @@ class astClass(object):
                 parseenum(i, self.enums)
             elif i.kind == CursorKind.STRUCT_DECL or i.kind == CursorKind.UNION_DECL:
                 parsestruct(i, self.structs)
+
 
 class astFile(object):
     def __init__(self, node):
@@ -205,9 +217,11 @@ def parsefunction(node, f):
         function = astFunction(node)
         f.append(function)
 
+
 def parseclass(node, c):
     clas = astClass(node)
     c.append(clas)
+
 
 def parseglobal(node, cf):
     for i in node.get_children():
@@ -234,22 +248,24 @@ def dumpnode(node):
     with open('./dumpnode.txt', 'w') as f:
         printnode(node, 0, f=f)
 
+
 def dump_struct_ostream(cf):
     with open('./struct_ostream.h', 'w') as f:
-        print ('#include <sstream>', file=f)
-        print ('#include <string>', file=f)
-        print ('#include "{}"\n'.format(cf.filename), file=f)
-        print ('using std::string;', file=f)
-        print ('using std::ostringstream;\n', file=f)
+        print('#include <sstream>', file=f)
+        print('#include <string>', file=f)
+        print('#include "{}"\n'.format(cf.filename), file=f)
+        print('using std::string;', file=f)
+        print('using std::ostringstream;\n', file=f)
         for s in cf.gStructs:
             print(s.ostream, file=f)
+
 
 def main():
     index = clang.cindex.Index.create()
     tu = index.parse('nvcuda.cpp',  # '../runtime/runtimeapi/cuda_runtime.cpp',
                      ['-x', 'c++', '-std=c++11', '-D__CODE_GENERATOR__'])
 
-    #dumpnode(tu.cursor)
+    # dumpnode(tu.cursor)
 
     cf = astFile(tu.cursor)
     parseglobal(tu.cursor, cf)
